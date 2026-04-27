@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="/home/clients/32552610a79c1ad36692aa67a1b0a8a2/sites/whiskytimeshop.ch/acsue9pxtk0soziw" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="626f4f003ebd0665a5a1156e4bc4f226">
+        <source>Search by our catalog</source>
+        <target>Rechercher dans notre catalogue</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="57b5715e2833ee507b901d4709c4cebe">
+        <source>List of products by brand</source>
+        <target>Liste des produits de la marque</target>
+        <note>Line: </note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

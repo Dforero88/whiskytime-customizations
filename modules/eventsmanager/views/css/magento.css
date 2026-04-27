@@ -1,0 +1,918 @@
+
+/* ======================================================================= Clear ======================================================================= */
+ .clearfix:before, .clearfix:after {
+     content: " ";
+     display: table;
+}
+/* ======================================================================= Clear ======================================================================= */
+ .clearfix:before, .clearfix:after {
+     content: " ";
+     display: table;
+}
+ .clearfix:after {
+     clear: both;
+}
+/*Events Manager*/
+ .event_manager {
+     width:100%;
+     padding-top:20px;
+}
+ .event_manager .inner_container {
+     max-width:100%;
+     padding:0 15px;
+}
+ .event_manager .page_title {
+     width:100%;
+     clear:both;
+     padding-bottom:25px;
+}
+ .event_manager .page_title h1 {
+     font-size:20px;
+     font-weight:600;
+}
+/*ToolBar*/
+ .event_manager .toolbar {
+     width:100%;
+     box-sizing:border-box;
+     padding:8px 15px;
+     background:#e5e5e5;
+     border-radius:1px;
+     font-size: 13px;
+     color: #7a7a7a;
+}
+
+ .event_manager .toolbar label {font-size: 13px; color: #7a7a7a;}
+
+ .event_manager .toolbar p {margin-bottom: 0; font-size: 13px;}
+ 
+ .event_manager .toolbar .calendar {
+     /*margin-left: 10px;*/
+     display:inline-block;
+     font-size:13px;
+     font-weight:400;
+     text-transform:uppercase;
+     padding-top:7px;
+}
+ .event_manager .toolbar .calendar img {
+     margin-bottom:0px;
+     margin-right:5px;
+}
+ .event_manager .toolbar .calendar a {
+     color:#427fbe 
+}
+ .event_manager .toolbar .view_mode {
+     display:inline-block;
+     font-size:13px;
+     font-weight:400;
+     text-transform:uppercase;
+     margin-left: 37px;
+}
+ .event_manager .toolbar .view_mode img {
+     margin-left:10px;
+     margin-bottom:0px;
+}
+ .event_manager .toolbar .sort_by {
+     float:right;
+     display:inline-block;
+     text-align:right;
+     font-weight:400;
+     text-transform:uppercase;
+}
+ .event_manager .toolbar .sort_by span {
+     display:inline-block;
+     float:left;
+     margin-top:11px;
+}
+ .event_manager .toolbar .sort_by img {
+     margin-left:15px;
+}
+/*Products Grid*/
+ .event_manager .product_grid {
+     width:100%;
+     padding-top:30px;
+}
+ .event_manager .product_grid ul {
+     list-style:none;
+     padding:0px;
+     margin:0px;
+     text-align:center;
+}
+
+ .event_manager .product_grid ul li {
+     
+     max-height: 400px;
+     width:23%;
+     padding:5px;
+     box-sizing:border-box;
+     background:#fff;
+     display:inline-block;
+     vertical-align:top;
+     margin:12px 8px;
+     text-align:left;
+     border:#fff 1px solid;
+     -webkit-box-shadow: 0 0 5px #fff;
+     -moz-box-shadow: 0px 0px 5px #fff;
+     box-shadow: 0px 0px 5px #fff;
+     overflow: hidden;
+}
+.event_manager .p_list ul li {
+     height: auto;
+     
+}
+ .event_manager .product_grid ul li.list {
+     width:99%;
+     text-align:left;
+     box-sizing:border-box;
+     margin-bottom:20px;
+}
+ .event_manager .product_grid ul li:hover {
+     border:#ebebeb 1px solid;
+     -webkit-box-shadow: 0 0 5px #999999;
+     -moz-box-shadow: 0px 0px 5px #999999;
+     box-shadow: 0px 0px 5px #999999;
+}
+ .event_manager .product_grid ul li:hover.list {
+     border:#ebebeb 1px solid;
+}
+ .event_manager .product_grid ul li .event_block {
+     width:100%;
+}
+ .event_manager .product_grid ul li .event_block .event_title {
+     width:100%;
+     background:#f0f0f0;
+     padding:18px 15px;
+     box-sizing:border-box;
+}
+ .event_manager .product_grid ul li .event_block .event_title h2 {
+     font-size:16px;
+     font-weight:600;
+     line-height:24px;
+}
+ .event_manager .product_grid ul li .event_block .event_title h2 a {
+     color:#494949 
+}
+ .event_manager .product_grid ul li:hover .event_block .event_title h2 a {
+     color:#1979c3 
+}
+ .event_manager .product_grid ul li .event_block .event_thumbnail {
+     width:100%;
+     text-align:center;
+     padding-top:5px;
+}
+ .event_manager .product_grid ul li .event_block .event_thumbnail img {
+     max-width:100%;
+     height:auto;
+}
+ .event_manager .product_grid ul li.list .event_block .event_thumbnail {
+     width:20%;
+     text-align:left;
+     padding-top:5px;
+     float:left;
+}
+ .event_manager .product_grid ul li .event_block .event_detail {
+     width:100%;
+     padding:10px;
+     box-sizing:border-box;
+}
+ .event_manager .product_grid ul li.list .event_block .event_detail {
+     text-overflow: ellipsis;
+    width:76%;
+     float:left;
+     margin-left:20px;
+}
+ .event_manager .product_grid ul li .event_block .event_detail p {
+     font-size:13px;
+     font-weight:400;
+     line-height:24px;
+     padding:0px;
+     margin:0px;
+}
+ .event_manager .product_grid ul li .event_block .event_detail p span {
+     font-weight:700;
+}
+ .event_manager .product_grid ul li .event_block .event_detail .learn_more {
+     display:none;
+     padding:10px 0;
+     padding-bottom:0px;
+}
+ .event_manager .product_grid ul li .event_block .event_detail .learn_more a {
+     font-size:13px;
+     color:#1979c3;
+     line-height:30px;
+}
+ .event_manager .product_grid ul li:hover .event_block .event_detail .learn_more {
+     display:block;
+}
+ .event_manager .product_grid ul li.list .event_block .event_detail .learn_more {
+     display:block;
+     padding:10px 0;
+     padding-bottom:0px;
+}
+/*Detail*/
+ .event_manager .info_bar {
+     width:100%;
+     box-sizing:border-box;
+     padding:8px 15px;
+     background:#f0f0f0;
+     border-radius:1px;
+}
+ .event_manager .info_bar p {
+     font-weight:400;
+     line-height:24px;
+     padding:0px;
+     margin:0px;
+}
+ .event_manager .info_bar p span {
+     font-weight:700;
+}
+ .event_manager .container {
+    width:100%;
+     margin:0px;
+     padding:0px;
+    margin-bottom: 2px;
+}
+ .event_manager .detail_thumbnail {
+     width:22%;
+     float:left;
+}
+ .event_manager .detail_thumbnail img {
+     max-width:100%;
+     height:auto;
+     border: 1px solid #d5d5d5;
+     padding: 3px;
+}
+ .event_manager .detail_left_col {
+     width:76%;
+     float:right;
+     background:#e0e0e0;
+     padding:15px;
+     box-sizing:border-box;
+}
+ .event_manager .detail_left_col .event_info {
+     width:73%;
+     float:left;
+}
+ .event_manager .detail_left_col .event_info h2 {
+     font-size:13px;
+     font-weight:600;
+     text-transform:uppercase;
+     margin-top:5px;
+     margin-bottom:20px;
+}
+ .event_manager .detail_left_col .event_info .event-info-field {
+     width:100%;
+     clear:both;
+     margin:2px 0;
+}
+ .event_manager .detail_left_col .event_info .event-info-field .event-info-label {
+     width:25%;
+     float:left;
+     padding:10px 0px;
+     box-sizing:border-box 
+}
+ .event_manager .detail_left_col .event_info .event-info-field .event-info-content {
+     width:72%;
+     float:right;
+     padding:10px 15px;
+     background:#fff;
+     box-sizing:border-box 
+}
+/*Tickets*/
+ .event_manager .detail_left_col .buy_tickets {
+    margin-top: 43px;
+     width:25%;
+     float:right;
+     background:#fff;
+     padding:10px;
+     box-sizing:border-box;
+}
+ .event_manager .detail_left_col .buy_tickets a {
+     display:block;
+     background:#f8f8f8;
+     border:#f0f0f0 2px solid;
+     text-align:center;
+     font-size:18px;
+     font-weight:600;
+     color:#1979c3;
+     text-transform:uppercase;
+     padding:60px 10px 
+}
+ .event_manager .detail_left_col .buy_tickets a:hover {
+     background:#fff;
+     color:#494949;
+}
+/*Content*/
+ .event_manager .content {
+     width:100%;
+     padding:20px 0;
+     clear:both 
+}
+ .event_manager .content h2 {
+     font-size:20px;
+     font-weight:600;
+     padding:10px 0;
+}
+ .event_manager .content h3 {
+     font-size:18px;
+     font-weight:600;
+     padding:10px 0;
+}
+ .event_manager .content h4 {
+     font-size:16px;
+     font-weight:600;
+     padding:10px 0;
+}
+ .event_manager .content p {
+     font-size:14px;
+     line-height:24px;
+     padding:10px 0 
+}
+ .event_manager .content ul {
+     list-style:none;
+     padding:0px;
+     margin:20px 40px;
+}
+ .event_manager .content ul li {
+     list-style:circle;
+     font-size:14px;
+     line-height:24px;
+     padding:2px 5px 
+}
+/*Media Gallery Slider*/
+ .event_manager .media_gallery_slider {
+     width:100%;
+     padding:20px 0 
+}
+ .event_manager .media_gallery_slider h2 {
+     font-size:22px;
+     font-weight:600;
+     margin-bottom:20px;
+}
+ .event_manager .media_gallery_slider h2 a {
+     float:right;
+     margin-left:8px;
+}
+ .event_manager .media_gallery_slider .container-carousel {
+     width:100%;
+     background:#f0f0f0;
+     box-sizing:border-box;
+     position:relative;
+     overflow: hidden;
+     margin-top: 11px;
+}
+ .event_manager .media_gallery_slider .container-carousel ul {
+     list-style:none;
+     padding:0px;
+     margin:0px;
+     text-align:center;
+}
+ .event_manager .media_gallery_slider .container-carousel ul li {
+     width:18%;
+     display:inline-block;
+     vertical-align:top;
+     margin:0 10px;
+}
+ .event_manager .media_gallery_slider .container-carousel ul li:first-child {
+     margin-left:0px;
+}
+ .event_manager .media_gallery_slider .container-carousel ul li:last-child {
+     margin-right:0px;
+}
+ .event_manager .media_gallery_slider .container-carousel ul li img {
+     max-width:100%;
+     height:auto;
+     border:#fff 3px solid;
+}
+ .event_manager .events_venue {
+     padding:20px 0 
+}
+ .event_manager .events_venue ul {
+     list-style:none;
+     padding:0px;
+     margin:0px;
+     display:flex;
+}
+ .event_manager .events_venue > ul li {
+     display:block;
+     flex: 1 1 0;
+     -webkit-flex: 1;
+    /* Safari 6.1+ */
+     -ms-flex: 1;
+    /* IE 10 */
+    /* margin-right:30px;*/
+}
+ .event_manager .events_venue > ul li:last-child {
+     margin-right:0px;
+}
+ .event_manager .events_venue > ul li h2 {
+     font-size:22px;
+     font-weight:600;
+     margin-bottom:20px;
+}
+ .event_manager .events_venue > ul li .video {
+     width:100%;
+     height:220px;
+     background:#f0f0f0;
+     box-sizing:border-box;
+     overflow: hidden;
+}
+ .event_manager .events_venue > ul li img {
+     max-width:100%;
+     height:auto;
+}
+ .event_manager .events_venue > ul li .map {
+     width:100%;
+     background:#f0f0f0;
+     padding:10px;
+     box-sizing:border-box;
+}
+ .event_manager .event_social_wdgt {
+     width:100%;
+     background:#f0f0f0;
+     padding:43px 20px;
+     padding-bottom:35px;
+     margin-top:35px;
+     text-align:center;
+     box-sizing:border-box;
+}
+ .event_manager .event_social_wdgt img {
+     max-width:100%;
+     height:auto;
+}
+/*PopUp Style*/
+ .holder {
+     width:50%;
+     margin:0 auto;
+}
+ .events_popup {
+     width:100%;
+     position:relative;
+     background:#fff;
+     border-radius:5px;
+     padding:20px;
+     box-sizing:border-box;
+}
+ .events_popup .page_title {
+     text-align:center;
+     margin-bottom:30px;
+}
+ .events_popup .page_title h1 {
+     font-size:24px;
+     font-weight:600;
+}
+ .events_popup ul {
+     list-style:none;
+     padding:0px;
+     margin:0px;
+     display:flex;
+     text-align:center;
+}
+ .events_popup > ul li {
+     display:block;
+     flex: 1 1 0;
+     -webkit-flex: 1;
+    /* Safari 6.1+ */
+     -ms-flex: 1;
+    /* IE 10 */
+     margin-right:20px;
+     border:#ebebeb 1px solid;
+     padding:20px;
+}
+ .events_popup ul li:hover {
+     border:#ebebeb 1px solid;
+     -webkit-box-shadow: 0 0 5px #999999;
+     -moz-box-shadow: 0px 0px 5px #999999;
+     box-shadow: 0px 0px 5px #999999;
+}
+ .events_popup > ul li h2 {
+     font-size:18px;
+     font-weight:400;
+     margin-bottom:20px 
+}
+ .events_popup > ul li .thumbnail {
+     width:25%;
+     margin:0 auto;
+     margin-bottom:10px;
+}
+ .events_popup > ul li .thumbnail img {
+     max-width:100%;
+     height:auto;
+}
+ .events_popup > ul li .price {
+     font-size:18px;
+     font-weight:600;
+     color:#1979c3;
+}
+ .events_popup > ul li .qty {
+     width:100%;
+     font-size:13px;
+     padding:20px 0 
+}
+ .events_popup > ul li .qty .qty_field {
+     width:55px;
+     padding:8px 0;
+     border:#ebebeb 1px solid;
+     text-align:center;
+     margin-left:10px;
+}
+ .events_popup > ul li .field {
+     width:100%;
+     padding:10px 0 
+}
+ .events_popup > ul li .field .title {
+     width:100%;
+}
+ .events_popup > ul li .field_input {
+     width:100%;
+     padding:8px;
+     border:#ebebeb 1px solid;
+     box-sizing:border-box;
+     margin-top:10px;
+     clear:both;
+}
+ .events_popup > ul li button {
+     margin-top:20px;
+     background:#1979c3;
+     border:0px;
+     padding:10px 15px;
+     font-size:14px;
+     color:#fff;
+     border-radius:2px;
+     font-weight:600;
+     text-transform:uppercase;
+}
+/*Responsive*/
+ @media (min-width: 200px) and (max-width: 450px) {
+     .event_manager .page_title h1 {
+         font-size:18px;
+    }
+     .event_manager .product_grid ul li {
+         width:100%;
+         margin:12px 0px;
+    }
+     .event_manager .toolbar .sort_by {
+         display:none 
+    }
+     .event_manager .toolbar .calendar {
+         padding-top:0px;
+    }
+     .event_manager .detail_thumbnail {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info h2 {
+         font-size:13px;
+         margin-bottom:10px;
+    }
+     .event_manager .detail_left_col .event_info .event-info-field .event-info-label {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info .event-info-field .event-info-content {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .buy_tickets {
+         width:100%;
+         float:none;
+         margin-top:30px;
+    }
+     .event_manager .media_gallery_slider h2 {
+         font-size:18px;
+    }
+     .event_manager .events_venue > ul li h2 {
+         font-size:18px;
+    }
+     .event_manager .events_venue > ul {
+         display: block;
+    }
+     .event_manager .events_venue > ul li {
+         display: block;
+         flex: 1 1 0;
+         margin-bottom:20px;
+    }
+     .holder {
+         width:90%;
+    }
+     .events_popup ul {
+         display:block;
+    }
+     .events_popup > ul li {
+         display:block;
+         margin-right:0px;
+         margin-bottom:20px;
+    }
+}
+ @media (min-width: 450px) and (max-width: 650px) {
+     .event_manager .product_grid ul li {
+         width:47%;
+         margin:12px 4px;
+    }
+     .event_manager .toolbar .sort_by {
+         display:none 
+    }
+     .event_manager .toolbar .calendar {
+         padding-top:0px;
+    }
+     .event_manager .detail_thumbnail {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info h2 {
+         font-size:15px;
+         margin-bottom:10px;
+    }
+     .event_manager .detail_left_col .event_info .event-info-field .event-info-label {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info .event-info-field .event-info-content {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .buy_tickets {
+         width:100%;
+         float:none;
+         margin-top:30px;
+    }
+     .event_manager .media_gallery_slider h2 {
+         font-size:18px;
+    }
+     .event_manager .events_venue > ul li h2 {
+         font-size:18px;
+    }
+     .event_manager .events_venue > ul {
+         display: block;
+    }
+     .event_manager .events_venue > ul li {
+         display: block;
+         flex: 1 1 0;
+         margin-bottom:20px;
+    }
+     .holder {
+         width:90%;
+    }
+     .events_popup ul {
+         display:block;
+    }
+     .events_popup > ul li {
+         display:block;
+         margin-right:0px;
+         margin-bottom:20px;
+    }
+}
+ @media (min-width: 650px) and (max-width: 800px) {
+     .event_manager .product_grid ul li {
+         width:31%;
+         margin:12px 4px;
+    }
+     .event_manager .detail_thumbnail {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info h2 {
+         font-size:15px;
+         margin-bottom:10px;
+    }
+     .event_manager .detail_left_col .event_info .event-info-field .event-info-label {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .event_info .event-info-field .event-info-content {
+         width:100%;
+         float:none;
+    }
+     .event_manager .detail_left_col .buy_tickets {
+         width:100%;
+         float:none;
+         margin-top:30px;
+    }
+     .event_manager .media_gallery_slider h2 {
+         font-size:18px;
+    }
+     .event_manager .events_venue > ul li h2 {
+         font-size:18px;
+    }
+     .event_manager .events_venue > ul {
+         display: block;
+    }
+     .event_manager .events_venue > ul li {
+         display: block;
+         flex: 1 1 0;
+         margin-bottom:20px;
+    }
+}
+ @media (min-width: 800px) and (max-width: 1000px) {
+     .event_manager .product_grid ul li {
+         width:23%;
+         margin:12px 6px;
+    }
+}
+ .modes{
+     display: inline-block;
+     float: left;
+     margin-right: 20px;
+}
+ .total_events{
+     margin-left: 32px;
+     margin-top: 8px;
+}
+ .blog .carousel-indicators {
+     left: 0;
+     top: auto;
+     bottom: -40px;
+}
+/* The colour of the indicators */
+ .blog .carousel-indicators li {
+     background: #a3a3a3;
+     border-radius: 50%;
+     width: 8px;
+     height: 8px;
+}
+ .blog .carousel-indicators .active {
+     background: #707070;
+}
+ .parentimg img {
+     border:0px;
+    height: 163px 
+}
+ #description {
+     font-family: Roboto;
+     font-size: 15px;
+     font-weight: 300;
+}
+ #infowindow-content .title {
+     font-weight: bold;
+}
+ #infowindow-content {
+     display: none;
+}
+ #map #infowindow-content {
+     display: inline;
+}
+ .pac-card {
+     margin: 10px 10px 0 0;
+     border-radius: 2px 0 0 2px;
+     box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     outline: none;
+     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+     background-color: #fff;
+     font-family: Roboto;
+}
+ #pac-container {
+     padding-bottom: 12px;
+     margin-right: 12px;
+}
+ .pac-controls {
+     display: inline-block;
+     padding: 5px 11px;
+}
+ .pac-controls label {
+     font-family: Roboto;
+     font-size: 13px;
+     font-weight: 300;
+}
+ #pac-input {
+     background-color: #fff;
+     font-family: Roboto;
+     font-size: 15px;
+     font-weight: 300;
+     margin-left: 12px;
+     padding: 0 11px 0 13px;
+     text-overflow: ellipsis;
+     width: 400px;
+}
+ #pac-input:focus {
+     border-color: #4d90fe;
+}
+ #title {
+     color: #fff;
+     background-color: #4d90fe;
+     font-size: 25px;
+     font-weight: 500;
+     padding: 6px 12px;
+}
+ #target {
+     width: 345px;
+}
+ .jssorl-009-spin img {
+     animation-name: jssorl-009-spin;
+     animation-duration: 1.6s;
+     animation-iteration-count: infinite;
+     animation-timing-function: linear;
+}
+ @keyframes jssorl-009-spin {
+     from {
+         transform: rotate(0deg);
+    }
+     to {
+         transform: rotate(360deg);
+    }
+}
+/*jssor slider bullet skin 057 css*/
+ .jssorb057 .i {
+    position:absolute;
+    cursor:pointer;
+}
+ .jssorb057 .i .b {
+    fill:none;
+    stroke:#fff;
+    stroke-width:2000;
+    stroke-miterlimit:10;
+    stroke-opacity:0.4;
+}
+ .jssorb057 .i:hover .b {
+    stroke-opacity:.7;
+}
+ .jssorb057 .iav .b {
+    stroke-opacity: 1;
+}
+ .jssorb057 .i.idn {
+    opacity:.3;
+}
+/*jssor slider arrow skin 073 css*/
+ .jssora073 {
+    display:block;
+    position:absolute;
+    cursor:pointer;
+}
+ .jssora073 .a {
+    fill:#ddd;
+    fill-opacity:.7;
+    stroke:#000;
+    stroke-width:160;
+    stroke-miterlimit:10;
+    stroke-opacity:.7;
+}
+ .jssora073:hover {
+    opacity:.8;
+}
+ .jssora073.jssora073dn {
+    opacity:.4;
+}
+ .jssora073.jssora073ds {
+    opacity:.3;
+    pointer-events:none;
+}
+ .event_detail p {
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+ 
+ .product-content h5{
+     top: -4px !important;
+ }
+ .ticket_section{
+     padding-top: 8px;
+     
+ }
+ .youtube-player{
+     width: 100%;
+     height: 100%;
+ }
+ .event-detail-heading2{
+     padding-bottom: 10px;
+     font-size: 18px;
+ }
+ #events-video{
+     margin-left: -11px;
+     margin-top: 8px;
+ }
+ .mat_event_single_holder{
+     margin-top: 10px;
+ }
+ #event-paginator { padding-bottom: 10px}
+ 
+ 
+ 
+ @media (min-width: 200px) and (max-width: 480px) {
+ .event_manager .modes { margin-right: 0px !important; width: 100%;}
+ .event_manager .toolbar .view_mode { margin-left: 0px !important; float: right}
+ .event_manager .product_grid ul li.list .event_block .event_thumbnail { width: 100%;}
+ }

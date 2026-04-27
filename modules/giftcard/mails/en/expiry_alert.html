@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Message from {shop_name}</title>
+
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Open Sans', sans-serif;
+            color: #555454;
+            font-size: 14px;
+            line-height: 20px;
+            margin: auto;
+            width: 500px; /* Reduced width */
+        }
+        .table {
+            width: 80%;
+			margin: auto;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #ffffff;
+            text-align: center; /* Centered text */
+        }
+        .header {
+            background-color: #337ff1;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        .subtitle {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .coupon-code {
+            font-weight: bold;
+            font-size: 20px;
+            color: #337ff1;
+            background-color: #e1f5fe;
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .expiry {
+            font-weight: bold;
+            color: #ff5722;
+            margin: 10px 0;
+        }
+        .thank-you {
+            padding: 20px;
+            background-color: #f0f4ff;
+            border: 1px solid #d1e2ff;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .footer {
+            padding: 15px;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                width: 100% !important;
+            }
+            .title {
+                font-size: 20px !important;
+            }
+            .coupon-code {
+                font-size: 18px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <table class="table">
+        <tr>
+            <td class="header">
+                <img src="{shop_logo}" alt="{shop_name}" />
+                <h1 class="title">Hi, {fname} {lname}!</h1>
+                <p class="subtitle">Your exclusive coupon is here!</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <p>Your coupon code:</p>
+                <div class="coupon-code"  style="padding: 15px 30px;">{coupon_code}</div>
+                <p class="expiry" style="padding-top: 10px;">This coupon will expire on <strong>{expiry_date}</strong>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="thank-you">
+                <strong>Thank you for shopping with {shop_name}!</strong>
+                <p>We appreciate your business and look forward to serving you again.</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="footer">
+                <p>If you have any questions, feel free to contact our support team.</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

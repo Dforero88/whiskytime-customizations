@@ -1,0 +1,12 @@
+{shop_name}
+Hi,{rec_name}
+
+You received a Gift Card from :{sender}
+
+Gift Card Name : {giftcard_name}
+Gift Card Code : {vcode}
+Gift Card Discount Value : {value}
+Gift Card Quantity: x{quantity}
+Expire Date : {expire_date}
+
+To use this Gift Card please visit :{shop_name} and enter gift card code as voucher in your shopping cart.

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="/home/clients/32552610a79c1ad36692aa67a1b0a8a2/sites/whiskytimeshop.ch/acsue9pxtk0soziw" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="739405e73cc9f2e323506440d0883734">
+        <source>Create Account</source>
+        <target>Créer un compte</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="d1a06050b5fa08dc37c2f445ce37f4dc">
+        <source>Si c’est votre première connexion depuis la mise à jour du site, veuillez réinitialiser votre mot de passe.</source>
+        <target>Si c'est votre première connexion depuis la mise à jour du site, veuillez réinitialiser votre mot de passe à l'aide de la fonction 'Mot de passe oublié ?'</target>
+        <note>Line: </note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

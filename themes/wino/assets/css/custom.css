@@ -1,0 +1,2142 @@
+/*
+ * Custom code goes here.
+ * A template should always ship with an empty custom.css
+ */
+
+/* Nouvelle couleur principale (remplace #9b0f44) */
+:root {
+	--primary-color: #13392a; /* Whisky time gren */
+	--primary-color-light: #d3e5dc; /* vert très pâle, inspiré du vert mousse */
+
+	/* #f3e1b2;  Or plus claire, style or pâle */
+	/* #b8860b;  Or classique */
+}
+
+/*Aei-Bannecms start*/
+.aei_cmsbanner{
+	position: relative;
+	text-align: center;
+	/* padding: 50px 0; */
+	padding-top: 50px;
+    clear: both;
+}
+ 
+@media(min-width: 992px){
+	.aei_cmsbanner .container{
+			 /*height: 415px !important;
+	min-height: 415px !important; */
+		width: 1830px;
+		max-width: 100%;
+	}
+} 
+
+.aei_cmsbanner .ax-title {
+    margin-bottom: 60px;
+}
+#aeibanner-arrows {
+	width: 100%;
+	right: 0;
+	bottom: 50%;
+    opacity: 0;
+	position: absolute;
+    -webkit-transition-duration: 500ms;
+    -moz-transition-duration: 500ms;
+    -ms-transition-duration: 500ms;
+    -o-transition-duration: 500ms;
+    transition-duration: 500ms;
+}
+.aei_cmsbanner:hover #aeibanner-arrows{
+	opacity: 1;
+}
+.aei_cmsbannerimage{
+	position: relative;
+	/* display: inline-block; */
+	display: block; /* Changez inline-block en block */
+	/* vertical-align: top; */
+	overflow: hidden;
+	aspect-ratio: 1 / 1; /* Ligne magique anti-CLS */
+    width: 100%; /* Nécessaire pour aspect-ratio */
+}
+
+.aei_cmsbannerimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garde les proportions */
+    display: block;
+}
+.aei_cmsbannerimage::after{
+	bottom: 0;
+	right: 0;
+	height: 0;
+	content: "";
+	position: absolute;
+	-webkit-transition: all 0.6s ease-in-out;
+	transition: all 0.6s ease-in-out;
+}
+.aei_cmsbannerimage::before{
+	left: 0;
+	top: 0;
+	height: 0;
+	content: "";
+	position: absolute;
+	-webkit-transition: all 0.6s ease-in-out;
+	transition: all 0.6s ease-in-out;
+}
+.aei-banner-item:hover .aei_cmsbannerimage::before,
+.aei-banner-item:hover .aei_cmsbannerimage::after{
+	background: rgba(0, 0, 0, 0.35) none repeat scroll 0 0;
+	height: 50%;
+	width: 100%;
+}
+.aei-banner-item {
+	position: relative;
+	float: left;
+	text-align: left;
+	width: 31.4%;
+}
+.aei-banner-item.top-center {
+    margin: 0 52px;
+}
+.banner_inner {
+	background: transparent url("../img/aximage/slider-bg.png") no-repeat scroll center bottom -100px;
+    overflow: hidden;
+    position: relative;
+    padding: 60px 0 80px;
+	margin: 0;
+}
+.aei-details {
+	left: 0;
+	right: 0;
+	top:30%;
+	bottom:30%;
+	margin: 0 auto;
+	opacity: 0;
+	position: absolute;
+	text-align: center;
+	transform: scale(0);
+	-webkit-transform: scale(0);
+	-moz-transform: scale(0);
+	-ms-transform: scale(0);
+	-o-transform: scale(0);
+	transition: all 500ms ease 0s;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+}
+.aei-banner-item:hover .aei-details{
+	opacity: 1;
+	transform: scale(1);
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	transition: all 500ms ease 0s;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+}
+.aei-title{
+	display: block;
+	margin:30px 0;
+    color: #ffffff;
+	font-size: 57px;
+	font-weight: 700;
+	line-height: 25px;
+	letter-spacing: 1.08px;
+	text-transform: capitalize;
+	font-family: 'Great Vibes', cursive;
+}
+.aei-desc{
+	display: block;
+	margin: 42px 80px;
+    color: #ffffff;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 30px;
+	letter-spacing: 0.9px;
+	text-transform: capitalize;
+}
+.aei-title a:hover{
+    color: var(--primary-color);
+}
+.aei_cmsbanner .aei-details .btn {
+	padding: 3px 27px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #ffffff;
+	margin-top: 1px;
+	line-height: 30px;
+	border-radius: 5px;
+	letter-spacing: 0.56px;
+	text-transform: capitalize;
+	background-color: #000000;
+	transition: all 500ms ease;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+}
+.aei_cmsbanner .aei-details .btn:hover {
+    background-color: #9b0f44;
+}
+.aei_cmsbanner .ax-product-title {
+    color: #ffffff;
+}
+/*Aei-Bannecms end*/
+
+/*Aei-Service Start*/
+
+#aei_cmsservice {
+	clear: both;
+	width: 100%;
+	margin-bottom: 100px;
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+}
+#aei_cmsservice .container{
+	width: 1230px;
+	max-width: 100%;
+}
+#aei_cmsservice ul{
+	margin: 0;
+	text-align: center;
+}
+#aei_cmsservice .aei-service-item.second {
+    margin: 0 30px;
+}
+#aei_cmsservice .aei-service-item {
+    background-color: #f5f5f5;
+	position: relative;
+	text-align: center;
+	float: left;
+	width: 31.6%;
+	padding: 20px 15px;
+	margin: 0;
+}
+.aei-service-item-inner{
+	text-align: center;
+	display: inline-block;
+	vertical-align: top;
+}
+.aei-service-item .aei-image-block {
+    position: relative;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 15px;
+	float: left;
+}
+.aei-service-item .aei-image-icon {
+    display: block;
+	height: 105px;
+	width: 105px;
+	border-radius: 50%;
+	transition: all 500ms ease;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.5) inset; 
+}
+#aei_cmsservice .aei-service-item:hover{
+	background-color: #9b0f44;
+    transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+}
+#aei_cmsservice .aei-service-item:nth-child(1) .aei-image-icon{
+	background: #ffffff url("../img/aximage/service-icon.png") no-repeat scroll center 40px	
+}
+#aei_cmsservice .aei-service-item:nth-child(1):hover .aei-image-icon{ 
+    background: #ffffff url("../img/aximage/service-icon.png") no-repeat scroll center -60px
+}
+#aei_cmsservice .aei-service-item:nth-child(2) .aei-image-icon{
+	background: #ffffff url("../img/aximage/service-icon.png") no-repeat scroll center -163px
+}
+#aei_cmsservice .aei-service-item:nth-child(2):hover .aei-image-icon{
+    background: #ffffff url("../img/aximage/service-icon.png") no-repeat scroll center -263px
+}
+#aei_cmsservice .aei-service-item:nth-child(3) .aei-image-icon{
+	background: #ffffff url("../img/aximage/service-icon.png") no-repeat scroll center -366px
+}
+#aei_cmsservice .aei-service-item:nth-child(3):hover .aei-image-icon{
+    background: #ffffff url("../img/aximage/service-icon.png") no-repeat scroll center -466px
+}
+.service-right {
+    display: inline-block;
+	vertical-align: top;
+	text-align: left;
+	margin-top: 28px;
+}
+.aei-service-title {
+    color: #000000;
+	display: block;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 0.64px;
+	line-height: normal;
+	text-transform: capitalize;
+}
+.aei-service-item:hover .aei-service-title,
+.aei-service-item:hover .aei-service-desc{color: #ffffff;}
+.aei-service-desc {
+   	color: rgba(0,0,0,0.7);
+	line-height: normal;
+	text-transform: capitalize;
+	font-size: 12px;
+	letter-spacing: 1.2px;
+	font-weight: 300;
+	font-style: italic;
+
+}
+/* colorbox  */
+.main_inline_content{
+    display: none;
+}
+#cboxLoadedContent .content {
+    text-align: center;
+}
+#cboxLoadedContent .content .aei-service-title,#cboxLoadedContent .content span {
+    display: block;
+    text-transform: capitalize;
+}
+#cboxLoadedContent .content .aei-service-desc2 {
+    font-size: 13px;
+    color: #737373;
+}
+#cboxLoadedContent{
+    max-width: 500px;
+}
+#cboxLoadedContent .content .aei-service-title {
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+#cboxLoadedContent .content .service-right {
+    margin: 20px 0 0;
+    padding: 0 30px;
+    text-align: center;
+}
+#cboxLoadedContent .content .service-right .aei-service-desc1 {
+    margin: 10px 0 5px;
+}
+#cboxLoadedContent .content .aei-image-block .aei-image-icon {
+    padding: 20px;
+    background-color: #09336e;
+}
+
+/*Aei-Service end*/
+
+/*Aei-Topcms start*/
+
+#aeicmstop {
+    float: none;
+	width: 100%;
+	position: relative;
+	display: inline-block;
+	vertical-align: top;	
+}
+.cmstop-ixon {
+	/*background: #f5f5f5 url("../img/aximage/wine-bottle.gif") no-repeat scroll center/90px;*/
+	background: #f5f5f5; 
+    height: 90px;
+    width: 86px;
+	float: left;
+    display: block;
+	position: relative;
+}
+.cmstop.right .cmstop-ixon{
+	/*background: #f5f5f5 url("../img/aximage/wine.gif") no-repeat scroll center/80px;*/
+	background: #f5f5f5;
+	float: right;
+}
+.cmstop.right .cmstop-ixon::after{
+	top: 35px;
+	left: -10px;
+	right: auto;
+	content: "";
+	position: absolute;
+	border-style: solid;
+	border-width: 10px 10px 10px 0;
+	border-color: transparent #f5f5f5 transparent transparent;
+}
+.cmstop-ixon::after{
+	top: 35px;
+	right: -10px;
+	content: "";
+	position: absolute;
+	border-style: solid;
+	border-width: 10px 0 10px 10px;
+	border-color: transparent transparent transparent #f5f5f5;
+}
+.cmstop {
+    display: inline-block;
+    vertical-align: top;
+}
+.cmstop.left {
+    float: left;
+}
+.cmstop.right {
+    float: right;
+}
+.cmstop.right .cmsdetails{
+	padding-right: 20px;
+}
+.cmstop.right .cmsdetails .customtext{
+	text-align: right;
+}
+.cmsdetails .shop-now a {
+    font-size: 14px;
+    color: #000000;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.56px;
+    text-transform: capitalize;
+}
+.cmstop:hover .shop-now{
+	opacity: 1;
+}
+.cmsdetails .shop-now:hover a{
+	color: #9b0f44;
+	text-decoration: underline;
+}
+.cmstop.left .cmsdetails .shop-now{
+	text-align: left;
+	padding-top: 2px;
+}
+.cmsdetails .shop-now{
+  opacity: 0;
+  -webkit-transition: .4s;
+  -moz-transition: .4s;
+  transition: .4s;
+}
+.cmstop.right .cmsdetails .shop-now{
+	text-align: right;
+	padding-top: 5px;
+}
+.cmsdetails {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
+	padding-top: 20px;
+}
+.customtext {
+    display: block;
+    text-align: left;
+}
+.customtext a{
+    color: #000000;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 25px;
+	letter-spacing: 0.624px;
+	cursor: pointer;
+}
+.topoffer {
+    color: #a8a8a8;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 25px;
+    letter-spacing: 0.708px;
+}
+.cmstop:hover .customtext a{
+	color: #9b0f44;
+}
+/*Aei-Topcms end*/
+
+/*Aei-Category CMS start*/
+#index #aei_cmscategory{
+	width: 60%;
+	float: left;
+	position: relative;
+	display: block;
+}
+#aei_cmscategory{
+	display: none;
+}
+#aei_cmscategory::after{
+	background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+	content: "";
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+.aei-cmscategory-inner {
+    margin: 0;
+}
+.aei-cat-item{
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+}
+.aei-cat-item::after{
+	content: '';
+	top: 70px;
+	right: 70px;
+	width: 87.6%;
+	height: 2px;
+	z-index: 1;
+	position: absolute;
+	transform: translateX(-100%);
+	border-top: 2px solid transparent;
+	border-right: 2px solid transparent;
+}
+.aei-cat-item::before{
+	content: '';
+	bottom: 70px;
+	left: 70px;
+	width: 87.6%;
+	height: 2px;
+	z-index: 1;
+	position: absolute;
+	transform: translateX(100%);
+	border-bottom: 2px solid transparent;
+	border-left: 2px solid transparent;
+}
+#aei_cmscategory:hover .aei-cat-item::before,
+#aei_cmscategory:hover .aei-cat-item::after{
+	height: 80%;
+	border-color: #f5e12e;
+	transition: .3s transform linear, .3s height linear .3s;
+	transform: translateX(0);
+}
+.aei-cmscategory-inner:hover .aei-cat-title{
+	color: #f5e12e;
+}
+.aei-cat-details {
+	top: 33%;
+	left: 0;
+	right: 0;
+	bottom: 33%;
+	z-index: 2;
+	margin: 0 140px;
+    position: absolute;
+	text-align: center;
+}
+.aei-cat-dscnt {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0.8px;
+}
+.aei-cat-title {
+	margin: 20px 0;
+    color: #ffffff;
+	font-size: 42px;
+	font-weight: 700;
+	line-height: 30px;
+	letter-spacing: 1.68px;
+	text-transform: capitalize;
+}
+.aei-cat-desc {
+	margin: 0 auto;
+    color: #ffffff;
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 30px;
+	position: relative;
+	text-transform: none;
+	letter-spacing: 0.84px;
+}
+.aei-cat-shop-btn {
+    color: #ffffff;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 30px;
+	letter-spacing: 0.54px;
+	padding: 4px 29px;
+	margin-top: 37px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #09336e;
+	transition: all 300ms ease;
+	-webkit-transition: all 300ms ease;
+	-moz-transition: all 300ms ease;
+	-ms-transition: all 300ms ease;
+	-o-transition: all 300ms ease;
+}
+.aei-cat-shop-btn:hover{
+	background-color: #f5e12e;
+	color: #000000;
+}
+
+@-webkit-keyframes colorchange {
+    0% { color: #d50e45;}
+    25% {color: #000000;}
+    50% {color: #113c82;}
+    75% { color: #fac400;}
+    100% {color: #02204d;}
+}
+
+/*Aei-Category CMS end*/
+
+
+/*Aei-Testimonial start*/
+.aei-cmstestimony {
+    /*background: transparent url("../img/aximage/Testimonial-Bg.jpg") repeat fixed center;*/
+	text-align: center;
+	padding: 100px 0 113px;
+	margin: 40px 0 100px;
+	position: relative;
+	z-index: 1;
+}
+.aei-cmstestimony::before {
+    content: "";
+    bottom: -120px;
+    left: 0;
+    right: auto;
+    margin: 0 auto;
+    height: 100%;
+    width: 385px;
+    position: absolute;
+/*    background:transparent url("../img/aximage/testimony-bg.png") no-repeat scroll center;*/
+}
+.aei-cmstestimony:hover::before{
+	-webkit-animation-name: bounce;
+	animation-name: bounce;
+	-webkit-transform-origin: center bottom;
+	transform-origin: center bottom;
+	-moz-animation: bounce 3s infinite;
+}
+@-webkit-keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+@keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+.aei-cmstestimony::after {
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 100%;
+    width: 958px;
+    z-index: -1;
+    position: absolute;
+    transform: skewX(-15deg);
+    background-color: rgba(0,0,0,0.5);
+}
+.testimony_inner {
+    display: inline-block;
+	vertical-align: top;
+}
+#aeitestimony-slider {
+    margin: 0;
+}
+#aeicmstestimony {
+    position: relative;
+}
+#aeicmstestimony:hover #aeitestimonyarrows{
+	opacity: 1;
+    transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+}
+.product_inner_cms .name a {
+    color: #ffffff;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 28px;
+	letter-spacing: 0.64px;
+	text-transform: capitalize;
+}
+.product_inner_cms .designation a {
+	color: rgba(255,255,255,0.7);
+	font-size: 12px;
+	font-weight: 300;
+	line-height: normal;
+	letter-spacing: 0.72px;
+}
+.product_inner_cms .name:hover a{
+    color: #9b0f44;
+}
+.product_inner_cms .desc p{
+    color: #ffffff;
+	font-size: 13px;
+	font-weight: 300;
+	line-height: 28px;
+	letter-spacing: 1.3px;
+	margin-bottom: 0;
+}
+.product_inner_cms {
+    position: relative;
+    padding-top: 40px;
+}
+.aei-cmstestimony .testmonial-image img {
+    border: 4px solid #9b0f44;
+	max-width: 126px;
+	max-height: 126px;
+	transition: all 1s ease 0s;
+	-webkit-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+}
+.testimony-icon {
+    background: transparent url("../img/aximage/testimony-icon.png") no-repeat scroll center;
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 8px;
+	height: 39px;
+	width: 44px;
+}
+.testimony-details {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    margin-left: 12px;
+}
+.product_inner_cms .desc {
+    width: 45%;
+	margin: 25px auto 0;
+}
+#aeicmstestimony .slick-dots{
+    display: block !important;
+	vertical-align: top;
+	bottom: -60px;
+	width:auto;
+	left: 0;
+	right: 0;
+	z-index: 1;
+}
+.item.cms_face {
+    position: relative;
+    padding: 0;
+}
+/*Aei-Testimonial end*/
+
+/*Aei-Bottom CMS start*/
+#aei_cmsbottom {
+    float: right;
+    margin-top: 15px;
+}
+.bottom-contact{
+	background: transparent url("../img/aximage/customer-service.svg") no-repeat scroll center left/18px;
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: 300;
+	line-height: normal;
+	letter-spacing: 0.78px;
+	padding-left: 25px;
+	cursor: pointer;
+}
+.bottom-contact:hover{
+	color: rgba(255,255,255,0.6);
+}
+/*Aei-Bottom CMS start*/
+
+
+/*Aei-payment start*/
+
+#aeicmspayment {
+    float:right;
+}
+.payment-block-inner {
+    margin: 8px 0 0;
+}
+.payment-block .icon {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 3px;
+}
+
+/*Aei-payment end*/
+
+/*Aei-brand logo start*/
+
+#index .brands{
+	clear: both;
+	display: block;
+}
+.brands{
+	display: none;
+}
+.brands .product-carousel {
+    background-color: #ffffff;
+    padding-top: 15px;
+    padding-bottom: 8px;
+}
+.brands .products {
+    position: relative;
+}
+#aeibrand-slider{margin: 0;}
+.brands #aeibrand-arrows {
+    width: 100%;
+    top:67px;
+    z-index: 1;
+    /* opacity: 0; */
+    right: 0;
+    bottom: auto;
+}
+.brands #aeibrand-arrows .slick-prev {
+    /*left: 15px;*/
+}
+.brands #aeibrand-arrows .slick-next {
+    /*right: 15px;*/
+}
+.brands:hover #aeibrand-arrows {
+    opacity: 1;
+}
+.brands .brand-image img {
+    opacity: 0.2;
+	/*padding: 15px 50px;*/
+	margin: 10px auto;
+	background-color: #fafafa;
+	transition: all 300ms ease;
+	-webkit-transition: all 300ms ease;
+	-moz-transition: all 300ms ease;
+	-ms-transition: all 300ms ease;
+	-o-transition: all 300ms ease;
+	max-width: 200px;
+    max-height: 100px;
+    height: auto;
+    width: auto;
+}
+.brands .brand-image:hover img {
+    opacity: 1;
+    transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15); 
+}
+
+/*Aei-brand logo end*/
+
+/*Custom-Link start*/
+#_desktop_links_block_top {
+    float: left;
+	margin-left: 110px;
+	margin-top: 15px;
+}
+#aei_customlink {
+	margin: 0;
+}
+#aei_customlink li{
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	padding-right: 20px;
+}
+#aei_customlink li:last-child{
+	padding-right: 0;
+}
+#aei_customlink li a {
+    color: #ffffff;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.96px;
+	line-height: normal;
+	text-align: center;
+	text-transform: uppercase;
+}
+#aei_customlink li a:hover{
+	color: #fdbc20;
+}
+
+/*Aei-parallax cms start*/
+#aeicmsparallax{
+	position: relative;
+	z-index: 1;
+	padding: 0;
+	text-align: center;
+	height: 530px;
+	margin-top: 70px;
+}
+#aeicmsparallax::after{
+	background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0;
+	content: "";
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+.parallax-wrapper {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 10px;
+    position: relative;
+}
+.parallax-image {
+    padding: 0;
+	position: relative;
+}
+.section-intro.youtube-video-background {
+    display: flex;
+    position: relative;
+    min-height: 530px;
+    background: #000;
+}
+.section-intro.youtube-video-background iframe {
+    opacity: 0.7;
+}
+.parallax-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 25%;
+    bottom: 25%;
+    margin: 0 auto;
+    z-index: 2;
+}
+.parallax-title {
+    color: #FFFFFF;
+    font-size: 60px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.2px;
+}
+.parallax-btn.btn {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 0.56px;
+    background-color: #fac400;
+    padding: 2px 27px;
+    margin-top: 42px;
+}
+.parallax-btn.btn:hover{
+	background-color: #000000;
+	color: #ffffff;
+}
+.play-icon #myBtn {
+	background: #ffffff url("../img/aximage/drone.svg") no-repeat scroll 13px center/35px;
+	font-size: 0;
+	border:none;
+	height: 60px;
+	width: 60px;
+	padding: 0;
+	cursor: pointer;
+	border-radius: 50%;
+	margin-bottom: 32px;
+}
+.play-icon #myBtn:hover{
+	background-color: #fac400;
+}
+#video-background {
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+}
+.section-first{
+	height: 530px;
+	background-color: transparent;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+/*Aei-parallax cms end*/
+
+
+/*=================== responsive part ======================*/
+@media (max-width: 1829px){
+	.aei-banner-item.top-center {
+	    margin: 0 34px;
+	}
+}
+@media (max-width: 1449px){
+	.aei-desc{margin: 40px;}
+	.aei-details{top: 20%; bottom: 20%;}
+}
+@media (max-width: 1229px){
+	.aei-desc {
+	    margin: 40px 20px;
+	}
+	.aei-banner-item.top-center {
+	    margin: 0 30px;
+	}
+}
+@media (max-width:1199px) {
+	.cmsdetails{
+		padding-right: 25px;
+	}
+	.cmstop.right .cmsdetails{
+		padding-left: 25px;
+	}
+	.aei-title{
+		font-size: 40px;
+	}
+	.aei-desc{
+		margin: 20px;
+		font-size: 12px;
+	}
+	.aei-banner-item.top-center{
+		margin: 0 27px;
+	}
+	.product_inner_cms .desc{
+		width: 65%;
+	}
+	.aei-service-item .aei-image-block{
+		margin: 0;
+		float: none;
+	}
+	.aei-service-title{font-size: 14px;}
+	#aei_cmsservice .aei-service-item.second {
+	    margin: 0 25px;
+	}
+	.aei-cmstestimony::after{width: 720px;}
+}
+@media (max-width: 1000px){
+	.aei-cat-details {
+	    margin: 0 40px;
+	    top: 12%;
+	    bottom: 12%;
+	}
+}
+@media (max-width: 991px){
+	#aei_cmsservice{
+		margin-bottom: 50px;
+	}
+	.aei_cmsbanner{
+		padding-bottom: 0;
+	}
+	.aei-service-item .aei-image-block{margin-right: 15px;}
+	.product_inner_cms .desc{width: 75%;}
+	.aei-cat-details {
+	    margin: 0 40px;
+	    top: 25%;
+	    bottom: 25%;
+	}
+	.aei_cmsbanner .ax-title {
+	    margin-bottom: 30px;
+	}
+	#aei_cmsservice .aei-service-item {
+	    margin: 15px 0;
+	    width: 50%;
+	    display: inline-block;
+	    vertical-align: top;
+	    float: none;
+	}
+	#aei_cmsbottom, #aeicmstop{display: none;}
+	.aei-desc{margin: 0;}
+	.aei-title {
+	    font-size: 30px;
+	    margin: 0;
+	}
+	#aeicmspayment{float: none;}
+	.aei-banner-item.top-center {
+	    margin: 0 21px;
+	}
+	.aei-cmstestimony::after {
+	    width: 620px;
+	}
+}
+@media (max-width: 767px){
+    .aei_banner_inner {
+        text-align: center;
+    }
+    #aei_cmsservice{margin-bottom: 40px;}
+    .aei-cmstestimony::after, .aei-cmstestimony::before{
+    	display: none;
+    }
+    .aei-cmstestimony{
+    	margin-bottom: 40px;
+    }
+    .aei-details{
+    	top: 40%;
+		bottom: 40%;
+    }
+    .aei-title{font-size: 40px;}
+    .aei-desc{
+    	margin: 20px 0;
+    }
+	.aei-banner-item {
+		position: relative;
+		float: none;
+		text-align: center;
+		width: auto;
+		padding-bottom: 15px;
+	}
+	.aei-banner-item.top-center {
+	    margin: 0;
+	}
+}
+@media (max-width: 575px){
+	.aei-cat-details{
+		top: 15%;
+		bottom: 15%;
+	}
+	.aei-cat-item::after {
+	    right: 15px;
+	    left: 15px;
+	    top: 15px;
+	    bottom: 15px;
+	}
+	.aei-cat-desc{font-size: 12px;}
+	.aei-cat-title {font-size: 30px;}
+	#aei_cmsservice .aei-service-item{width: 80%;}
+	.product_inner_cms .desc {
+	    width: 100%;
+	}
+	.aei_cmsbanner{
+		padding-top: 30px;
+	}
+	.aei-cmstestimony {
+	    margin-bottom: 15px;
+	}
+	#aei_cmsservice {
+	    margin-bottom: 15px;
+	}
+	.aei_cmsbannerimage::before, .aei_cmsbannerimage::after {
+		background: rgba(0, 0, 0, 0.35) none repeat scroll 0 0;
+	    height: 50%;
+	    width: 100%;
+	}
+	.aei-details {
+	    opacity: 1;
+	    transform: scale(1);
+	    -webkit-transform: scale(1);
+	    -moz-transform: scale(1);
+	    -ms-transform: scale(1);
+	    -o-transform: scale(1);
+	    transition: all 500ms ease 0s;
+	    -webkit-transition: all 500ms ease;
+	    -moz-transition: all 500ms ease;
+	    -ms-transition: all 500ms ease;
+	    -o-transition: all 500ms ease;
+	}
+	.aei-cmstestimony::after {
+	    width: 620px;
+	    bottom: 0;
+	    right: 0;
+	    height: 100%;
+	    content: "";
+	    position: absolute;
+	    -webkit-transition: all 0.6s ease-in-out;
+	    transition: all 0.6s ease-in-out;
+	    width: 100%;
+	    background: rgba(0, 0, 0, 0.35) none repeat scroll 0 0;
+	    display: block !important;
+		transform: skewX(0) !important;
+	}
+}
+@media (max-width: 420px){
+	.aei-cat-item::after{display: none;}
+	.aei-cat-details {
+		margin: 0;
+	    top: 30%;
+	    bottom: 30%;
+	}
+	.aei-cat-desc{display: none;}
+	#aei_cmsservice .aei-service-item.second{
+		margin: 0;
+	}
+	#aei_cmsservice .aei-service-item {
+	    width: 100%;
+	}
+	.service-right{
+		display: block;
+		text-align: center;
+	}
+	.aei-service-item .aei-image-block{
+		float: none;
+		margin: 0;
+	}
+}
+@media (max-width: 360px){
+	.aei-details {
+	    top: 18%;
+	    bottom: 18%;
+	}
+}
+
+/* === Début des modifs custom === */
+
+
+/* Application aux éléments concernés */
+.header-navfullwidth {
+    background-color: var(--primary-color) !important;
+}
+
+.top-menu .sub-menu a:hover {
+    color: var(--primary-color) !important;
+}
+
+.psr_icon_color,
+.btn-primary,
+.btn-success,
+.add-to-cart,
+.quick-view,
+.aeisliders_nav.prev, 
+.aeisliders_nav.next,
+.aei-product-cart,
+.ax-search-icon,
+.aei-product-quickview,
+.ax-back-to-top {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+.cart-count, {
+    background-color: #9b0f44 !important;
+    border-color: #9b0f44 !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    background-color: var(--primary-color-light) !important;
+    border-color: var(--primary-color-light) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+}
+
+/* Changement de couleur au survol des titres de bannière */
+.aei_cmsbanner .aei-title:hover {
+    color: var(--primary-color-light) !important;
+    text-decoration: none; /* Optionnel : supprime le soulignement */
+    transition: color 0.3s ease; /* Pour un effet fluide */
+}
+
+/* Couleur pour les liens au survol */
+.footer-item a:hover, 
+.footer-link a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Bouton représentant la page active et survol */
+.pagination .current a,
+.pagination a:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+/* Masquer bouton show_grid ou show_list */
+.show_grid,
+.show_list {
+    display: none !important;
+}
+
+
+/* Cellule qui contient le texte de la category parent */
+.block-categories .block_title {
+    background-color: var(--primary-color) !important;
+    color: #fff !important; /* Pour contraste lisible */
+}
+
+/* Appliquer couleur aux sous menu*/
+
+.block-categories .category-sub-menu a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Appliquer couleur au survol du nom d'un produit*/
+
+.product-miniature:hover .product-title a {
+    color: var(--primary-color) !important;
+}
+
+/* Appliquer couleur clair au fil d'ariane*/
+.breadcrumb {
+    background-color: var(--primary-color-light) !important;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+.breadcrumb a {
+  color: var(--primary-color) !important;
+  text-decoration: none;
+}
+
+/* Appliquer couleur au survol au fil d'ariane*/
+.breadcrumb a:hover {
+    color: var(--primary-color) !important;
+}
+
+.breadcrumb a:hover {
+  /* text-decoration: underline; 
+   color: #2a4d3d !important; */
+   font-weight: bold; 
+}
+
+/* Masquer le lien Quick View */
+a.quick-view,
+a.quick-view span.aei-product-quickview {
+    display: none !important;
+}
+
+/* Appliquer couleur au survol dans les dropdown*/
+#js-product-list-top .dropdown-menu a:hover {
+    background-color: var(--primary-color-light) !important;
+    color: var(--primary-color) !important;
+}
+
+/* === Slider catégorie === */
+
+/* Appliquer couleur au survol dans le slider*/
+
+#aeicategory-tabs li a:hover{
+    color: var(--primary-color) !important;
+    /* border-bottom: 2px solid var(--primary-color) !important;  optionnel : effet souligné */
+}
+
+/* Appliquer couleur sur élément actif du slider*/
+
+.tabs .nav-tabs .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+.tabs .nav-tabs .nav-link.active::after {
+    border-top-color: var(--primary-color) !important;
+}
+
+
+/* Triangle sous l’item survolé */
+#aeicategory-tabs li a:hover::after{
+    border-top-color: var(--primary-color) !important;
+}
+
+/* masquer icône du slider*/
+
+#aeicategory-tabs li a{
+    background-image: none !important;
+    background: none !important;
+    padding-left: 0 !important; /* supprimer l'espace réservé à l'icône */
+}
+
+/* === Fin Slider catégorie === */
+
+/* ===== CORRECTIONS SPÉCIFIQUES PAGE PRODUIT ===== */
+/* (À ajouter à la fin de votre fichier CSS existant) */
+
+/* Cible uniquement les nav-tabs de la page produit */
+.product-tabcontent .tabs .nav-tabs .nav-link {
+    /* Styles de base */
+    background-image: none !important;
+    padding-left: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Correction du hover - Page produit seulement */
+.product-tabcontent .tabs .nav-tabs .nav-link:hover {
+    color: var(--primary-color) !important;
+    /* border-bottom-color: var(--primary-color) !important; */
+    background-color: transparent !important; /* Supprime tout fond au survol */
+}
+
+/* Correction de l'état actif - Page produit */
+.product-tabcontent .tabs .nav-tabs .nav-link.active {
+    color: var(--primary-color) !important;
+    /* border-bottom: 2px solid var(--primary-color) !important; */
+}
+
+/* Correction du triangle indicateur */
+.product-tabcontent .tabs .nav-tabs .nav-link.active::after,
+.product-tabcontent .tabs .nav-tabs .nav-link:hover::after {
+    border-top-color: var(--primary-color) !important;
+}
+/* ===== FIN CORRECTIONS SPÉCIFIQUES PAGE PRODUIT ===== */
+
+
+/* === Footer - Bloc d'informations de contact === */
+
+/* Étend sur toute la largeur de l'écran, sans débordement */
+.footer-container {
+    width: 100%;
+    padding: 30px 0;
+    background-color: #f9f9f9;
+    overflow-x: hidden; /* évite le scroll horizontal */
+}
+
+/* Annule la largeur fixe et centre le contenu */
+.footer-container > .container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+/* Bloc de contact - centré et aéré */
+.footer-container .block-contact.links.wrapper {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* ou center si tu veux centrer le texte */
+    text-align: left;
+    box-sizing: border-box;
+}
+
+/* Titre du bloc */
+.footer-container .block-contact-title a {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+/* Liste de contacts */
+.footer-container ul#contact-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.footer-container ul#contact-info-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+/* Icônes (GPS, téléphone, email) */
+.footer-container .block-contact .icon i {
+    color: var(--primary-color) !important;
+    font-size: 18px;
+    min-width: 24px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* Texte d'info */
+.footer-container .block-contact .data {
+    flex: 1;
+}
+
+.footer-container .info-title {
+    font-weight: 600;
+    color: #333;
+    display: inline-block;
+    margin-bottom: 3px;
+}
+
+/* Liens */
+.footer-container .block-contact a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer-container .block-contact a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive (mobile/tablette) */
+@media (max-width: 768px) {
+    .footer-container .block-contact.links.wrapper {
+        padding: 0 15px;
+    }
+}
+
+
+/* === Fin du bloc de contact - Footer === */
+
+
+/* === Newsletter bloc (footer-before) === */
+
+.footer-before {
+    background-color: var(--primary-color-light) !important;
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Supprimer les pseudo-éléments qui pourraient créer des formes */
+.footer-before:before,
+.footer-before:after {
+    content: none !important;
+}
+
+/* Réinitialiser les transformations */
+.footer-before > .container {
+    transform: none !important;
+}
+
+/* Appliquer la couleur au texte */
+.footer-before .newsletter-title,
+.footer-before .newsletter-desc {
+    color: var(--primary-color) !important;
+}
+
+/* Placeholder dans le champ email */
+.footer-before input::placeholder {
+    color: var(--primary-color) !important;
+    opacity: 1;
+}
+
+/* Couleur du texte dans le champ si utile */
+.footer-before input[type="text"] {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+}
+
+/* Nettoyage / adaptation bouton */
+.footer-before .btn.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transition: background 0.3s ease;
+}
+
+/* === Fin du bloc: Newsletter bloc (footer-before) === */
+
+/* === Modification du copyright dans le footer === */
+.footer-bottom .copyright a {
+    visibility: hidden; /* Cache le texte existant mais conserve l'espace */
+    position: relative; /* Permet de positionner le pseudo-élément */
+}
+
+.footer-bottom .copyright a::after {
+    content: "© 2025 - Whisky Time Shop"; /* Votre nouveau texte */
+    visibility: visible; /* Rend le nouveau texte visible */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: inherit; /* Reprend la couleur du texte parent */
+    text-decoration: none; /* Supprime le soulignement du lien */
+    pointer-events: none; /* Désactive les interactions avec le pseudo-élément */
+}
+
+.footer-bottom .copyright a[href] {
+    text-decoration: none !important; /* Supprime le soulignement du lien */
+    cursor: default !important; /* Change le curseur en pointeur normal */
+}
+
+/* === Fin Modification du copyright dans le footer === */
+
+/* === Modification page produit === */
+
+
+/* Appliquer la couleur primaire aux prix */
+.product-prices .current-price span[itemprop="price"] {
+    color: var(--primary-color) !important;
+}
+
+/* Appliquer le fond personnalisé à la section produit */
+
+.product-actions {
+    background-color: var(--primary-color-light) !important;
+border-radius: 8px; /* Optionnel: coins arrondis */
+}
+
+/* Style pour le message de disponibilité */
+#product-availability {
+    color: var(--primary-color);
+    display: block;
+}
+
+/* Style pour l'icône de disponibilité */
+#product-availability .material-icons {
+    color: var(--primary-color);
+}
+
+/* === Modification page produit === */
+
+/* Style pour le bouton "Continuer mes achats" */
+.btn.btn-secondary[data-dismiss="modal"] {
+    background-color: var(--primary-color-light) !important;
+    border-color: var(--primary-color-light) !important;
+    color: #fff !important; /* Couleur du texte (blanc par défaut) */
+    transition: all 0.3s ease;
+}
+
+/* Style au survol */
+.btn.btn-secondary[data-dismiss="modal"]:hover {
+    background-color: var(--primary-color) !important; /* Version plus foncée au survol */
+    border-color: var(--primary-color) !important;
+}
+/* === Modification modal produit ajouté === */
+
+#blockcart-modal .modal-header {
+    background: var(--primary-color) !important;
+}
+
+/* Couleur blanche pour le titre de la modal */
+.modal-title.h6.text-sm-center {
+    color: white !important;
+}
+/* Appliquer la couleur custom au prix dans la modale */
+.modal-content .product-price {
+    color: var(--primary-color) !important;
+    font-weight: bold; /* Optionnel : pour mettre en valeur */
+}
+
+/* === FIN Modification modal produit ajouté === */
+
+/* ===== COULEUR CUSTOM AU SURVOL - HEADER ===== */
+
+/* ===== CORRECTION ICÔNES UTILISATEUR ET PANIER ===== */
+
+/* ===== ICÔNE UTILISATEUR ===== */
+.ax-user-icon {
+    position: relative;
+    background: transparent url("../img/aximage/user.svg") no-repeat center/28px !important;
+}
+
+.ax-user-icon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    mask: url("../img/aximage/user.svg") no-repeat center/28px;
+    -webkit-mask: url("../img/aximage/user.svg") no-repeat center/28px;
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+.ax-user-info:hover .ax-user-icon::after {
+    opacity: 1;
+}
+
+/* ===== ICÔNE PANIER ===== */
+.shopping-cart-icon { /* Adaptez ce sélecteur selon votre HTML */
+    position: relative;
+    background: transparent url("../img/aximage/shopping-cart.svg") no-repeat center/28px !important;
+}
+
+.shopping-cart-icon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    mask: url("../img/aximage/shopping-cart.svg") no-repeat center/28px;
+    -webkit-mask: url("../img/aximage/shopping-cart.svg") no-repeat center/28px;
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+#_desktop_cart:hover .shopping-cart-icon::after { /* Adaptez ce sélecteur */
+    opacity: 1;
+}
+
+/* ===== RÉINITIALISATION DES HOVERS PAR DÉFAUT ===== */
+.ax-user-info:hover .ax-user-icon,
+#_desktop_cart:hover .shopping-cart-icon {
+    background-image: none !important;
+}
+
+/* ===== TRANSITIONS ===== */
+.ax-user-icon,
+.shopping-cart-icon {
+    transition: all 300ms ease-in !important;
+}
+
+/* Texte "My Account" et description */
+#_desktop_user_info .user-info-icon:hover,
+#_desktop_user_info .user-desc:hover,
+#_desktop_user_info .ax-user-info:hover .user-info-icon,
+#_desktop_user_info .ax-user-info:hover .user-desc {
+    color: var(--primary-color) !important;
+}
+
+/* Icône de déconnexion et texte */
+#_desktop_user_info a.logout:hover,
+#_desktop_user_info a.logout:hover i.material-icons {
+    color: var(--primary-color) !important;
+}
+
+/* Icône et texte du compte (David Forero) */
+#_desktop_user_info a.account:hover,
+#_desktop_user_info a.account:hover span,
+#_desktop_user_info a.account:hover i.material-icons {
+    color: var(--primary-color) !important;
+}
+
+/* Sélecteur de langue - Bouton principal */
+#_desktop_language_selector .language-selector button:hover,
+#_desktop_language_selector .language-selector button:hover .expand-more,
+#_desktop_language_selector .language-selector button:hover .material-icons {
+    color: var(--primary-color) !important;
+}
+
+/* Dropdown des langues - Éléments au survol */
+#_desktop_language_selector .dropdown-menu a.dropdown-item:hover {
+    color: var(--primary-color) !important;
+    background-color: var(--primary-color-light) !important;
+}
+
+/* Correction spécifique - Header dropdown coloré au survol des items */
+#_desktop_language_selector .langauge-dropdown:hover ~ button,
+#_desktop_language_selector .dropdown-menu:hover ~ button .expand-more,
+#_desktop_language_selector .dropdown-menu:hover ~ button .material-icons {
+    color: var(--primary-color) !important;
+}
+
+/* Pour écraser spécifiquement le rgb(155,15,68) */
+#_desktop_language_selector .dropdown-menu:hover + .btn-unstyle {
+    color: var(--primary-color) !important;
+}
+
+/* ===== FIN COULEUR CUSTOM AU SURVOL - HEADER ===== */
+
+
+/* ===== TRANSITIONS POUR EFFET FLUIDE ===== */
+#_desktop_user_info *,
+#_desktop_language_selector * {
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* ===== FIN TRANSITIONS POUR EFFET FLUIDE ===== */
+
+/* === COULEUR CUSTOM AU SURVOL - LIENS COMPTE CLIENT === */
+
+/* Cible tous les liens et icônes au survol */
+.links a:hover,
+.links a:hover .link-item,
+.links a:hover .material-icons,
+.links a:hover .fa {
+    color: var(--primary-color) !important;
+}
+
+/* Cible spécifiquement le violet à remplacer */
+.links a:hover span.link-item,
+.links a:hover i.material-icons,
+.links a:hover .fa-comments {
+    color: var(--primary-color) !important;
+    fill: var(--primary-color) !important; /* Pour les SVG si nécessaire */
+}
+
+/* === FIN COULEUR CUSTOM AU SURVOL - LIENS COMPTE CLIENT === */
+
+/* ===== MASQUER L'ARBORESCENCE DES CATEGORIES ET CENTRER LE CONTENU ===== */
+body#my-account #left-column,
+body#identity #left-column,
+body#addresses #left-column,
+body#history #left-column,
+body#order-slip #left-column,
+body#lists #left-column,
+body#customerPersonalData #left-column,
+body#management_comments #left-column,
+body#cms.cms-id-1 #left-column,
+body#cms.cms-id-3 #left-column,
+body#cms.cms-id-5 #left-column,
+body#cms.cms-id-6 #left-column,
+body#authentication #left-column,
+body#discount #left-column,
+body#password #left-column,
+body#manufacturer #left-column {
+    display: none !important;
+}
+
+body#my-account #content-wrapper,
+body#identity #content-wrapper,
+body#addresses #content-wrapper,
+body#history #content-wrapper,
+body#order-slip #content-wrapper,
+body#lists #content-wrapper,
+body#customerPersonalData #content-wrapper,
+body#management_comments #content-wrapper,
+body#cms.cms-id-1 #content-wrapper,
+body#cms.cms-id-3 #content-wrapper,
+body#cms.cms-id-5 #content-wrapper,
+body#cms.cms-id-6 #content-wrapper,
+body#authentication #content-wrapper,
+body#discount #content-wrapper,
+body#password #content-wrapper,
+body#manufacturer #content-wrapper {
+    width: 100% !important;
+    max-width: 1200px; /* Ajustez selon vos besoins */
+    margin: 0 auto !important;
+    float: none !important;
+    padding: 0 15px !important;
+}
+
+body#my-account #columns_inner,
+body#identity #columns_inner,
+body#addresses #columns_inner,
+body#history #columns_inner,
+body#order-slip #columns_inner,
+body#lists #columns_inner,
+body#customerPersonalData #columns_inner,
+body#management_comments #columns_inner,
+body#cms.cms-id-1 #columns_inner,
+body#cms.cms-id-3 #columns_inner,
+body#cms.cms-id-5 #columns_inner,
+body#cms.cms-id-6 #columns_inner,
+body#authentication #columns_inner,
+body#discount #columns_inner,
+body#password #columns_inner,
+body#manufacturer #columns_inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wishlist-footer-links a {
+    color: black !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.wishlist-footer-links a:hover {
+    color: #9b0f44 !important;
+}
+
+body#my-account .page-footer .text-sm-center a {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border: 1px solid var(--primary-color);
+}
+
+body#my-account .page-footer .text-sm-center a:hover {
+    background-color: var(--primary-color-light);
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color-light);
+}
+
+
+
+/* ===== FIN MASQUER L'ARBORESCENCE DES CATEGORIES ET CENTRER LE CONTENU ===== */
+
+
+.facet-label:hover .custom-checkbox {
+    background-color: var(--primary-color-light) !important;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+/* === Dropdowns déroulants : couleur au survol des options === */
+#search_filters .dropdown-menu a:hover {
+    background-color: var(--primary-color-light) !important;
+    color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+}
+
+#search_filters .select-title {
+    border: none !important;
+    box-shadow: none !important;
+    background: none;
+    transition: all 0.3s ease;
+}
+
+/* Même quand le dropdown est ouvert */
+#search_filters .facet-dropdown.dropdown.show .select-title {
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+/* ===== STYLES PERSONNALISÉS POUR LES FLAG PRODUITS ===== */
+
+ul.product-flags li.product-flag.new {
+    color: var(--primary-color); /* Utilisation de la couleur 'custom' pour 'Nouveau' */
+    background-color: var(--primary-color-light); /* Utilisation de la couleur 'custom light' */
+    padding: 10px; /* Ajustez le padding si nécessaire */
+    border-radius: 5px; /* Bordure arrondie optionnelle */
+}
+
+ul.product-flags li.product-flag.out_of_stock {
+    color: var(--primary-color); /* Utilisation de la couleur 'custom' pour 'Rupture de stock' */
+    background-color: var(--primary-color-light); /* Utilisation de la couleur 'custom light' */
+    padding: 10px; /* Ajustez le padding si nécessaire */
+    border-radius: 5px; /* Bordure arrondie optionnelle */
+}
+
+/* Style pour le bouton "Continuer mes achats" */
+.btn.btn-secondary{
+    background-color: var(--primary-color-light) !important;
+    border-color: var(--primary-color-light) !important;
+    color: #fff !important; /* Couleur du texte (blanc par défaut) */
+    transition: all 0.3s ease;
+}
+
+/* Style au survol */
+.btn.btn-secondary :hover {
+    background-color: var(--primary-color) !important; /* Version plus foncée au survol */
+    border-color: var(--primary-color) !important;
+}
+
+/* ===== custom alerte sur la page login ===== */
+
+
+.custom-login-alert {
+  background-color: #ffe8cc;
+  color: #8a5000;
+  border: 1px solid #ffba7f;
+  padding: 12px 16px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.custom-login-alert i.material-icons {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #e67e22;
+}
+
+/* ===== FIN custom alerte sur la page login ===== */
+
+#_desktop_cart .cart-count {
+  position: absolute;
+  top: 0;
+  left: 20px; /* Ajuste cette valeur selon l'emplacement souhaité */
+}
+
+/* Page livraison sur mobile */
+
+@media only screen and (max-width: 768px) {
+    body.cms-id-1 table,
+    body.cms-id-3 table,
+    body.cms-id-5 table,
+    body.cms-id-6 table {
+        width: 100%;
+    }
+
+    body.cms-id-1 td,
+    body.cms-id-3 td,
+    body.cms-id-5 td,
+    body.cms-id-6 td {
+        display: block;
+        width: 100%;
+        text-align: center; /* Centrer le contenu dans chaque cellule */
+    }
+
+    body.cms-id-1 td img,
+    body.cms-id-3 td img,
+    body.cms-id-5 td img,
+    body.cms-id-6 td img  {
+        max-width: 100%; /* L'image prend la largeur de la cellule mais sans la dépasser */
+        height: auto;
+        display: block; /* Assure que l'image est un bloc */
+        margin-left: auto;
+        margin-right: auto; /* Centre l'image horizontalement */
+    }
+
+    body.cms-id-1 td:nth-child(2) {
+        padding-left: 0;
+        margin-top: 15px;
+    }
+
+    body.cms-id-6 img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Supprime la transformation sur les mots (ie: première lettre en maj de chaque mot) */
+
+* {
+  text-transform: none !important;
+}
+
+.ax-product-title {
+  display: block !important;
+  text-align: center;
+}
+
+/*
+.product-carousel {
+  background-color: #fff !important;
+}
+*/
+
+.aeibrand-slider .brand-image {
+  width: 100%;
+  height: 150px; /* Taille fixe du conteneur image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.aeibrand-slider .brand-image img {
+	  box-shadow: none !important;
+  border: none !important;
+  background-color: #fff !important;
+}
+
+.slick-prev,
+.slick-next
+{
+    background-color: var(--primary-color);
+}
+.slick-prev:hover,
+.slick-prev:focus{
+    background-color: var(--primary-color-light);
+}
+.slick-next:hover,
+.slick-next:focus
+{
+    background-color: var(--primary-color-light);
+}
+
+.spacer::after {
+  content: '...'; /* insère les trois points */
+  font-size: 14px; /* ou ce que tu veux */
+}
+
+.pagination a:hover,
+.pagination span:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #ffffff;
+}
+
+
+@media (max-width: 768px) {
+  .aeibrand-slider .brand-image {
+    height: auto;              /* Ne force pas la hauteur fixe sur mobile */
+    padding: 10px;             /* Garde de l’espace intérieur */
+  }
+
+body.controller-eventsmanager .gift_products_wrapper .sort-search {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  #header .header-nav {
+    background-color: #ffffff; /* fond blanc */
+    border-bottom: 1px solid var(--primary-color); /* ligne en dessous avec la couleur primaire */
+  }
+}
+
+.related-products-title {
+  font-family: "Great Vibes", cursive !important;
+}
+
+#header .menu {
+    float: none !important;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 991px) {
+  #header .header-nav {
+    background-color: #ffffff !important; /* fond blanc */
+  }
+}
+
+/* ---------------------------
+   Appliquer Great Vibes au H2
+   uniquement pour le bloc "Derniers produits consultés"
+   --------------------------- */
+
+/* règles ciblant plusieurs variantes rencontrées dans PS */
+section.featured-products > h2,
+section.featured-products h2.title_block,
+section.featured-products .title_block,
+section.featured-products .block-title,
+.block.viewed-product h2,
+#viewed-product_block h2,
+#viewed-products-block h2,
+.featured-products.viewed-products > h2,
+.featured-products > h2,
+.featured-products h2,
+/* .featured-products h2 * */{
+  font-family: "Great Vibes", cursive !important;
+  font-size: clamp(24px, 5vw, 48px) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+}
+
+/* au cas où le titre utiliserait des pseudo-éléments */
+section.featured-products h2::before,
+section.featured-products h2::after {
+  font-family: "Great Vibes", cursive !important;
+}
+
+.logo.img-responsive {
+    width: 200px !important;
+    height: 80px !important;
+    max-width: 200px !important;
+    max-height: 80px !important;
+}
+
+@media (min-width: 768px) {
+    #aeicategorytabs {
+        min-height: 500px !important;
+    }
+}

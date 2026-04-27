@@ -1,0 +1,4 @@
+{shop_name}
+
+
+{gift_content_txt}

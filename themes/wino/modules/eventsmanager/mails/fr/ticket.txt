@@ -1,0 +1,643 @@
+ Order confirmation 
+
+
+
+
+    #outlook a {
+      padding: 0;
+    }
+
+    .ReadMsgBody {
+      width: 100%;
+    }
+
+    .ExternalClass {
+      width: 100%;
+    }
+
+    .ExternalClass * {
+      line-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+  
+
+    @media only screen and (max-width:480px) {
+      @-ms-viewport {
+        width: 320px;
+      }
+
+      @viewport {
+        width: 320px;
+      }
+    }
+  
+
+  
+
+    .shadow {
+      box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .warning {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    a {
+      color: #25B9D7;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    a.light {
+      font-weight: 400;
+    }
+
+    span.strong {
+      font-weight: 600;
+    }
+
+    .box {
+      width: 244px;
+    }
+
+    .margin {
+      margin-right: 16px
+    }
+
+    table {
+      font-family: Open sans, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .products-table,
+    .products-table th,
+    .products-table td {
+      font-family: Open sans, Arial, sans-serif;
+      font-size: 12px;
+      background-color: #FDFDFD;
+      color: #353943;
+    }
+
+    .products-table th {
+      font-weight: 600;
+      padding: 10px 5px;
+      border: 1px solid #DFDFDF;
+    }
+
+    .products-table .order_summary td {
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #DFDFDF;
+    }
+
+    .products-table.mail-alert td {
+      border: 1px solid #DFDFDF;
+    }
+
+    @media only screen and (max-width: 480px) {
+
+      body,
+      .no-bg {
+        background-color: #fff !important;
+      }
+
+      .left p {
+        text-align: left;
+        display: inline-block
+      }
+
+      .box {
+        display: block !important;
+        width: 100%
+      }
+
+      .space {
+        display: none !important
+      }
+    }
+  
+
+    #outlook a {
+      padding: 0;
+    }
+
+    .ReadMsgBody {
+      width: 100%;
+    }
+
+    .ExternalClass {
+      width: 100%;
+    }
+
+    .ExternalClass * {
+      line-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+  
+
+    @media only screen and (max-width:480px) {
+      @-ms-viewport {
+        width: 320px;
+      }
+
+      @viewport {
+        width: 320px;
+      }
+    }
+  
+
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700);
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i);
+  
+
+    @media only screen and (min-width:480px) {
+      .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+
+      .mj-column-px-25 {
+        width: 25px !important;
+        max-width: 25px;
+      }
+    }
+  
+
+  
+
+    .shadow {
+      box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .warning {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    a {
+      color: #25B9D7;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    a.light {
+      font-weight: 400;
+    }
+
+    span.strong {
+      font-weight: 600;
+    }
+
+    .box {
+      width: 244px;
+    }
+
+    .margin {
+      margin-right: 16px
+    }
+
+    table {
+      font-family: Open sans, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .products-table,
+    .products-table th,
+    .products-table td {
+      font-family: Open sans, Arial, sans-serif;
+      font-size: 12px;
+      background-color: #FDFDFD;
+      color: #353943;
+    }
+
+    .products-table th {
+      font-weight: 600;
+      padding: 10px 5px;
+      border: 1px solid #DFDFDF;
+    }
+
+    .products-table .order_summary td {
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #DFDFDF;
+    }
+
+    .products-table.mail-alert td {
+      border: 1px solid #DFDFDF;
+    }
+
+    @media only screen and (max-width: 480px) {
+
+      body,
+      .no-bg {
+        background-color: #fff !important;
+      }
+
+      .left p {
+        text-align: left;
+        display: inline-block
+      }
+
+      .box {
+        display: block !important;
+        width: 100%
+      }
+
+      .space {
+        display: none !important
+      }
+    }
+  
+
+
+  
+    
+       
+    
+    
+      
+
+               
+                                        
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+                                
+
+                                        
+                                          
+                                      
+                                    
+
+                            
+
+                        
+                      
+                    
+
+              
+              
+              
+                  
+                  
+              
+                
+
+                        
+                        
+                          
+
+                                  
+
+
+                                        
+                                          Hi {customer_name},
+                                        
+                                      
+                                    
+
+
+                                        
+                                          Thank you for reservation!
+                                        
+                                      
+                                    
+
+
+
+                              
+
+                        
+                      
+                    
+
+              
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+                                
+                                
+                                
+                              
+                            
+
+                        
+                      
+                    
+
+              
+              
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+                                  
+
+                                        
+                                          Order details
+                                        
+                                      
+                                    
+
+                              
+
+                        
+                      
+                    
+
+              
+              
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+                                  
+
+
+                                        
+                                          Order: Placed on {date} 
+                                      
+                                    
+
+
+                                        
+                                          Payment: Pending 
+                                      
+                                    
+
+
+                              
+
+                        
+                      
+                    
+
+              
+              
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+                                
+
+
+
+
+
+
+
+
+Ticket
+                                    Currency
+                                    Unit price
+                                    Quantity
+                                    Total price
+                                  
+
+                                  
+
+                                      {event_title}
+                                    
+                                     {currency_name} 
+                                    
+                                      {p_price}
+                                    
+                                     {qty} 
+                                     {total_p} 
+                                  
+
+
+                            
+
+
+        
+                
+
+                        
+                        
+                          
+
+                                
+
+
+
+
+
+
+
+
+Event Start Date
+                                    Event End Date
+                                    Location
+                                    Seats
+                                    
+                                  
+
+                                  
+
+                                      {event_start_date}
+                                    
+                                     {event_end_date} 
+                                    
+                                      {event_venu}
+                                    
+                                     {reserve_seat} 
+                                    
+                                  
+
+
+                            
+                            
+                        
+                      
+                    
+
+              
+              
+              
+              
+       
+              
+              
+              
+              
+             
+              
+              
+              
+              
+              
+                
+
+                        
+                        
+              
+              
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+                               
+                              
+                            
+
+                        
+                      
+                    
+
+              
+              
+              
+              
+              
+                
+
+                        
+                       
+                        
+                      
+                    
+
+              
+              
+              
+
+
+                                    
+              
+            
+          
+
+     
+                                        
+              
+              
+              
+                
+
+                        
+                        
+                          
+
+
+                                
+                                  {shop_name}
+                                
+                              
+                            
+
+
+                                 Powered by PrestaShop
+                                
+                              
+                            
+
+
+                        
+                      
+                    
+
+              
+              
+              
+                  
+  
+
+

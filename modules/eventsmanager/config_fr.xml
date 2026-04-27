@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>eventsmanager</name>
+    <displayName><![CDATA[Events Manager]]></displayName>
+    <version><![CDATA[4.5.4]]></version>
+    <description><![CDATA[Affichage des &eacute;v&eacute;nements et aussi la vente des billets &agrave; ces &eacute;v&eacute;nements]]></description>
+    <author><![CDATA[FMM Modules]]></author>
+    <tab><![CDATA[front_office_features]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+</module>

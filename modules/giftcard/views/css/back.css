@@ -1,0 +1,96 @@
+/*
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ *  @author    FMM Modules
+ *  @copyright 2021 FMM Modules
+ *  @license   FMM Modules
+*/
+#form-giftcard_image_template .panel{
+    width: 83%;
+}
+.overlay-text {
+    position: absolute;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    z-index: 10;
+}
+.top-right {
+    top: 10px;
+    right: 10px;
+}
+
+.bottom-right {
+    bottom: 10px;
+    right: 10px;
+}
+
+.bottom-left {
+    bottom: 10px;
+    left: 10px;
+}
+#gc_customization .separation{
+    padding-top: 10px;
+}
+#gc_customization #template_customization_div{
+    padding-left: 25px;
+  padding-top: 20px;
+}
+
+
+#giftcard-menu ul.tab { 
+    border: 1px solid #d3d8db; 
+    border-radius: 4px; 
+    overflow: hidden; 
+    margin: 0; 
+    padding: 0; 
+    background: #fff; 
+    display: block;
+    color: #555555;}
+#giftcard-menu ul.tab a,
+#giftcard-menu ul.tab li { 
+    display: block;
+    color:
+    #555555; text-transform: capitalize;
+}
+#giftcard-menu ul.tab a { 
+    padding: 12px; 
+    border-bottom: 1px solid #d3d8db;
+}
+#giftcard-menu ul.tab a i { 
+    display: inline-block; 
+    vertical-align: middle; 
+    font-size: 20px;
+}
+#giftcard-menu ul.tab li.last a { 
+    border-bottom: none;
+}
+#giftcard-menu ul.tab a:hover,
+#giftcard-menu ul.tab a:active,
+#giftcard-menu ul.tab a:focus { 
+    text-decoration: none; 
+    outline: none;
+}
+#giftcard-menu ul.tab li a.selected { 
+    color: #ffffff; 
+    background: #25b9d7
+}
+.adminorderedgiftcards #form-product .panel,
+.admingifttemplates #form-gift_card_template .panel,
+.admingiftcards #form-gift_card .panel
+{
+    width: 83%;
+}
+
+@media (min-width: 1150px) and (max-width: 1350px) {
+    #giftcard-menu ul.tab .tab-row a { 
+        font-size: 10px;
+    }
+}
+

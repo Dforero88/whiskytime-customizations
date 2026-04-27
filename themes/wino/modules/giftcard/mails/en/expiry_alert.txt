@@ -1,0 +1,5 @@
+Hi,{fname} {lname}
+
+This coupon will expire on {expiry_date}.
+
+Thank you for shopping with {shop_name}

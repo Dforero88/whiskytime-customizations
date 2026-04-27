@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="/home/clients/32552610a79c1ad36692aa67a1b0a8a2/sites/whiskytimeshop.ch/acsue9pxtk0soziw" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="01139c2610b8f0c629cd6c755050c11d">
+        <source>my cart</source>
+        <target>Mon panier</target>
+        <note>Line: </note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

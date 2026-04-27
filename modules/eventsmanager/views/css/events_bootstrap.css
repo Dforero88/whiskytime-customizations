@@ -1,0 +1,187 @@
+@charset "utf-8";
+
+#mat_container {
+    position: relative;
+}
+.fme-bootstrap #mat_menu_left {
+    padding-left: 0 !important;
+}
+#mat_toogle-menu {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #f1f1f1;
+    border-color: #ddd #ddd #ddd -moz-use-text-color;
+    border-image: none;
+    border-style: solid solid solid none;
+    border-width: 1px 1px 1px 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    font-size: 90%;
+    height: 60px;
+    padding: 5px 0;
+    position: absolute;
+    right: 0;
+    top: 41px;
+    width: 15px;
+    z-index: 99;
+}
+.fme-bootstrap .mat_toogle-menu-close {
+    left: 0;
+    right: auto;
+    top: 41px;
+}
+.mat_container_border_left {
+    border-left: 1px solid #ddd;
+}
+#mat_active_filters {
+    border-bottom: 1px dotted #ddd;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+}
+#mat_menu_left .badge {
+    margin-right: 8px;
+}
+.fme-bootstrap #mat_menu_left .control-label {
+    text-align: left;
+}
+.mat_submenu_item {
+    padding: 5px;
+}
+.mat_events_margin_left {
+    margin-left: 15px;
+    padding-right: 30px !important;
+}
+.fme-bootstrap .list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.fme-bootstrap .list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.fme-bootstrap #mat_events {
+    padding-left: 25px;
+}
+.mat_event_single_even {
+}
+.mat_event_single_holder {
+    /* border: 1px solid rgba(0, 0, 0, 0.1); */
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+    margin: 0 0 20px;
+    background: #d3e5dc;
+}
+/* .mat_event_single_holder:hover {
+    background: none repeat scroll 0 0 #f1f1f1;
+} */
+.fme-bootstrap .mat_event_single_holder_inner {
+}
+.mat_event_single_holder_inner {
+    padding: 8px 6px;
+}
+.mat_event_single_holder h3 {
+    margin-top: 10px;
+}
+.fme-bootstrap .mat_event_short_description {
+    margin: 8px 0;
+}
+.fme-bootstrap .mat_event_image_holder {
+    overflow: hidden;
+    padding: 0;
+}
+.fme-bootstrap .mat_event_buttons {
+    margin-top: 8px;
+}
+#sbox-window {
+    padding: 0;
+}
+.mat_event_map_holder {
+    display: none;
+}
+.fme-bootstrap .mat_event_top_informations {
+    border-bottom: 1px solid #f1f1f1;
+    color: #888;
+    font-size: 90%;
+    padding-bottom: 2px;
+    padding-bottom: 5px;
+}
+.mat_event_map_inner {
+    border-top: 1px dotted #f1f1f1;
+    margin-top: 10px;
+    padding: 10px 0 0;
+}
+.mat_event_map {
+    height: 250px;
+}
+.mat_event_map_inner .span9 {
+    border: 1px solid #f1f1f1;
+    padding: 2px 0;
+}
+.mat_event_route {
+    margin-top: 25px;
+}
+.margin-top-5 {
+    margin-top: 5px;
+}
+.mat_map_close {
+    cursor: pointer;
+}
+.eventlist-icons {
+    color: #777;
+}
+.mat_event_category_description {
+    margin-bottom: 20px;
+}
+.mat_event_date, .mat_event_location, .mat_event_phone, .mat_event_organizer, .mat_event_email, .mat_info_cancelled {
+    color: #000000;
+    padding-right: 15px;
+    margin-top: 5px;
+}
+.mat_event_content .mat_event_buttons .mat_btn_details{
+    min-width: 20%;
+    float: right;
+    clear: both;
+
+}
+.mat_event_content .mat_event_buttons .mat_btn_book{
+    min-width: 20%;
+}
+.mat_event_content .mat_event_buttons .mat_event_buttons_disable{
+    min-width: 20%;
+    opacity: .5;
+}
+/*----------custom css -------------*/
+/* .events_list_title {
+    border-bottom:1px dashed #c4c4c4;
+} */
+
+.mat_event_buttons a[href*="/events/calendar"] {
+  display: none !important;
+}
+
+/* .event-detail-heading{
+     background: none repeat scroll 0 0 #f1f1f1;
+    border-left: 5px solid green; 
+    padding-bottom: 15px; 
+    padding-left: 5px; 
+    padding-top: 15px;
+} */
+
+/* Mobile : centre le bouton */
+@media (max-width: 768px) {
+  .mat_event_content .mat_event_buttons {
+    text-align: center; /* centre le contenu inline */
+    clear: both; /* au cas où */
+  }
+  .mat_event_content .mat_event_buttons .mat_btn_details {
+    float: none;       /* annule le float right */
+    min-width: auto;   /* ou fixe une largeur adaptée */
+    display: inline-block; /* pour respecter le text-align center */
+  }
+
+  .mat_event_image_holder {
+    text-align: center; /* centre le contenu horizontalement */
+  }
+}

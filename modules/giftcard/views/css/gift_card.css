@@ -1,0 +1,72 @@
+/*
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ *  @author    FMM Modules
+ *  @copyright 2021 FMM Modules
+ *  @license   FMM Modules
+*/
+
+.gift_reduction_price {
+    background: #f13340 none repeat scroll 0 0;
+    border: 1px solid #d02a2c;
+    color: #fff;
+    font-family: "Open Sans",sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    margin-right: 10px;
+    padding: 1px 2px;
+    text-align: center;
+    width: 35%;
+}
+
+tr.my-gift-voucher td {
+    vertical-align: middle;
+}
+
+.invisible_row {
+    display: none;
+}
+
+.giftcards_title {
+    padding: 16px;
+    /* border: 1px solid #f6f6f6;
+    background: #2fb5d2;
+    color: #fff; */
+    margin-bottom: 20px;
+    border-bottom: 4px solid #555;
+}
+
+.gc_required {
+    color: red;
+}
+/* do not group these rules */
+.gc_required_fields::-webkit-input-placeholder {
+    color: red;
+}
+.gc_required_fields:-moz-placeholder {
+    /* FF 4-18 */
+    color: red;
+    opacity: 1;
+}
+.gc_required_fields::-moz-placeholder {
+    /* FF 19+ */
+    color: red;
+    opacity: 1;
+}
+.gc_required_fields:-ms-input-placeholder {
+    /* IE 10+ */
+    color: red;
+}
+.gc_required_fields::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: red;
+}
+.gc_required_fields::placeholder {
+    /* modern browser */
+    color: red;
+}

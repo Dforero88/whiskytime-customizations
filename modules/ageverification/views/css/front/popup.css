@@ -1,0 +1,241 @@
+.ageModal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999999;
+    display: none;
+    overflow: hidden;
+    outline: 0;
+}
+.popupfade{
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+.ageModal.popupfade.active {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+    opacity: 1;
+}
+.ageModalBackdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999999;
+    cursor: pointer;
+    display: none;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.ageModaldialogue {
+    position: relative;
+    width: auto;
+    margin: .5rem;
+    pointer-events: none;
+    z-index: 9999999;
+}
+.ageModalContainer {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+.ageModalContainer{
+    background: transparent;
+    border: none;
+}
+.ageModalBody {
+/*    padding: 60px;*/
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;	
+}
+.ageModalleftBox, .ageModalRightBox {
+    flex: 1;
+    width: 50%;
+}
+.ageModalleftBox {
+    background: #fff;
+    text-align: center;
+}
+.agePopupTitle {
+    font-size: 30px;
+    margin: 0;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.ageformGroup label {
+    font-size: 22px;
+    font-family: 'Whitney-Semibold Regular';
+    width: 100%;
+    display: inline-block;
+    padding-bottom: 15px;
+    color: #636060;
+}
+.ageformGroup input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #a5a5a5;
+    color: #636060;
+    min-height: 50px;
+    text-align: center;
+}
+.button {
+    background: #b95454;
+    max-width: 400px;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    text-transform: capitalize;
+    margin: 60px auto;
+    cursor: pointer
+}
+button.btn.btn-submit {
+    margin-top: 30px;
+    width: 100%;
+    font-size: 18px;
+    background: #b00a0a;
+    color: #fff;
+    border: 0;
+    padding: 10px;
+    min-height: 50px;
+}
+button.btn.btn-submit:focus, button.btn.btn-submit:hover {
+    outline: 0;
+/*    background: #de2828;*/
+    cursor:pointer
+}
+small {
+    font-size: 13px;
+    color: #636060;
+    font-family: 'Whitney-Semibold Regular';
+    margin-top: 20px;
+    display: inline-block;
+}
+.ageModalleftBoxContent{	
+    padding: 10px 25px;
+}
+.ageModalRightBox {
+    background-position: center;
+    background-size: cover;
+}
+.ageformGroup input:focus {
+    outline: 0;
+}
+img.brandImage {
+    max-width: 100%;
+    display: inline-block;
+}
+@media (min-width: 768px){
+    .ageModaldialogue {
+        width: 800px;
+        margin: 100px auto;
+    }
+}
+@media (max-width: 1000px){
+    .ageModaldialogue {
+        width: 700px;
+        margin: 100px auto;
+    }
+    .ageModalBody {
+        flex-direction: column-reverse;
+/*        padding: 20px*/
+    }
+    .ageModalRightBox {
+        min-height: 250px;
+    }
+    .ageModalleftBox, .ageModalRightBox {
+        flex: 1;
+        width: 100%;
+    }
+    .ageModalRightBox {
+        background-position: top center;
+        display:none;
+    }
+    .ageModalleftBox {
+        width: 95%;
+        margin: 0px auto 0;
+        z-index: 9;
+/*        border-radius: 10px;*/
+    }
+
+}
+@media (max-width: 750px){
+    .ageModaldialogue {
+        width: 90%;
+        margin: 50% auto;
+    }
+}
+.kbyesnobutton {
+    width: auto;
+    min-width: 40%;
+    margin: 10px;
+    padding: 12px;
+    outline: none;
+    cursor: pointer;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+    border: none;
+    top: 0;
+}
+.ageModalBody .date-box input {
+    max-width: 30%;
+    background: unset;
+    text-align: center;
+    margin-right: 5px;
+}
+.ageModalBody .date-box input:last-child{
+    margin-right: 0px;
+}
+.ageModalBody .date-box input::placeholder{
+    font-weight: 600;
+}
+
+.ageModalBody .year-box input {
+    background: unset;
+    text-align: center;
+}
+.ageModalBody .year-box input::placeholder{
+    font-weight: 600;
+}
+
+.kb-age-error-message {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(17,17,17,0.9);
+    top: -10px;
+    padding: 20px;
+    transition: 0.3s ease all;
+    box-sizing: border-box;
+    z-index: 100;
+}
+.kb-age-error-message-show {
+    opacity: 1;
+    top: 0;
+}
+.kbageVerificationActive {
+    overflow: hidden;
+}

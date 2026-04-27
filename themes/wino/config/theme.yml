@@ -1,0 +1,230 @@
+name: wino
+display_name: wino
+version: 7.0.0
+theme_key: 1e97ba249b10520f62810136df5757f8
+author:
+  name: "Aeipix"
+  email: "support@aeipix.com"
+  url: "https://addons.prestashop.com/en/contact-us?id_product=43212"
+
+meta:
+  compatibility:
+      from: 1.7.0.0
+      to: ~
+
+  available_layouts:
+    layout-full-width:
+      name: Full Width
+      description: No side columns, ideal for distraction-free pages such as product pages.
+    layout-both-columns:
+      name: Three Columns
+      description: One large central column and 2 side columns.
+    layout-left-column:
+      name: Two Columns, small left column
+      description: Two columns with a small left column
+    layout-right-column:
+      name: Two Columns, small right column
+      description: Two columns with a small right column
+
+assets:
+  # If you're using this theme as child and you want to load
+  # the parent theme assets, uncomment this line.
+#  use_parent_assets: true
+
+  # The following lines are showing how to load assets in your page
+  # Uncomment and change value to start loading css or js files
+  css:
+    all:
+      - id: custom-lib-style
+        path: assets/css/custom-lib.css
+      - id: slick
+        path: assets/css/slick.css
+        media: all
+        priority: 230
+      - id: fontawesome-lib-style
+        path: assets/css/font-awesome.css
+        media: all
+        priority: 235
+      - id: colorbox
+        path: assets/css/colorbox.css
+        media: all
+        priority: 240
+#    product:
+#      - id: product-style
+#        path: assets/css/product.css
+#        media: all
+#        priority: 200
+  js:
+    all:
+      - id: slick
+        path: assets/js/slick.js
+        priority: 310
+        position: bottom
+      - id: jquery.colorbox
+        path: assets/js/jquery.colorbox.js
+        priority: 315
+        position: bottom
+      - id: parallax
+        path: assets/js/parallax.js
+        priority: 312
+        position: bottom
+      - id: videoBackground
+        path: assets/js/videoBackground.js
+        priority: 318
+        position: bottom
+#    cart:
+#      - id: cat-extra-lib
+#        path: assets/js/cart-lib.js
+
+
+global_settings:
+  configuration:
+    PS_IMAGE_QUALITY: png
+  modules:
+   to_enable:
+     - ps_linklist
+  hooks:
+    modules_to_hook:
+      displayNav:
+        - ps_languageselector
+        - ps_currencyselector
+      displayNav1: 
+        - ps_socialfollow
+      displayNav2:
+        - ps_searchbar
+        - ps_customersignin
+        - ps_shoppingcart
+      displayNavFullWidth:
+        - ps_mainmenu
+        - aei_cmsbottom
+      displayAdminCustomers:
+        - blockwishlist
+      displayCustomerAccount:
+        - blockwishlist
+        - psgdpr
+      displayMyAccountBlock:
+        - blockwishlist
+      displayTop:
+        - aei_cmstop
+        - ps_searchbar
+      displayTopColumn:
+        - aei_imageslider
+        - aei_cmsbanner
+      displayHome:
+        - aei_cmstestimony
+        - aei_cmsservice
+        - aei_categoryslider
+      displayAeiFeature:
+        - aei_featuredproducts
+      displayAeiNew:
+        - aei_newproducts
+      displayAeiBestseller:
+        - aei_bestsellers
+      displayFooterBefore:
+        - ps_emailsubscription
+      displayFooter:
+        - ps_contactinfo
+        - ps_linklist 
+        - ps_customeraccountlinks
+        - blockwishlist
+      displayFooterAfter:
+        - aei_cmspayment
+      displayLeftColumn:
+        - ps_categorytree
+        - ps_facetedsearch
+        - aei_sidespecials
+        - aei_sidebestsellers
+        - aei_leftbanner
+      displaySearch:
+        - ps_searchbar
+      displayProductAdditionalInfo:
+        - ps_sharebuttons
+      displayReassurance:
+        - blockreassurance
+      displayOrderConfirmation2:
+        - ps_featuredproducts
+      displayCrossSellingShoppingCart:
+        - ps_featuredproducts
+      displayContentWrapperBottom:
+        - aei_brandlogo
+      displayProductActions:
+        - blockwishlist
+
+  image_types:
+    cart_default:
+      width: 70
+      height: 76
+      scope: [ products ]
+    small_default:
+      width: 98
+      height: 98
+      scope: [ products, categories, manufacturers, suppliers ]
+    medium_default:
+      width: 452
+      height: 452
+      scope: [ products, manufacturers, suppliers ]
+    home_default:
+      width: 300
+      height: 314
+      scope: [ products ]
+    large_default:
+      width: 955
+      height: 1000
+      scope: [ products, manufacturers, suppliers ]
+    category_default:
+      width: 885
+      height: 200
+      scope: [ categories ]
+    stores_default:
+      width: 170
+      height: 115
+      scope: [ stores ]
+  new_password_policy_feature: true
+
+theme_settings:
+  default_layout: layout-full-width
+  layouts:
+    index: layout-full-width
+    category: layout-left-column
+    product: layout-full-width
+    best-sales: layout-left-column
+    new-products: layout-left-column
+    prices-drop: layout-left-column
+    contact: layout-left-column
+    manufacturer: layout-left-column
+    password: layout-left-column
+    sitemap: layout-left-column
+    supplier: layout-left-column
+    address: layout-left-column
+    addresses: layout-left-column
+    authentication: layout-left-column
+    cart: layout-full-width
+    checkout: layout-left-column
+    discount: layout-left-column
+    history: layout-left-column
+    identity: layout-left-column
+    my-account: layout-left-column
+    order-follow: layout-left-column
+    order-slip: layout-left-column
+    order: layout-left-column
+    search: layout-left-column
+    stores: layout-left-column
+    guest-tracking: layout-left-column
+    cms: layout-left-column   
+dependencies:
+  modules:
+    - aei_cmsbottom
+    - aei_cmstop
+    - aei_imageslider
+    - aei_cmsbanner
+    - aei_cmstestimony
+    - aei_cmsservice
+    - aei_categoryslider
+    - aei_bestsellers
+    - aei_newproducts
+    - aei_featuredproducts
+    - aei_cmspayment
+    - aei_brandlogo
+    - aei_sidespecials
+    - aei_sidebestsellers
+    - aei_leftbanner

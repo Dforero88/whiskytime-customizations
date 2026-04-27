@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="/home/clients/32552610a79c1ad36692aa67a1b0a8a2/sites/whiskytimeshop.ch/acsue9pxtk0soziw" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="ca7d973c26c57b69e0857e7a0332d545">
+        <source>Featured products</source>
+        <target>Produits en avant</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="31d26a6487e08357bd771619e894b0c6">
+        <source>New Arrivals</source>
+        <target>Nouveautés</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="d7b2933ba512ada478c97fa43dd7ebe6">
+        <source>Best Sellers</source>
+        <target>Meilleures ventes</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="1cc578dbdecb721fef13d4bdf3f232fc">
+        <source>Top Products</source>
+        <target>Nos produits</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="dac8c6c19e7eb1bfcf1366ed674bab7e">
+        <source>Subscribe For The Newsletter</source>
+        <target>S'inscrire à la newsletter</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="c3d67cba349c7ecb5465ae92bdb38970">
+        <source>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</source>
+        <target>Vous pouvez vous désabonner à tout moment. Vous trouverez pour cela nos coordonnées dans les mentions légales.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="8cf04a9734132302f96da8e113e80ce5">
+        <source>Home</source>
+        <target>Accueil</target>
+        <note>Line: </note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
