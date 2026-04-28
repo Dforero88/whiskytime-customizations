@@ -15,6 +15,14 @@
 {block name='content'}
 
 <div class="block card card-block">
+    <style>
+        #products.giftcards-catalog .giftcard-miniature button,
+        #products.giftcards-catalog .giftcard-miniature .wishlist-button,
+        #products.giftcards-catalog .giftcard-miniature .wishlist-button-add,
+        #products.giftcards-catalog .giftcard-miniature .material-icons {
+            display: none !important;
+        }
+    </style>
     {* <h3>{l s='Gift Cards' mod='giftcard'}</h3><hr> *}
     <div id="js-product-list-header">
         <div class="block-category card card-block">
@@ -75,18 +83,47 @@
                 </div>
             </div><hr>
 
-            <div class="row push-down">
-                <div class="filtr-container">
-                    {foreach from=$giftProducts item=$gift}
-                      <div class="col-xs-6 col-sm-4 col-md-3 filtr-item" data-category="{$gift.tags|escape:'htmlall':'UTF-8'}" data-sort="{$gift.name|escape:'htmlall':'UTF-8'}">
-                        <a href="{$gift.link|escape:'htmlall':'UTF-8'}" title="{l s='Detail' mod='giftcard'}">
-                            <img class="img-responsive img img-thumbnail" src="{$link->getImageLink($gift.link_rewrite|escape:'htmlall':'UTF-8', $gift.id_image|escape:'htmlall':'UTF-8', 'home_default')}" alt="{$gift.name|escape:'htmlall':'UTF-8'}">
-                            <span class="gift-item-desc">{$gift.name|escape:'htmlall':'UTF-8'}</span>
-                        </a>
-                      </div>
-                    {/foreach}
+            <section id="products" class="giftcards-catalog push-down">
+                <div id="js-product-list">
+                    <div class="products row filtr-container">
+                        {foreach from=$giftProducts item=$gift}
+                            <article
+                                class="product-miniature js-product-miniature filtr-item giftcard-miniature"
+                                data-id-product="{$gift.id_product|intval}"
+                                data-category="{$gift.tags|escape:'htmlall':'UTF-8'}"
+                                data-sort="{$gift.name|escape:'htmlall':'UTF-8'}"
+                            >
+                                <div class="thumbnail-container">
+                                    <div class="product-image-block">
+                                        <a href="{$gift.link|escape:'htmlall':'UTF-8'}" class="thumbnail product-thumbnail" title="{l s='Detail' mod='giftcard'}">
+                                            <span class="main_image">
+                                                <img
+                                                    src="{$link->getImageLink($gift.link_rewrite|escape:'htmlall':'UTF-8', $gift.id_image|escape:'htmlall':'UTF-8', 'home_default')}"
+                                                    alt="{$gift.name|escape:'htmlall':'UTF-8'}"
+                                                    loading="lazy"
+                                                >
+                                            </span>
+                                        </a>
+                                    </div>
+
+                                    <div class="product-description">
+                                        <h2 class="h3 product-title">
+                                            <a href="{$gift.link|escape:'htmlall':'UTF-8'}" title="{l s='Detail' mod='giftcard'}">
+                                                {$gift.name|truncate:30:'...'}
+                                            </a>
+                                        </h2>
+                                        {if !empty($gift.giftcard_range)}
+                                            <div class="product-price-and-shipping">
+                                                <span class="price">{$gift.giftcard_range|escape:'htmlall':'UTF-8'}</span>
+                                            </div>
+                                        {/if}
+                                    </div>
+                                </div>
+                            </article>
+                        {/foreach}
+                    </div>
                 </div>
-            </div>
+            </section>
         {else}
           <div class="alert alert-info info">{l s='No Gift products available.' mod='giftcard'}</div>
         {/if}

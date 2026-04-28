@@ -14,20 +14,7 @@
 }
 
 .filtr-item {
-    padding: 1rem;
-}
-
-.gift-item-desc {
-  background-color: #13392a;
-  color: white;
-  position: absolute;
-  text-transform: uppercase;
-  text-align: center;
-  padding: 1rem;
-  z-index: 1;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
+  transition: none !important;
 }
 
 /* Filter controls */
@@ -60,9 +47,6 @@
   transition: height 500ms ease-out;
 } */
 
-.filtr-item {
-  transition: none !important;
-}
 .filtr-container {
   transition: none !important;
 }
@@ -230,27 +214,45 @@ div.form-group > ul.gift-filter.tags {
   display: none !important;
 }
 
-.filtr-item:hover .gift-item-desc {
-  background-color: #d3e5dc !important;
+.giftcards-catalog .filtr-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.filtr-item img.img-responsive {
-  margin-bottom: 20px;
+#products.giftcards-catalog .product-miniature.filtr-item {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: 25%;
 }
 
-.filtr-item img {
-  border-radius: 10px; /* ou 10px, 50% pour un cercle */
+#products.giftcards-catalog .product-miniature .thumbnail-container {
+  width: 100%;
+}
+
+#products.giftcards-catalog .product-miniature .product-thumbnail {
   display: block;
-  clip-path: inset(0 round 10px);
 }
 
-.filtr-item a {
-  border-radius: 10px;
+#products.giftcards-catalog .product-miniature .product-thumbnail img {
+  width: 100%;
+  display: block;
 }
 
-.filtr-item {
-  border-radius: 10px;
-  overflow: hidden;
+#products.giftcards-catalog .giftcard-miniature .product-description {
+  min-height: 0;
+}
+
+#products.giftcards-catalog .giftcard-miniature .product-title {
+  margin-bottom: 0;
+}
+
+#products.giftcards-catalog .wishlist-button-add,
+#products.giftcards-catalog .wishlist-button,
+#products.giftcards-catalog .giftcard-miniature button,
+#products.giftcards-catalog .giftcard-miniature .material-icons {
+  display: none !important;
 }
 
 .card {
@@ -262,25 +264,27 @@ body#module-giftcard-mygiftcards hr {
 }
 
 @media (max-width: 768px) {
-  .filtr-item {
+  #products.giftcards-catalog .product-miniature.filtr-item {
     position: relative !important;
-    width: 100% !important;
     transform: none !important;
     transition: none !important;
-    margin-bottom: 20px;
   }
 
-  .filtr-item img.img-responsive {
-    margin-bottom: 10px;
+  #products.giftcards-catalog .product-miniature .product-thumbnail img {
     width: 100%;
     height: auto;
-    display: block;
   }
+}
 
-  .gift-item-desc {
-    display: block;
-    text-align: center;
-    /* padding: 5px 0; */
+@media (max-width: 991px) {
+  #products.giftcards-catalog .product-miniature.filtr-item {
+    width: 50%;
+  }
+}
+
+@media (max-width: 479px) {
+  #products.giftcards-catalog .product-miniature.filtr-item {
+    width: 100%;
   }
 }
 

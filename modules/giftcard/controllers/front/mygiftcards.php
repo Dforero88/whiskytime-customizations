@@ -413,6 +413,7 @@ class GiftCardMyGiftCardsModuleFrontController extends ModuleFrontController
                     unset($products[$key]);
                 } else {
                     $giftProducts[$key] = $product;
+                    $giftProducts[$key]['giftcard_range'] = $this->getGiftCardRangeDisplay((int) $product['id_product']);
                     $tags = Tag::getProductTags((int) $product['id_product']);
                     $giftProducts[$key]['id_image'] = Gift::getId_image($product['id_product']);
                     $giftProducts[$key]['tags'] = ($tags && count($tags) > 0) ? array_shift($tags) : [];
@@ -445,6 +446,44 @@ class GiftCardMyGiftCardsModuleFrontController extends ModuleFrontController
             'giftProducts' => $giftProducts,
         ]);
         $this->setTemplate($this->tpl);
+    }
+
+    protected function getGiftCardRangeDisplay($idProduct)
+    {
+        $giftCard = Gift::getCardValue((int) $idProduct);
+        if (empty($giftCard['card_value'])) {
+            return '';
+        }
+
+        $rawValues = array_filter(array_map('trim', explode(',', $giftCard['card_value'])), 'strlen');
+        if (empty($rawValues)) {
+            return '';
+        }
+
+        $numericValues = array_map('floatval', $rawValues);
+        sort($numericValues, SORT_NUMERIC);
+
+        $currencyIsoCode = $this->context->currency->iso_code;
+        $locale = method_exists($this->context, 'getCurrentLocale') ? $this->context->getCurrentLocale() : null;
+
+        $formatPrice = function ($value) use ($locale, $currencyIsoCode) {
+            if ($locale) {
+                return $locale->formatPrice($value, $currencyIsoCode);
+            }
+
+            return Tools::displayPrice($value, $this->context->currency);
+        };
+
+        $minFormatted = $formatPrice($numericValues[0]);
+
+        if (count($numericValues) === 1) {
+            return $minFormatted;
+        }
+
+        $maxFormatted = $formatPrice($numericValues[count($numericValues) - 1]);
+        $minAmountOnly = preg_replace('/\s*' . preg_quote($currencyIsoCode, '/') . '$/u', '', $minFormatted);
+
+        return trim($minAmountOnly) . ' - ' . $maxFormatted;
     }
 
     public function setMedia($newTheme = false)

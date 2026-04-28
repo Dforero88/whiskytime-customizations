@@ -18,7 +18,7 @@
 		name="giftcard_price"
 		style="width: 40%;margin-left:5px;"
 		onkeyup="_validatePrice($(this).val(), 'range')"
-		value="{if isset($preselected_price) AND $preselected_price}{$preselected_price|escape:'htmlall':'UTF-8'}{/if}"/>
+		value="{if isset($preselected_price) AND $preselected_price > 0}{$preselected_price|escape:'htmlall':'UTF-8'}{else}{$values[0]|escape:'htmlall':'UTF-8'}{/if}"/>
 		{if $type == 'range'}
 			<div class="amount" style="font-size:10px;margin-left:5px;">
 				{l s='Enter value between' mod='giftcard'}
