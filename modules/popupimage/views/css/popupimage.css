@@ -1,0 +1,83 @@
+#popupimage-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+
+    padding: 10px;   /* espace min avec le bord */
+    overflow: auto;  /* scroll si jamais trop grand */
+    opacity: 0;
+    animation: popupFadeIn 0.5s ease forwards;
+    animation-delay: 1s; /* ⏱ délai avant de commencer à apparaître */
+}
+
+@keyframes popupFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#popupimage-box {
+    position: relative;
+    background: #d3e5dc;
+    padding: 18px 6px 6px; /* reserve un peu d'espace pour la croix */
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+
+    max-width: 95vw;
+    max-height: 95vh;      /* contraintes globales */
+}
+
+#popupimage-content {
+    color: #13392a;
+    padding: 8px 12px 12px;
+    width: 100%;
+}
+
+#popupimage-content > *:last-child {
+    margin-bottom: 0;
+}
+
+#popupimage-box img {
+    display: block;
+    max-width: 90vw;   /* 🔑 empêche de sortir en largeur */
+    max-height: 90vh;  /* 🔑 empêche de sortir en hauteur */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
+#popupimage-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #13392a;
+    border: 0;
+
+    /* Ajouts pour visibilité */
+    background: #d3e5dc;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transition: background 0.3s, color 0.3s;
+    padding: 0;
+    z-index: 2;
+}
+
+#popupimage-close:hover {
+    background: #13392a;
+    color: #d3e5dc;
+}
