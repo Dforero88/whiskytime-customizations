@@ -27,6 +27,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  popup.addEventListener('click', function (event) {
+    if (event.target.closest('a')) {
+      sessionStorage.setItem(seenKey, 'true');
+    }
+  });
+
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape' && !popup.hidden) {
       closePopup();
