@@ -22,15 +22,17 @@
 #popupimage-box {
     position: relative;
     background: #d3e5dc;
-    padding: 18px 6px 6px; /* reserve un peu d'espace pour la croix */
+    padding: 10px;
+    margin: 16px;
     border-radius: 8px;
     box-sizing: border-box;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
 
-    max-width: 95vw;
-    max-height: 95vh;      /* contraintes globales */
+    max-width: calc(95vw - 32px);
+    max-height: calc(95vh - 32px);
+    overflow: visible;
 }
 
 #popupimage-content {
@@ -45,13 +47,14 @@
 
 #popupimage-box img {
     display: block;
-    max-width: 90vw;   /* 🔑 empêche de sortir en largeur */
-    max-height: 90vh;  /* 🔑 empêche de sortir en hauteur */
+    max-width: min(90vw, 100%);
+    max-height: calc(95vh - 180px);
     width: auto;
     height: auto;
     object-fit: contain;
     border-radius: 4px;
     margin: 0 auto;
+    flex-shrink: 1;
 }
 
 #popupimage-close {
