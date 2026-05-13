@@ -467,7 +467,7 @@ $result = $category->getProducts(
     $this->context->language->id,
     0,
     ($catnb ? $catnb : 8) * 3,
-    'reference',
+    'id_product',
     'DESC'
 );
 
