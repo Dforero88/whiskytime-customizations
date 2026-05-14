@@ -59,7 +59,9 @@
     {block name='product_availability'}
       <span id="product-availability">
         {if $product.show_availability && $product.availability_message}
-          {if $product.availability == 'available'}
+          {if isset($product.soonproducts_is_soon) && $product.soonproducts_is_soon}
+            <i class="material-icons product-last-items">schedule</i>
+          {elseif $product.availability == 'available'}
             <i class="material-icons rtl-no-flip product-available">&#xE5CA;</i>
           {elseif $product.availability == 'last_remaining_items'}
             <i class="material-icons product-last-items">&#xE002;</i>

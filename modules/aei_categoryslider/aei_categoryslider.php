@@ -457,6 +457,7 @@ class aei_categoryslider extends Module implements WidgetInterface
         $arrayCategory = array();
         $categoryimg = '';
         $catnb = Configuration::get('AEI_CATE_NBR');
+        $soonModule = Module::getInstanceByName('soonproducts');
 		foreach ($config_values['AEI_CATE_SLIDER_LIST'] as $id){
             if($id == 1) { continue; }
             $category = new Category((int)$id, $id_lang, $id_shop);
@@ -471,8 +472,19 @@ $result = $category->getProducts(
     'DESC'
 );
 
-// Filtrer uniquement les produits en stock
-$result = array_filter($result, fn($p) => StockAvailable::getQuantityAvailableByProduct($p['id_product']) > 0);
+// Garder les produits en stock, plus les produits flagues bientot dispo.
+$result = array_filter($result, function ($product) use ($soonModule) {
+    $idProduct = (int) $product['id_product'];
+    $quantity = StockAvailable::getQuantityAvailableByProduct($idProduct);
+
+    if ($quantity > 0) {
+        return true;
+    }
+
+    return $soonModule && method_exists($soonModule, 'isSoonProduct')
+        ? (bool) $soonModule->isSoonProduct($idProduct)
+        : false;
+});
 
 // Ne garder que le nombre de produits demandé
 $result = array_slice($result, 0, ($catnb ? $catnb : 8));
