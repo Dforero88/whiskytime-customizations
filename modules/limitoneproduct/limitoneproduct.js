@@ -1,193 +1,229 @@
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('Script LimitOne chargé', limitOneRefs);
+  const limitedIds = Array.isArray(window.limitOneProductIds)
+    ? window.limitOneProductIds.map(String)
+    : [];
+  const cartLimitedIds = new Set(
+    Array.isArray(window.limitOneCartProductIds)
+      ? window.limitOneCartProductIds.map((id) => String(id).trim())
+      : []
+  );
+  const limitMessage = String(window.limitOnePerCustomerMessage || '').trim();
 
-
-// --- PAGE PRODUIT ---
-const idElem = document.querySelector('input[name="id_product"]');
-if (idElem) {
-  //const productId = parseInt(idElem.value, 10);
-  const productId = idElem.value.trim(); // reste une string
-
-  console.log('ID produit détecté sur la page produit :', productId);
-
-  if (limitOneRefs.includes(productId)) {
-    console.log('Produit limité détecté :', productId);
-
-    const qtyInput = document.querySelector('input[name="qty"]');
-    const addButton = document.querySelector('.add-to-cart');
-
-    if (qtyInput) {
-      qtyInput.value = 1;
-      qtyInput.setAttribute('readonly', true);
-      qtyInput.style.cursor = 'not-allowed';
-      qtyInput.style.pointerEvents = 'none'; // ⚡ bloque toute interaction
-
-
-      // Supprime les boutons TouchSpin après init
-      setTimeout(() => {
-        const wrapper = qtyInput.closest('.bootstrap-touchspin');
-        if (wrapper) {
-          const upBtn = wrapper.querySelector('.bootstrap-touchspin-up');
-          const downBtn = wrapper.querySelector('.bootstrap-touchspin-down');
-          if (upBtn) upBtn.remove();
-          if (downBtn) downBtn.remove();
-        }
-      }, 50); // délai un peu plus long si nécessaire
-    }
-
-    if (addButton) {
-      prestashop.on('updateCart', function (event) {
-        if (event && event.reason && event.reason.linkAction === 'add-to-cart') {
-          // On attend que le produit soit vraiment rechargé
-          prestashop.on('updatedProduct', function () {
-            const qtyInput = document.querySelector('input[name="qty"]');
-            if (qtyInput) {
-              qtyInput.value = 0;
-              qtyInput.setAttribute('readonly', true);
-              qtyInput.style.cursor = 'not-allowed';
-                qtyInput.style.pointerEvents = 'none'; // ⚡ bloque toute interaction
-
-              console.log('Produit limité ajouté — quantité bloquée à 0 après reload.');
-            }
-          });
-        }
-      });
-    }
-
-      // ✅ Vérifie si le produit est déjà dans le panier au chargement (via HTML)
-      const cartUrl = prestashop?.urls?.pages?.cart;
-      if (cartUrl) {
-        console.log('Vérification panier via :', cartUrl);
-        fetch(cartUrl + '?ajax=1&action=refresh')
-          .then(res => res.json())
-          .then(data => {
-            console.log('Réponse reçue (HTML) :', data);
-
-            if (!data || !data.cart_detailed) {
-              console.warn('⚠️ Pas de "cart_detailed" dans la réponse.');
-              return;
-            }
-
-            const cartHtml = data.cart_detailed;
-
-            // --- Nouvelle portion de code pour parser les IDs en string ---
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(cartHtml, 'text/html');
-            const cartInputs = doc.querySelectorAll('input[data-product-id]');
-            const cartProductIds = Array.from(cartInputs).map(input => input.dataset.productId); // string
-            const isAlreadyInCart = cartProductIds.includes(productId); // comparaison string → string
-
-            console.log(`Produits dans le panier (IDs) :`, cartProductIds);
-            console.log(`Recherche de l'ID "${productId}" dans le panier → ${isAlreadyInCart ? 'TROUVÉ' : 'non trouvé'}`);
-
-            if (isAlreadyInCart) {
-              const qtyInput = document.querySelector('input[name="qty"]');
-              if (qtyInput) {
-                qtyInput.value = 0;
-                qtyInput.setAttribute('readonly', true);
-                qtyInput.style.cursor = 'not-allowed';
-                  qtyInput.style.pointerEvents = 'none'; // ⚡ bloque toute interaction
-
-                console.log('✅ Produit limité déjà présent dans le panier — input bloqué à 0.');
-              }
-            }
-          })
-          .catch(err => console.warn('Erreur vérification panier :', err));
-      } else {
-        console.warn('Impossible de récupérer prestashop.urls.pages.cart');
-      }
-
-
+  if (!limitedIds.length) {
+    return;
   }
-}
 
-// PAGE PANIER
+  function isLimitedProduct(id) {
+    return limitedIds.includes(String(id).trim());
+  }
 
-function applyLimitOneOnCart() {
-  const cartRows = document.querySelectorAll('.cart-item');
-  if (cartRows.length === 0) return;
+  function isLimitedProductInCart(id) {
+    return cartLimitedIds.has(String(id).trim());
+  }
 
-  cartRows.forEach(row => {
-    const qtyInput = row.querySelector('input.js-cart-line-product-quantity');
-    if (!qtyInput) return;
-
-    const productIdInCart = qtyInput.dataset.productId?.trim();
-    if (!productIdInCart) return;
-
-    if (limitOneRefs.includes(productIdInCart)) {
-      // Bloque le champ quantité
-      //qtyInput.value = 1;
-      qtyInput.setAttribute('readonly', true);
-      qtyInput.style.cursor = 'not-allowed';
-      qtyInput.style.pointerEvents = 'none'; // ⚡ bloque toute interaction
-
-
-      // Supprime les boutons TouchSpin après init
-      setTimeout(() => {
-        const wrapper = qtyInput.closest('.bootstrap-touchspin');
-        if (wrapper) {
-          const upBtn = wrapper.querySelector('.bootstrap-touchspin-up');
-          const downBtn = wrapper.querySelector('.bootstrap-touchspin-down');
-          if (upBtn) upBtn.remove();
-          if (downBtn) downBtn.remove();
-        }
-      }, 50);
+  function setAddToCartDisabled(button, disabled) {
+    if (!button) {
+      return;
     }
-  });
-}
 
-// --- Page panier initial load ---
-applyLimitOneOnCart();
+    button.disabled = disabled;
+    button.classList.toggle('disabled', disabled);
+    button.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+    button.style.pointerEvents = disabled ? 'none' : '';
+    button.style.opacity = disabled ? '0.5' : '';
+  }
 
-// --- Réapplique après chaque updateCart ---
-prestashop.on('updateCart', function () {
-  setTimeout(() => {
-    applyLimitOneOnCart();
-  }, 400); // petit délai pour laisser le DOM se mettre à jour
-});
+  function hideTouchSpinButtons(qtyInput) {
+    const wrapper = qtyInput?.closest('.bootstrap-touchspin');
+    if (!wrapper) {
+      return;
+    }
 
-// Catalogue ----
+    wrapper.querySelectorAll('.bootstrap-touchspin-up, .bootstrap-touchspin-down').forEach((button) => {
+      button.style.display = 'none';
+      button.style.pointerEvents = 'none';
+      button.setAttribute('aria-hidden', 'true');
+      button.disabled = true;
+    });
+  }
 
-function applyLimitOneOnListing() {
-  // Sélectionne toutes les cartes produits du catalogue
-  const productCards = document.querySelectorAll('.product-miniature, .product-container'); // adapte le sélecteur selon ton thème
-  if (productCards.length === 0) return;
+  function observeTouchSpin(qtyInput) {
+    const parent = qtyInput?.parentElement;
+    if (!qtyInput || !parent || parent.dataset.limitOneObserved === '1') {
+      return;
+    }
 
-  // On peut récupérer le panier actuel pour savoir quels produits sont dedans
-  const cartProductIds = []; // si tu veux faire via HTML du panier, sinon juste limitOneRefs
+    parent.dataset.limitOneObserved = '1';
+    const observer = new MutationObserver(function () {
+      hideTouchSpinButtons(qtyInput);
+    });
 
-  productCards.forEach(card => {
-    const idElem = card.querySelector('input[name="id_product"]');
-    if (!idElem) return;
+    observer.observe(parent, { childList: true, subtree: true });
+    hideTouchSpinButtons(qtyInput);
+    setTimeout(() => hideTouchSpinButtons(qtyInput), 50);
+    setTimeout(() => hideTouchSpinButtons(qtyInput), 300);
+    setTimeout(() => hideTouchSpinButtons(qtyInput), 800);
+  }
+
+  function lockQuantityInput(qtyInput, value, disabled) {
+    if (!qtyInput) {
+      return;
+    }
+
+    qtyInput.value = String(value);
+    qtyInput.setAttribute('min', value === 0 ? 0 : 1);
+    qtyInput.setAttribute('max', 1);
+    qtyInput.setAttribute('readonly', 'readonly');
+    if (disabled) {
+      qtyInput.setAttribute('disabled', 'disabled');
+    } else {
+      qtyInput.removeAttribute('disabled');
+    }
+    qtyInput.style.cursor = 'not-allowed';
+    qtyInput.style.pointerEvents = 'none';
+
+    observeTouchSpin(qtyInput);
+  }
+
+  function ensureLimitMessage() {
+    if (!limitMessage) {
+      return;
+    }
+
+    if (document.querySelector('.limit-oneproduct-message')) {
+      return;
+    }
+
+    const target =
+      document.querySelector('#product-availability') ||
+      document.querySelector('.product-add-to-cart') ||
+      document.querySelector('.product-quantity');
+
+    if (!target) {
+      return;
+    }
+
+    const message = document.createElement('div');
+    message.className = 'limit-oneproduct-message';
+    message.textContent = limitMessage;
+    message.style.marginTop = '8px';
+    message.style.fontSize = '0.95rem';
+    message.style.fontWeight = '600';
+    message.style.color = '#9a7b20';
+
+    target.insertAdjacentElement('afterend', message);
+  }
+
+  function scheduleProductPageRefresh() {
+    setTimeout(applyLimitOneOnProductPage, 50);
+    setTimeout(applyLimitOneOnProductPage, 300);
+    setTimeout(applyLimitOneOnProductPage, 800);
+  }
+
+  function observeProductPageChanges() {
+    const root =
+      document.querySelector('.product-add-to-cart') ||
+      document.querySelector('#add-to-cart-or-refresh') ||
+      document.querySelector('form.add-to-cart-or-refresh');
+
+    if (!root || root.dataset.limitOneObserved === '1') {
+      return;
+    }
+
+    root.dataset.limitOneObserved = '1';
+    const observer = new MutationObserver(function () {
+      scheduleProductPageRefresh();
+    });
+
+    observer.observe(root, { childList: true, subtree: true });
+  }
+
+  function applyLimitOneOnProductPage() {
+    const idElem = document.querySelector('input[name="id_product"]');
+    if (!idElem) {
+      return;
+    }
 
     const productId = idElem.value.trim();
-    if (limitOneRefs.includes(productId)) {
-      // On empêche l'affichage du bouton "Ajouter au panier"
-      const addBtn = card.querySelector('.add-to-cart, .ajax_add_to_cart_button');
+    if (!isLimitedProduct(productId)) {
+      return;
+    }
+
+    const qtyInput = document.querySelector('input[name="qty"], #quantity_wanted');
+    const addButton = document.querySelector('.add-to-cart, [data-button-action="add-to-cart"]');
+    const alreadyInCart = isLimitedProductInCart(productId);
+
+    lockQuantityInput(qtyInput, alreadyInCart ? 0 : 1, alreadyInCart);
+    setAddToCartDisabled(addButton, alreadyInCart);
+    ensureLimitMessage();
+    observeProductPageChanges();
+  }
+
+  function applyLimitOneOnCart() {
+    document.querySelectorAll('.cart-item').forEach((row) => {
+      const qtyInput = row.querySelector('input.js-cart-line-product-quantity');
+      if (!qtyInput) {
+        return;
+      }
+
+      const productId = String(qtyInput.dataset.productId || '').trim();
+      if (!productId || !isLimitedProduct(productId)) {
+        return;
+      }
+
+      lockQuantityInput(qtyInput, qtyInput.value || 1, true);
+    });
+  }
+
+  function applyLimitOneOnListing() {
+    document.querySelectorAll('.product-miniature, .product-container').forEach((card) => {
+      const productId =
+        String(card.dataset.idProduct || '').trim() ||
+        String(card.querySelector('input[name="id_product"]')?.value || '').trim();
+
+      if (!productId || !isLimitedProduct(productId)) {
+        return;
+      }
+
+      const addBtn = card.querySelector('.add-to-cart, .ajax_add_to_cart_button, [data-button-action="add-to-cart"]');
       if (addBtn) {
         addBtn.style.display = 'none';
-        // ou addBtn.disabled = true;
-        console.log(`Produit limité dans le catalogue (ID: ${productId}) → bouton ajouté masqué`);
       }
+    });
+  }
+
+  applyLimitOneOnProductPage();
+  applyLimitOneOnCart();
+  applyLimitOneOnListing();
+
+  if (window.prestashop && typeof prestashop.on === 'function') {
+    prestashop.on('updateCart', function (event) {
+      const pageIdElem = document.querySelector('input[name="id_product"]');
+      const pageProductId = pageIdElem ? String(pageIdElem.value || '').trim() : '';
+
+      if (
+        pageProductId &&
+        isLimitedProduct(pageProductId) &&
+        event &&
+        event.reason &&
+        event.reason.linkAction === 'add-to-cart'
+      ) {
+        cartLimitedIds.add(pageProductId);
+      }
+
+      setTimeout(applyLimitOneOnCart, 300);
+      scheduleProductPageRefresh();
+    });
+
+    prestashop.on('updatedProduct', function () {
+      scheduleProductPageRefresh();
+    });
+  }
+
+  document.addEventListener('mouseover', function (event) {
+    const target = event.target.closest('.product-miniature, .product-container');
+    if (target) {
+      applyLimitOneOnListing();
     }
   });
-}
-
-// --- Au chargement de la page catalogue ---
-applyLimitOneOnListing();
-
-// --- Si ton catalogue charge dynamiquement plus de produits (scroll infini) ---
-document.addEventListener('mouseover', function(e) {
-  const target = e.target.closest('.product-miniature, .product-container');
-  if (target) {
-    applyLimitOneOnListing();
-  }
-});
-
-
-
-
-
-
-
 });
