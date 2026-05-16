@@ -28,7 +28,7 @@ class Ageverification extends Module
         $this->need_instance = 0;
         $this->bootstrap = true;
         $this->module_key = 'b6c496beb0d562e2bb1b4ff6d4a93e8b';
-        $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' <= _PS_VERSION_);
+        $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
 
         parent::__construct();
 
@@ -49,7 +49,7 @@ class Ageverification extends Module
         }
 
         if (!parent::install() ||
-            !$this->registerHook('header')) {
+            !$this->registerHook('displayHeader')) {
             return false;
         }
 
@@ -61,14 +61,20 @@ class Ageverification extends Module
 
     public function uninstall()
     {
-        if (!parent::uninstall() ||
-            !$this->unregisterHook('header')) {
+        if (!parent::uninstall()) {
             return false;
         }
+        $this->unregisterHook('displayHeader');
+        $this->unregisterHook('header');
         return true;
     }
     
     public function hookHeader($params)
+    {
+        return $this->hookDisplayHeader($params);
+    }
+
+    public function hookDisplayHeader($params)
     {
         $values = Tools::unSerialize(Configuration::get('AGE_VERIFICATION'));
                 
@@ -1852,7 +1858,7 @@ class Ageverification extends Module
             return false;
         }
         $color = trim($color);
-        $result = false;
+        $result = [];
         if (preg_match("/^[0-9ABCDEFabcdef\#]+$/i", $color)) {
             $hex = str_replace('#', '', $color);
             if (!$hex) {
