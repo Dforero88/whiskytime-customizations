@@ -103,7 +103,7 @@
 {block name='page_footer'}
   {block name='my_account_links'}
     <div class="text-sm-center">
-      <a href="{$logout_url}" >
+      <a href="{if isset($urls.actions.logout)}{$urls.actions.logout}{else}{$logout_url|default:''}{/if}" >
         {l s='Sign out' d='Shop.Theme.Actions'}
       </a>
     </div>
