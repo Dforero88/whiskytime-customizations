@@ -77,7 +77,7 @@ class CartController extends CartControllerCore
             }
         }
     }
-    protected function processChangeProductInCart()
+    protected function processChangeProductInCart(): void
     {
         parent::processChangeProductInCart();
         if (!count($this->errors) && $this->is_gift_product) {
@@ -94,7 +94,7 @@ class CartController extends CartControllerCore
             ]);
         }
     }
-    protected function processDeleteProductInCart()
+    protected function processDeleteProductInCart(): void
     {
         parent::processDeleteProductInCart();
         Hook::exec(
