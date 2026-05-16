@@ -17,7 +17,7 @@ class CartController extends CartControllerCore
     protected $specific_date = '';
     protected $id_gift_card_template = 0;
     
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (Module::isInstalled('giftcard')) {
