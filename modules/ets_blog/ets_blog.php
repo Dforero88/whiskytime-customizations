@@ -493,10 +493,16 @@ $this->refs = 'https://prestahero.com/';
             if ($this->is8e) {
                 $this->context->controller->addCSS($this->_path.'views/css/admin8e.css');
             }
-            $this->context->controller->addJquery();
-            $this->context->controller->addJqueryUI('ui.widget');
-            $this->context->controller->addJqueryPlugin('tagify');
-            $this->context->controller->addJqueryUI('ui.sortable');
+            if (method_exists($this->context->controller, 'addJquery')) {
+                $this->context->controller->addJquery();
+            }
+            if (method_exists($this->context->controller, 'addJqueryUI')) {
+                $this->context->controller->addJqueryUI('ui.widget');
+                $this->context->controller->addJqueryUI('ui.sortable');
+            }
+            if (method_exists($this->context->controller, 'addJqueryPlugin')) {
+                $this->context->controller->addJqueryPlugin('tagify');
+            }
             $this->context->controller->addJS($this->_path.'views/js/admin.js');
         }
         $this->context->smarty->assign(
