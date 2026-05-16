@@ -22,6 +22,11 @@ if (!defined('_PS_VERSION_'))
     	exit;
 class AdminEtsBlogPostController extends ModuleAdminController
 {
+    protected function l($string, $class = null, $addslashes = false, $htmlentities = true)
+    {
+        return Translate::getAdminTranslation($string, $class ?: get_class($this), $addslashes, $htmlentities);
+    }
+
     public function __construct()
     {
        parent::__construct();
