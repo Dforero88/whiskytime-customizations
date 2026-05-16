@@ -213,7 +213,9 @@ $this->refs = 'https://prestahero.com/';
 			return $this->displayWarning(sprintf($this->l('You must enable "%s" module to configure its features'),$this->displayName));
 		}
 
-		$this->context->controller->addJqueryUI('ui.sortable');
+		if (method_exists($this->context->controller, 'addJqueryUI')) {
+			$this->context->controller->addJqueryUI('ui.sortable');
+		}
 		$this->processPost();
 		if (Tools::isSubmit('saveConfig')) {
 			$this->saveConfigs();
@@ -1125,7 +1127,7 @@ $this->refs = 'https://prestahero.com/';
 	{
 		if (version_compare(_PS_VERSION_, '1.7.6.0', '>=') && version_compare(_PS_VERSION_, '1.7.7.0', '<'))
 			$this->context->controller->addJS(_PS_JS_DIR_ . 'jquery/jquery-' . _PS_JQUERY_VERSION_ . '.min.js');
-		else
+		elseif (method_exists($this->context->controller, 'addJquery'))
 			$this->context->controller->addJquery();
 	}
 
