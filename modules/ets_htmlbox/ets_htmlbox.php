@@ -600,7 +600,9 @@ $this->refs = 'https://prestahero.com/';
             (string)Tools::getValue('configure') == $this->name ||
             (string)Tools::getValue('controller') == 'AdminEtsHBBase'
         ) {
-            $this->context->controller->setMedia();
+            if (method_exists($this->context->controller, 'setMedia')) {
+                $this->context->controller->setMedia();
+            }
             $this->context->controller->addJS($this->_path . 'views/js/back.js');
             $this->context->controller->addCSS($this->_path . 'views/css/back.css');
         }
