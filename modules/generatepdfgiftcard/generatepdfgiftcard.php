@@ -189,8 +189,8 @@ class GeneratePDFGiftCard extends Module
 
     public function renderForm()
     {
-        $languages = Language::getLanguages(false);
         $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+        $languages = $this->getHelperFormLanguages($default_lang);
 
         $form = new HelperForm();
         $form->module = $this;
@@ -287,6 +287,21 @@ class GeneratePDFGiftCard extends Module
         ];
 
         return $form->generateForm($fields_form);
+    }
+
+    protected function getHelperFormLanguages($defaultLang)
+    {
+        $languages = Language::getLanguages(false);
+
+        foreach ($languages as &$language) {
+            if (!array_key_exists('is_default', $language)) {
+                $language['is_default'] = ((int) $language['id_lang'] === (int) $defaultLang) ? 1 : 0;
+            }
+        }
+
+        unset($language);
+
+        return $languages;
     }
 
     public function getTemplateForLanguage($id_lang)
