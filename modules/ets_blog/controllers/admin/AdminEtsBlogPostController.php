@@ -24,7 +24,11 @@ class AdminEtsBlogPostController extends ModuleAdminController
 {
     protected function l($string, $class = null, $addslashes = false, $htmlentities = true)
     {
-        return Translate::getAdminTranslation($string, $class ?: get_class($this), $addslashes, $htmlentities);
+        if (isset($this->module) && method_exists($this->module, 'l')) {
+            return $this->module->l($string, $class ?: pathinfo(__FILE__, PATHINFO_FILENAME));
+        }
+
+        return $string;
     }
 
     public function __construct()
