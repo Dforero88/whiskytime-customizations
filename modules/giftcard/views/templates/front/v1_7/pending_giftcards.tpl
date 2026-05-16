@@ -40,7 +40,7 @@
 								</td>
 								<td>
 									{if isset($card.product_price) AND $card.product_price != 0}
-										{if _PS_VERSION_ == '9.0.0'}
+										{if Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')}
                                             {* {$card.product_price|escape:'htmlall':'UTF-8'} *}
 											{$card.product_price}
                                             

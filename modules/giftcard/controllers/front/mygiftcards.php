@@ -134,7 +134,7 @@ class GiftCardMyGiftCardsModuleFrontController extends ModuleFrontController
                     $currency = new Currency((int) $gift_coupon->reduction_currency);
 
                     $sender_name = $this->context->cookie->customer_firstname . ' ' . $this->context->cookie->customer_lastname;
-                    if(_PS_VERSION_ == '9.0.0'){
+                    if (Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')) {
                         $priceFormatter = new PriceFormatter();
                         $this->smarty->assign('priceFormatter', $priceFormatter);
                         $value = $mycoupon['reduction_percent'] && $mycoupon['reduction_percent'] != '0.00' ? $mycoupon['reduction_percent'] . ' %' : $priceFormatter->format($mycoupon['reduction_amount'], $currency);
@@ -403,7 +403,7 @@ class GiftCardMyGiftCardsModuleFrontController extends ModuleFrontController
         $products = $giftCategory->getProducts($idLang, 1, 100);
         if (!empty($products)) {
             foreach ($products as $key => &$product) {
-                if(_PS_VERSION_ == '9.0.0'){
+                if (Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')) {
                     $product['category'] = Category::getLinkRewrite((int) $product['id_category_default'], (int) $idLang);
                     $product['category_name'] = Db::getInstance()->getValue('SELECT name FROM ' . _DB_PREFIX_ . 'category_lang WHERE id_shop = ' . (int) $this->context->shop->id . ' AND id_lang = ' . (int) $idLang . ' AND id_category = ' . (int) $product['id_category_default']);
                     $product['link'] = $this->context->link->getProductLink((int) $product['id_product'], $product['link_rewrite'], $product['category'], $product['ean13']);

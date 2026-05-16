@@ -59,7 +59,7 @@
                                     {if isset($card.reduction_percent) AND $card.reduction_percent != 0}
                                         {$card.reduction_percent|escape:'htmlall':'UTF-8'}{l s='%' mod='giftcard'}
                                     {elseif isset($card.reduction_amount) AND $card.reduction_amount != 0}
-                                        {if _PS_VERSION_ == '9.0.0'}
+                                        {if Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')}
                                             {* {$card.reduction_amount|escape:'htmlall':'UTF-8'} *}
                                             {$card.reduction_amount}
                                             

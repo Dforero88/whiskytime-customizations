@@ -49,7 +49,7 @@
         {/if}
         {if (int)$voucher['reduction_amount']}
           <p> <strong>{l s='Reduction Amount' mod='giftcard' } </strong>
-          {if _PS_VERSION_ == '9.0.0'}
+          {if Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')}
               {* {$voucher['reduction_amount']|escape:'htmlall':'UTF-8'} *}
               {$voucher['reduction_amount']}
           {else}

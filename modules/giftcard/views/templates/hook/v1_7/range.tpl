@@ -22,7 +22,7 @@
 		{if $type == 'range'}
 			<div class="amount" style="font-size:10px;margin-left:5px;">
 				{l s='Enter value between' mod='giftcard'}
-				{if _PS_VERSION_ == '9.0.0'}
+				{if Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')}
 					{* {($values[0])} {l s=' and ' mod='giftcard'} {($values[1])|escape:'htmlall':'UTF-8'} *}
 					{$values[0]} {l s=' and ' mod='giftcard'} {$values[1]}
 					

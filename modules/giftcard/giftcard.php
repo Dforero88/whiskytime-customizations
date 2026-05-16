@@ -50,7 +50,7 @@ class GiftCard extends Module
         'actionProductDelete',
         'ActionObjectDeleteAfter',
         'actionProductUpdate',
-        'displayProductButtons',
+        'displayProductAdditionalInfo',
         'displayMyAccountBlock',
         'displayCustomerAccount',
         'actionOrderStatusPostUpdate',
@@ -199,6 +199,7 @@ class GiftCard extends Module
             && $this->unregisterHook('actionProductUpdate')
             && $this->unregisterHook('displayMyAccountBlock')
             && $this->unregisterHook('displayCustomerAccount')
+            && $this->unregisterHook('displayProductAdditionalInfo')
             && $this->unregisterHook('displayProductButtons')
             && $this->unregisterHook('actionOrderStatusPostUpdate')
             && $this->unregisterHook('ActionOrderStatusUpdate')
@@ -1047,7 +1048,12 @@ class GiftCard extends Module
         }
     }
 
-    public function hookdisplayProductButtons()
+    public function hookDisplayProductAdditionalInfo($params)
+    {
+        return $this->hookdisplayProductButtons($params);
+    }
+
+    public function hookdisplayProductButtons($params = [])
     {
         $action = '';
         $card_type = '';
@@ -1097,7 +1103,7 @@ class GiftCard extends Module
 
             $currency = $this->context->currency;
             $price = 0;
-            if(_PS_VERSION_ == '9.0.0'){
+            if (Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')) {
                 $priceFormatter = new PriceFormatter();
                 $price = array_map(function ($price) use ($priceFormatter, $currency) {
                     return $priceFormatter->format((float) $price, $currency);
@@ -1397,7 +1403,7 @@ class GiftCard extends Module
 
                         $currency = new Currency((int) $voucher->reduction_currency);
                         $price = 0;
-                        if(_PS_VERSION_ == '9.0.0'){
+                        if (Tools::version_compare(_PS_VERSION_, '9.0.0', '>=')) {
                             $priceFormatter = new \PrestaShop\PrestaShop\Adapter\Product\PriceFormatter();
                             $price = $priceFormatter->format($voucher->reduction_amount, $currency);                        
                         } else{
