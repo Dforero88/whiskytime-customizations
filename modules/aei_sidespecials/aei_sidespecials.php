@@ -27,7 +27,6 @@
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 use PrestaShop\PrestaShop\Adapter\Image\ImageRetriever;
 use PrestaShop\PrestaShop\Adapter\Product\PriceFormatter;
-use PrestaShop\PrestaShop\Core\Product\ProductListingPresenter;
 use PrestaShop\PrestaShop\Adapter\Product\ProductColorsRetriever;
 
 if (!defined('_PS_VERSION_')) {
@@ -228,7 +227,10 @@ class Aei_SideSpecials extends Module implements WidgetInterface
 
         $presenterFactory = new ProductPresenterFactory($this->context);
         $presentationSettings = $presenterFactory->getPresentationSettings();
-        $presenter = new ProductListingPresenter(
+        $productListingPresenterClass = class_exists('PrestaShop\\PrestaShop\\Core\\Product\\ProductListingPresenter')
+            ? 'PrestaShop\\PrestaShop\\Core\\Product\\ProductListingPresenter'
+            : 'PrestaShop\\PrestaShop\\Adapter\\Presenter\\Product\\ProductListingPresenter';
+        $presenter = new $productListingPresenterClass(
             new ImageRetriever(
                 $this->context->link
             ),
