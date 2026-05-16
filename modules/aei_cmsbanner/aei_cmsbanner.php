@@ -28,7 +28,6 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-use PrestaShop\PrestaShop\Adapter\ObjectPresenter;
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 require_once _PS_MODULE_DIR_ . 'aei_cmsbanner/classes/AEICmsBanner.php';
@@ -324,7 +323,11 @@ class Aei_Cmsbanner extends Module implements WidgetInterface
     public function getWidgetVariables($hookName = null, array $configuration = [])
     {
         $aeicmsBanner = new AEICmsBanner(1, (int) $this->context->language->id, (int) $this->context->shop->id);
-        $objectPresenter = new ObjectPresenter();
+        $objectPresenterClass = class_exists('PrestaShop\\PrestaShop\\Adapter\\ObjectPresenter')
+            ? 'PrestaShop\\PrestaShop\\Adapter\\ObjectPresenter'
+            : 'PrestaShop\\PrestaShop\\Adapter\\Presenter\\Object\\ObjectPresenter';
+
+        $objectPresenter = new $objectPresenterClass();
         $data = $objectPresenter->present($aeicmsBanner);
         $data['id_lang'] = $this->context->language->id;
         $data['id_shop'] = $this->context->shop->id;
