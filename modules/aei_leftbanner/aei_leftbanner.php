@@ -44,7 +44,9 @@ class Aei_LeftBanner extends Module implements WidgetInterface
         $this->version = '1.0.0';
         $this->author = 'Aeipix';
         $this->need_instance = 0;
-        $this->secure_key = Tools::encrypt($this->name);
+        $this->secure_key = method_exists('Tools', 'encrypt')
+            ? Tools::encrypt($this->name)
+            : Tools::hash($this->name);
         $this->bootstrap = true;
 
         parent::__construct();
