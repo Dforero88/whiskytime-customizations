@@ -175,7 +175,7 @@
                <tr class="mat_event_single_holder">
                   <td align="center"><img src="{$link->getImageLink($cover[$product->id].id_image, $cover[$product->id].id_image, 'small_default')|escape:'htmlall':'UTF-8'}"></td>
                   <td align="center">{$product->name|escape:'htmlall':'UTF-8'}</td>
-                  <td align="center"><strong>{Tools::displayPrice(Product::getPriceStatic($product->id), $currency)}</strong></td>
+                  <td align="center"><strong>{convertPrice price=Product::getPriceStatic($product->id)}</strong></td>
                   {if $product->available_for_order eq 1 AND $product->quantity gt 0}
                   {if $is_seat_map}
                   <td align="center">
