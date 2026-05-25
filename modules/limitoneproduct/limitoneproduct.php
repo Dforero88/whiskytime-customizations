@@ -152,8 +152,8 @@ class LimitOneProduct extends Module
         Media::addJsDef([
             'limitOneProductLimits' => $this->getLimitedProductLimitsForJs(),
             'limitOneCartQuantities' => $this->getLimitedProductCartQuantities(),
-            'limitOnePerCustomerMessageTemplate' => $this->l('Limité à %limit% par commande'),
-            'limitOneReachedMessageTemplate' => $this->l('Limité à %limit% par commande. Limite déjà atteinte dans votre panier.'),
+            'limitOnePerCustomerMessageTemplate' => $this->l('Limité par client'),
+            'limitOneReachedMessageTemplate' => $this->l('Limité par client. Limite déjà atteinte dans votre panier.'),
         ]);
     }
 
