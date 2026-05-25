@@ -497,20 +497,18 @@ class LimitOneProduct extends Module
                     $this->l('Deja limite a %d'),
                     $existingLimit
                 ) . '</span>';
+                $html .= '</td><td></td>';
             } else {
                 $html .= '
-                    <form method="post" action="' . $action . '" style="display:flex;align-items:center;gap:12px;">
-                        <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
-                        <input type="hidden" name="id_product" value="' . $idProduct . '">
-                        <input type="number" class="form-control" name="max_quantity_per_order" min="1" step="1" value="1" style="max-width:110px;">
+                    1
                     </td>
                     <td>
-                        <button type="submit" name="submitLimitOneProductAdd" class="btn btn-default">' . $this->l('Ajouter') . '</button>
-                    </form>';
-            }
-
-            if ($this->isLimitedProduct($idProduct)) {
-                $html .= '</td><td></td>';
+                        <form method="post" action="' . $action . '" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                            <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
+                            <input type="hidden" name="id_product" value="' . $idProduct . '">
+                            <input type="number" class="form-control" name="max_quantity_per_order" min="1" step="1" value="1" style="max-width:110px;">
+                            <button type="submit" name="submitLimitOneProductAdd" class="btn btn-default">' . $this->l('Ajouter') . '</button>
+                        </form>';
             }
 
             $html .= '
@@ -563,18 +561,13 @@ class LimitOneProduct extends Module
                     <td>' . htmlspecialchars((string) $product['name'], ENT_QUOTES, 'UTF-8') . '</td>
                     <td>' . htmlspecialchars((string) $product['reference'], ENT_QUOTES, 'UTF-8') . '</td>
                     <td>' . (int) $product['quantity'] . '</td>
+                    <td>' . $limit . '</td>
                     <td>
-                        <form method="post" action="' . $action . '" style="display:flex;align-items:center;gap:12px;">
+                        <form method="post" action="' . $action . '" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                             <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
                             <input type="hidden" name="id_product" value="' . $idProduct . '">
                             <input type="number" class="form-control" name="max_quantity_per_order" min="1" step="1" value="' . $limit . '" style="max-width:110px;">
-                    </td>
-                    <td>
                             <button type="submit" name="submitLimitOneProductUpdate" class="btn btn-default">' . $this->l('Mettre a jour') . '</button>
-                        </form>
-                        <form method="post" action="' . $action . '" style="display:inline-block;margin-left:12px;">
-                            <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
-                            <input type="hidden" name="id_product" value="' . $idProduct . '">
                             <button type="submit" name="submitLimitOneProductRemove" class="btn btn-link">' . $this->l('Retirer') . '</button>
                         </form>
                     </td>
@@ -688,15 +681,25 @@ class LimitOneProduct extends Module
 
     protected function isValidToken()
     {
-        return Tools::getValue('limitoneproduct_token') === Tools::getAdminTokenLite('AdminModules');
+        $expectedToken = (string) Tools::getAdminTokenLite('AdminModules');
+        $submittedToken = (string) Tools::getValue('limitoneproduct_token');
+        $requestToken = (string) Tools::getValue('token');
+
+        return ($submittedToken !== '' && hash_equals($expectedToken, $submittedToken))
+            || ($requestToken !== '' && hash_equals($expectedToken, $requestToken));
     }
 
     protected function getModuleConfigUrl()
     {
-        return $this->context->link->getAdminLink('AdminModules', false)
-            . '&configure=' . $this->name
-            . '&tab_module=' . $this->tab
-            . '&module_name=' . $this->name
-            . '&token=' . Tools::getAdminTokenLite('AdminModules');
+        return $this->context->link->getAdminLink(
+            'AdminModules',
+            true,
+            [],
+            [
+                'configure' => $this->name,
+                'tab_module' => $this->tab,
+                'module_name' => $this->name,
+            ]
+        );
     }
 }
