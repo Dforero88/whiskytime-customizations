@@ -1,24 +1,54 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const limitedIds = Array.isArray(window.limitOneProductIds)
-    ? window.limitOneProductIds.map(String)
-    : [];
-  const cartLimitedIds = new Set(
-    Array.isArray(window.limitOneCartProductIds)
-      ? window.limitOneCartProductIds.map((id) => String(id).trim())
-      : []
-  );
-  const limitMessage = String(window.limitOnePerCustomerMessage || '').trim();
+  const limitedLimits =
+    window.limitOneProductLimits && typeof window.limitOneProductLimits === 'object'
+      ? Object.fromEntries(
+          Object.entries(window.limitOneProductLimits).map(([id, limit]) => [
+            String(id).trim(),
+            Math.max(1, parseInt(limit, 10) || 1),
+          ])
+        )
+      : {};
+  const cartQuantities =
+    window.limitOneCartQuantities && typeof window.limitOneCartQuantities === 'object'
+      ? Object.fromEntries(
+          Object.entries(window.limitOneCartQuantities).map(([id, qty]) => [
+            String(id).trim(),
+            Math.max(0, parseInt(qty, 10) || 0),
+          ])
+        )
+      : {};
+  const limitMessageTemplate = String(window.limitOnePerCustomerMessageTemplate || '').trim();
+  const limitReachedTemplate = String(window.limitOneReachedMessageTemplate || '').trim();
+  const limitedIds = Object.keys(limitedLimits);
 
   if (!limitedIds.length) {
     return;
   }
 
   function isLimitedProduct(id) {
-    return limitedIds.includes(String(id).trim());
+    return Object.prototype.hasOwnProperty.call(limitedLimits, String(id).trim());
   }
 
-  function isLimitedProductInCart(id) {
-    return cartLimitedIds.has(String(id).trim());
+  function getLimitForProduct(id) {
+    return limitedLimits[String(id).trim()] || 1;
+  }
+
+  function getCartQuantityForLimitedProduct(id) {
+    return cartQuantities[String(id).trim()] || 0;
+  }
+
+  function setCartQuantityForLimitedProduct(id, qty) {
+    cartQuantities[String(id).trim()] = Math.max(0, parseInt(qty, 10) || 0);
+  }
+
+  function isLimitReached(id) {
+    const productId = String(id).trim();
+    return getCartQuantityForLimitedProduct(productId) >= getLimitForProduct(productId);
+  }
+
+  function buildLimitMessage(limit, reached) {
+    const template = reached ? limitReachedTemplate : limitMessageTemplate;
+    return template ? template.replace(/%limit%/g, String(limit)) : '';
   }
 
   function setAddToCartDisabled(button, disabled) {
@@ -65,14 +95,17 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => hideTouchSpinButtons(qtyInput), 800);
   }
 
-  function lockQuantityInput(qtyInput, value, disabled) {
+  function applyQuantityInputLimit(qtyInput, value, max, disabled) {
     if (!qtyInput) {
       return;
     }
 
-    qtyInput.value = String(value);
-    qtyInput.setAttribute('min', value === 0 ? 0 : 1);
-    qtyInput.setAttribute('max', 1);
+    const normalizedMax = Math.max(1, parseInt(max, 10) || 1);
+    const normalizedValue = Math.min(normalizedMax, Math.max(1, parseInt(value, 10) || 1));
+
+    qtyInput.value = String(normalizedValue);
+    qtyInput.setAttribute('min', 1);
+    qtyInput.setAttribute('max', normalizedMax);
     qtyInput.setAttribute('readonly', 'readonly');
     if (disabled) {
       qtyInput.setAttribute('disabled', 'disabled');
@@ -85,12 +118,9 @@ document.addEventListener('DOMContentLoaded', function () {
     observeTouchSpin(qtyInput);
   }
 
-  function ensureLimitMessage() {
-    if (!limitMessage) {
-      return;
-    }
-
-    if (document.querySelector('.limit-oneproduct-message')) {
+  function ensureLimitMessage(limit, reached) {
+    const messageText = buildLimitMessage(limit, reached);
+    if (!messageText) {
       return;
     }
 
@@ -103,15 +133,18 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    const message = document.createElement('div');
-    message.className = 'limit-oneproduct-message';
-    message.textContent = limitMessage;
-    message.style.marginTop = '8px';
-    message.style.fontSize = '0.95rem';
-    message.style.fontWeight = '600';
-    message.style.color = '#9a7b20';
+    let message = document.querySelector('.limit-oneproduct-message');
+    if (!message) {
+      message = document.createElement('div');
+      message.className = 'limit-oneproduct-message';
+      message.style.marginTop = '8px';
+      message.style.fontSize = '0.95rem';
+      message.style.fontWeight = '600';
+      message.style.color = '#9a7b20';
+      target.insertAdjacentElement('afterend', message);
+    }
 
-    target.insertAdjacentElement('afterend', message);
+    message.textContent = messageText;
   }
 
   function scheduleProductPageRefresh() {
@@ -149,13 +182,21 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
+    const limit = getLimitForProduct(productId);
+    const cartQty = getCartQuantityForLimitedProduct(productId);
+    const remainingQty = Math.max(0, limit - cartQty);
     const qtyInput = document.querySelector('input[name="qty"], #quantity_wanted');
     const addButton = document.querySelector('.add-to-cart, [data-button-action="add-to-cart"]');
-    const alreadyInCart = isLimitedProductInCart(productId);
 
-    lockQuantityInput(qtyInput, alreadyInCart ? 0 : 1, alreadyInCart);
-    setAddToCartDisabled(addButton, alreadyInCart);
-    ensureLimitMessage();
+    if (remainingQty <= 0) {
+      applyQuantityInputLimit(qtyInput, 1, 1, true);
+      setAddToCartDisabled(addButton, true);
+    } else {
+      applyQuantityInputLimit(qtyInput, remainingQty, remainingQty, false);
+      setAddToCartDisabled(addButton, false);
+    }
+
+    ensureLimitMessage(limit, remainingQty <= 0);
     observeProductPageChanges();
   }
 
@@ -171,7 +212,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      lockQuantityInput(qtyInput, qtyInput.value || 1, true);
+      const limit = getLimitForProduct(productId);
+      const currentQty = Math.min(limit, Math.max(1, parseInt(qtyInput.value, 10) || 1));
+
+      applyQuantityInputLimit(qtyInput, currentQty, limit, false);
     });
   }
 
@@ -187,31 +231,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const addBtn = card.querySelector('.add-to-cart, .ajax_add_to_cart_button, [data-button-action="add-to-cart"]');
       if (addBtn) {
-        addBtn.style.display = 'none';
+        addBtn.style.display = isLimitReached(productId) ? 'none' : '';
       }
     });
   }
 
+  function syncCartQuantitiesFromDom() {
+    document.querySelectorAll('.cart-item input.js-cart-line-product-quantity').forEach((qtyInput) => {
+      const productId = String(qtyInput.dataset.productId || '').trim();
+      if (!productId || !isLimitedProduct(productId)) {
+        return;
+      }
+
+      setCartQuantityForLimitedProduct(productId, qtyInput.value);
+    });
+  }
+
   applyLimitOneOnProductPage();
+  syncCartQuantitiesFromDom();
   applyLimitOneOnCart();
   applyLimitOneOnListing();
 
   if (window.prestashop && typeof prestashop.on === 'function') {
     prestashop.on('updateCart', function (event) {
-      const pageIdElem = document.querySelector('input[name="id_product"]');
-      const pageProductId = pageIdElem ? String(pageIdElem.value || '').trim() : '';
+      const reason = event && event.reason ? event.reason : {};
+      const candidateId =
+        String(reason.idProduct || reason.id_product || reason.productId || '').trim();
 
-      if (
-        pageProductId &&
-        isLimitedProduct(pageProductId) &&
-        event &&
-        event.reason &&
-        event.reason.linkAction === 'add-to-cart'
-      ) {
-        cartLimitedIds.add(pageProductId);
+      if (candidateId && isLimitedProduct(candidateId) && reason.linkAction === 'add-to-cart') {
+        const nextQty = getCartQuantityForLimitedProduct(candidateId) + 1;
+        setCartQuantityForLimitedProduct(candidateId, Math.min(nextQty, getLimitForProduct(candidateId)));
       }
 
+      setTimeout(syncCartQuantitiesFromDom, 100);
       setTimeout(applyLimitOneOnCart, 300);
+      setTimeout(applyLimitOneOnListing, 300);
       scheduleProductPageRefresh();
     });
 

@@ -8,11 +8,17 @@ class LimitOneProduct extends Module
     /** @var int[]|null */
     protected $limitedProductIds = null;
 
+    /** @var array<int, int>|null */
+    protected $limitedProductLimits = null;
+
+    /** @var bool */
+    protected $schemaEnsured = false;
+
     public function __construct()
     {
         $this->name = 'limitoneproduct';
         $this->tab = 'front_office_features';
-        $this->version = '1.1.0';
+        $this->version = '1.2.0';
         $this->author = 'David Forero';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
@@ -21,7 +27,7 @@ class LimitOneProduct extends Module
         parent::__construct();
 
         $this->displayName = $this->l('Limit One Product');
-        $this->description = $this->l('Limit quantity to 1 for selected products.');
+        $this->description = $this->l('Limit quantity per order for selected products.');
     }
 
     public function install()
@@ -50,13 +56,14 @@ class LimitOneProduct extends Module
         $sql = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'limitoneproduct` (
             `id_limitoneproduct` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `id_product` INT UNSIGNED NOT NULL,
+            `max_quantity_per_order` INT UNSIGNED NOT NULL DEFAULT 1,
             `created_at` DATETIME NOT NULL,
             `updated_at` DATETIME NOT NULL,
             PRIMARY KEY (`id_limitoneproduct`),
             UNIQUE KEY `uniq_limitoneproduct_product` (`id_product`)
         ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8mb4;';
 
-        return Db::getInstance()->execute($sql);
+        return Db::getInstance()->execute($sql) && $this->ensureDbSchema();
     }
 
     protected function uninstallDb()
@@ -66,6 +73,7 @@ class LimitOneProduct extends Module
 
     public function getContent()
     {
+        $this->ensureDbSchema();
         $output = '';
 
         if (Tools::isSubmit('submitLimitOneProductAdd')) {
@@ -73,12 +81,29 @@ class LimitOneProduct extends Module
                 $output .= $this->displayError($this->l('Invalid security token.'));
             } else {
                 $idProduct = (int) Tools::getValue('id_product');
+                $limit = $this->sanitizeLimit(Tools::getValue('max_quantity_per_order'));
                 if ($idProduct <= 0) {
                     $output .= $this->displayError($this->l('Invalid product.'));
-                } elseif ($this->addLimitedProduct($idProduct)) {
-                    $output .= $this->displayConfirmation($this->l('Product added to limit-one list.'));
+                } elseif ($this->addLimitedProduct($idProduct, $limit)) {
+                    $output .= $this->displayConfirmation($this->l('Product added to limited list.'));
                 } else {
                     $output .= $this->displayError($this->l('Unable to add this product.'));
+                }
+            }
+        }
+
+        if (Tools::isSubmit('submitLimitOneProductUpdate')) {
+            if (!$this->isValidToken()) {
+                $output .= $this->displayError($this->l('Invalid security token.'));
+            } else {
+                $idProduct = (int) Tools::getValue('id_product');
+                $limit = $this->sanitizeLimit(Tools::getValue('max_quantity_per_order'));
+                if ($idProduct <= 0) {
+                    $output .= $this->displayError($this->l('Invalid product.'));
+                } elseif ($this->updateLimitedProductLimit($idProduct, $limit)) {
+                    $output .= $this->displayConfirmation($this->l('Product limit updated.'));
+                } else {
+                    $output .= $this->displayError($this->l('Unable to update this product limit.'));
                 }
             }
         }
@@ -91,7 +116,7 @@ class LimitOneProduct extends Module
                 if ($idProduct <= 0) {
                     $output .= $this->displayError($this->l('Invalid product.'));
                 } elseif ($this->removeLimitedProduct($idProduct)) {
-                    $output .= $this->displayConfirmation($this->l('Product removed from limit-one list.'));
+                    $output .= $this->displayConfirmation($this->l('Product removed from limited list.'));
                 } else {
                     $output .= $this->displayError($this->l('Unable to remove this product.'));
                 }
@@ -112,6 +137,7 @@ class LimitOneProduct extends Module
 
     public function hookDisplayHeader()
     {
+        $this->ensureDbSchema();
         $controller = $this->context->controller;
         if (!$controller || !method_exists($controller, 'registerJavascript')) {
             return;
@@ -124,14 +150,16 @@ class LimitOneProduct extends Module
         );
 
         Media::addJsDef([
-            'limitOneProductIds' => array_map('strval', $this->getLimitedProductIds()),
-            'limitOneCartProductIds' => array_map('strval', $this->getLimitedProductIdsInCart()),
-            'limitOnePerCustomerMessage' => $this->l('Limité à un par client'),
+            'limitOneProductLimits' => $this->getLimitedProductLimitsForJs(),
+            'limitOneCartQuantities' => $this->getLimitedProductCartQuantities(),
+            'limitOnePerCustomerMessageTemplate' => $this->l('Limité à %limit% par commande'),
+            'limitOneReachedMessageTemplate' => $this->l('Limité à %limit% par commande. Limite déjà atteinte dans votre panier.'),
         ]);
     }
 
     public function hookActionCartUpdateQuantityBefore($params)
     {
+        $this->ensureDbSchema();
         $idProduct = (int) ($params['id_product'] ?? 0);
         if ($idProduct <= 0 || !$this->isLimitedProduct($idProduct)) {
             return;
@@ -142,31 +170,37 @@ class LimitOneProduct extends Module
             return;
         }
 
+        $operator = (string) ($params['operator'] ?? 'up');
+        if ($operator === 'down') {
+            return;
+        }
+
+        $limit = $this->getProductLimit($idProduct);
         $currentQty = $this->getCartQuantity($cart, $idProduct);
-        if ($currentQty >= 1) {
+        $remainingQty = max(0, $limit - $currentQty);
+
+        if ($remainingQty <= 0) {
             if (isset($params['qty'])) {
                 $params['qty'] = 0;
             }
             if (isset($params['quantity'])) {
                 $params['quantity'] = 0;
             }
-            if (isset($params['operator'])) {
-                $params['operator'] = 'up';
-            }
 
             return false;
         }
 
-        if (isset($params['qty']) && (int) $params['qty'] > 1) {
-            $params['qty'] = 1;
+        if (isset($params['qty'])) {
+            $params['qty'] = min((int) $params['qty'], $remainingQty);
         }
-        if (isset($params['quantity']) && (int) $params['quantity'] > 1) {
-            $params['quantity'] = 1;
+        if (isset($params['quantity'])) {
+            $params['quantity'] = min((int) $params['quantity'], $remainingQty);
         }
     }
 
     public function hookActionCartSave($params)
     {
+        $this->ensureDbSchema();
         $cart = $this->context->cart;
         if (!$cart) {
             return;
@@ -178,13 +212,14 @@ class LimitOneProduct extends Module
                 continue;
             }
 
+            $limit = $this->getProductLimit($idProduct);
             $cartQty = (int) ($product['cart_quantity'] ?? 0);
-            if ($cartQty <= 1) {
+            if ($cartQty <= $limit) {
                 continue;
             }
 
             $cart->updateQty(
-                $cartQty - 1,
+                $cartQty - $limit,
                 $idProduct,
                 (int) ($product['id_product_attribute'] ?? 0),
                 false,
@@ -211,15 +246,63 @@ class LimitOneProduct extends Module
             return $this->limitedProductIds;
         }
 
-        $rows = Db::getInstance()->executeS('SELECT `id_product` FROM `' . _DB_PREFIX_ . 'limitoneproduct`');
-        $this->limitedProductIds = array_map('intval', array_column($rows ?: [], 'id_product'));
+        $this->limitedProductIds = array_map('intval', array_keys($this->getLimitedProductLimits()));
 
         return $this->limitedProductIds;
     }
 
-    protected function addLimitedProduct($idProduct)
+    protected function getLimitedProductLimits()
+    {
+        $this->ensureDbSchema();
+        if ($this->limitedProductLimits !== null) {
+            return $this->limitedProductLimits;
+        }
+
+        $rows = Db::getInstance()->executeS(
+            'SELECT `id_product`, `max_quantity_per_order` FROM `' . _DB_PREFIX_ . 'limitoneproduct`'
+        ) ?: [];
+
+        $limits = [];
+        foreach ($rows as $row) {
+            $idProduct = (int) ($row['id_product'] ?? 0);
+            if ($idProduct <= 0) {
+                continue;
+            }
+
+            $limits[$idProduct] = $this->sanitizeLimit($row['max_quantity_per_order'] ?? 1);
+        }
+
+        $this->limitedProductLimits = $limits;
+
+        return $this->limitedProductLimits;
+    }
+
+    protected function getProductLimit($idProduct)
     {
         $idProduct = (int) $idProduct;
+        if ($idProduct <= 0) {
+            return 1;
+        }
+
+        $limits = $this->getLimitedProductLimits();
+
+        return isset($limits[$idProduct]) ? $this->sanitizeLimit($limits[$idProduct]) : 1;
+    }
+
+    protected function getLimitedProductLimitsForJs()
+    {
+        $limits = [];
+        foreach ($this->getLimitedProductLimits() as $idProduct => $limit) {
+            $limits[(string) $idProduct] = (int) $limit;
+        }
+
+        return $limits;
+    }
+
+    protected function addLimitedProduct($idProduct, $limit = 1)
+    {
+        $idProduct = (int) $idProduct;
+        $limit = $this->sanitizeLimit($limit);
         if ($idProduct <= 0) {
             return false;
         }
@@ -237,18 +320,44 @@ class LimitOneProduct extends Module
         if ($rowExists) {
             $result = Db::getInstance()->update(
                 'limitoneproduct',
-                ['updated_at' => pSQL($now)],
+                [
+                    'max_quantity_per_order' => $limit,
+                    'updated_at' => pSQL($now),
+                ],
                 '`id_product` = ' . $idProduct
             );
         } else {
             $result = Db::getInstance()->insert('limitoneproduct', [
                 'id_product' => $idProduct,
+                'max_quantity_per_order' => $limit,
                 'created_at' => pSQL($now),
                 'updated_at' => pSQL($now),
             ]);
         }
 
-        $this->limitedProductIds = null;
+        $this->invalidateLimitedProductCache();
+
+        return (bool) $result;
+    }
+
+    protected function updateLimitedProductLimit($idProduct, $limit)
+    {
+        $idProduct = (int) $idProduct;
+        $limit = $this->sanitizeLimit($limit);
+        if ($idProduct <= 0 || !$this->isLimitedProduct($idProduct)) {
+            return false;
+        }
+
+        $result = Db::getInstance()->update(
+            'limitoneproduct',
+            [
+                'max_quantity_per_order' => $limit,
+                'updated_at' => pSQL(date('Y-m-d H:i:s')),
+            ],
+            '`id_product` = ' . $idProduct
+        );
+
+        $this->invalidateLimitedProductCache();
 
         return (bool) $result;
     }
@@ -260,7 +369,7 @@ class LimitOneProduct extends Module
             return false;
         }
 
-        $this->limitedProductIds = null;
+        $this->invalidateLimitedProductCache();
 
         return (bool) Db::getInstance()->delete('limitoneproduct', '`id_product` = ' . $idProduct);
     }
@@ -300,8 +409,9 @@ class LimitOneProduct extends Module
 
     protected function getLimitedProductsData()
     {
+        $this->ensureDbSchema();
         $rows = Db::getInstance()->executeS(
-            'SELECT lp.`id_product`, pl.`name`, p.`reference`
+            'SELECT lp.`id_product`, lp.`max_quantity_per_order`, pl.`name`, p.`reference`
             FROM `' . _DB_PREFIX_ . 'limitoneproduct` lp
             INNER JOIN `' . _DB_PREFIX_ . 'product` p ON (p.`id_product` = lp.`id_product`)
             INNER JOIN `' . _DB_PREFIX_ . 'product_lang` pl
@@ -316,6 +426,7 @@ class LimitOneProduct extends Module
 
         foreach ($rows as &$row) {
             $row['quantity'] = (int) StockAvailable::getQuantityAvailableByProduct((int) $row['id_product']);
+            $row['max_quantity_per_order'] = $this->sanitizeLimit($row['max_quantity_per_order'] ?? 1);
         }
 
         return $rows;
@@ -329,7 +440,7 @@ class LimitOneProduct extends Module
 
         return '
         <div class="panel">
-            <h3>' . $this->l('Ajouter un produit limite a 1') . '</h3>
+            <h3>' . $this->l('Ajouter un produit limite') . '</h3>
             <form method="post" action="' . $action . '">
                 <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
                 <div class="form-group">
@@ -364,6 +475,7 @@ class LimitOneProduct extends Module
                             <th>' . $this->l('Nom') . '</th>
                             <th>' . $this->l('Reference') . '</th>
                             <th>' . $this->l('Stock') . '</th>
+                            <th>' . $this->l('Limite / commande') . '</th>
                             <th>' . $this->l('Action') . '</th>
                         </tr>
                     </thead>
@@ -371,6 +483,7 @@ class LimitOneProduct extends Module
 
         foreach ($products as $product) {
             $idProduct = (int) $product['id_product'];
+            $existingLimit = $this->isLimitedProduct($idProduct) ? $this->getProductLimit($idProduct) : 1;
             $html .= '
                 <tr>
                     <td>' . $idProduct . '</td>
@@ -380,18 +493,27 @@ class LimitOneProduct extends Module
                     <td>';
 
             if ($this->isLimitedProduct($idProduct)) {
-                $html .= '<span class="label label-info">' . $this->l('Deja limite') . '</span>';
+                $html .= '<span class="label label-info">' . sprintf(
+                    $this->l('Deja limite a %d'),
+                    $existingLimit
+                ) . '</span>';
             } else {
                 $html .= '
-                    <form method="post" action="' . $action . '" style="display:inline-block;">
+                    <form method="post" action="' . $action . '" style="display:flex;align-items:center;gap:12px;">
                         <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
                         <input type="hidden" name="id_product" value="' . $idProduct . '">
+                        <input type="number" class="form-control" name="max_quantity_per_order" min="1" step="1" value="1" style="max-width:110px;">
+                    </td>
+                    <td>
                         <button type="submit" name="submitLimitOneProductAdd" class="btn btn-default">' . $this->l('Ajouter') . '</button>
                     </form>';
             }
 
+            if ($this->isLimitedProduct($idProduct)) {
+                $html .= '</td><td></td>';
+            }
+
             $html .= '
-                    </td>
                 </tr>';
         }
 
@@ -411,7 +533,7 @@ class LimitOneProduct extends Module
         $token = htmlspecialchars(Tools::getAdminTokenLite('AdminModules'), ENT_QUOTES, 'UTF-8');
         $html = '
         <div class="panel">
-            <h3>' . $this->l('Produits limites a 1') . '</h3>';
+            <h3>' . $this->l('Produits limites') . '</h3>';
 
         if (empty($products)) {
             return $html . '<p>' . $this->l('Aucun produit limite.') . '</p></div>';
@@ -426,6 +548,7 @@ class LimitOneProduct extends Module
                             <th>' . $this->l('Nom') . '</th>
                             <th>' . $this->l('Reference') . '</th>
                             <th>' . $this->l('Stock') . '</th>
+                            <th>' . $this->l('Limite / commande') . '</th>
                             <th>' . $this->l('Action') . '</th>
                         </tr>
                     </thead>
@@ -433,6 +556,7 @@ class LimitOneProduct extends Module
 
         foreach ($products as $product) {
             $idProduct = (int) $product['id_product'];
+            $limit = $this->sanitizeLimit($product['max_quantity_per_order'] ?? 1);
             $html .= '
                 <tr>
                     <td>' . $idProduct . '</td>
@@ -440,7 +564,15 @@ class LimitOneProduct extends Module
                     <td>' . htmlspecialchars((string) $product['reference'], ENT_QUOTES, 'UTF-8') . '</td>
                     <td>' . (int) $product['quantity'] . '</td>
                     <td>
-                        <form method="post" action="' . $action . '" style="display:inline-block;">
+                        <form method="post" action="' . $action . '" style="display:flex;align-items:center;gap:12px;">
+                            <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
+                            <input type="hidden" name="id_product" value="' . $idProduct . '">
+                            <input type="number" class="form-control" name="max_quantity_per_order" min="1" step="1" value="' . $limit . '" style="max-width:110px;">
+                    </td>
+                    <td>
+                            <button type="submit" name="submitLimitOneProductUpdate" class="btn btn-default">' . $this->l('Mettre a jour') . '</button>
+                        </form>
+                        <form method="post" action="' . $action . '" style="display:inline-block;margin-left:12px;">
                             <input type="hidden" name="limitoneproduct_token" value="' . $token . '">
                             <input type="hidden" name="id_product" value="' . $idProduct . '">
                             <button type="submit" name="submitLimitOneProductRemove" class="btn btn-link">' . $this->l('Retirer') . '</button>
@@ -470,7 +602,7 @@ class LimitOneProduct extends Module
         return 0;
     }
 
-    protected function getLimitedProductIdsInCart()
+    protected function getLimitedProductCartQuantities()
     {
         $cart = $this->context->cart;
         if (!$cart) {
@@ -482,15 +614,76 @@ class LimitOneProduct extends Module
             return [];
         }
 
-        $productIdsInCart = [];
+        $quantities = [];
         foreach ($cart->getProducts() as $product) {
             $idProduct = (int) ($product['id_product'] ?? 0);
             if ($idProduct > 0 && in_array($idProduct, $limitedIds, true)) {
-                $productIdsInCart[] = $idProduct;
+                $quantities[(string) $idProduct] = (int) ($product['cart_quantity'] ?? 0);
             }
         }
 
-        return array_values(array_unique($productIdsInCart));
+        return $quantities;
+    }
+
+    protected function sanitizeLimit($limit)
+    {
+        $limit = (int) $limit;
+
+        return max(1, $limit);
+    }
+
+    protected function invalidateLimitedProductCache()
+    {
+        $this->limitedProductIds = null;
+        $this->limitedProductLimits = null;
+    }
+
+    protected function ensureDbSchema()
+    {
+        if ($this->schemaEnsured) {
+            return true;
+        }
+
+        $created = Db::getInstance()->execute(
+            'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'limitoneproduct` (
+                `id_limitoneproduct` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `id_product` INT UNSIGNED NOT NULL,
+                `max_quantity_per_order` INT UNSIGNED NOT NULL DEFAULT 1,
+                `created_at` DATETIME NOT NULL,
+                `updated_at` DATETIME NOT NULL,
+                PRIMARY KEY (`id_limitoneproduct`),
+                UNIQUE KEY `uniq_limitoneproduct_product` (`id_product`)
+            ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8mb4;'
+        );
+
+        if (!$created) {
+            return false;
+        }
+
+        $hasLimitColumn = (bool) Db::getInstance()->executeS(
+            'SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'limitoneproduct` LIKE "max_quantity_per_order"'
+        );
+
+        if (!$hasLimitColumn) {
+            $altered = Db::getInstance()->execute(
+                'ALTER TABLE `' . _DB_PREFIX_ . 'limitoneproduct`
+                ADD COLUMN `max_quantity_per_order` INT UNSIGNED NOT NULL DEFAULT 1 AFTER `id_product`'
+            );
+
+            if (!$altered) {
+                return false;
+            }
+        }
+
+        Db::getInstance()->execute(
+            'UPDATE `' . _DB_PREFIX_ . 'limitoneproduct`
+            SET `max_quantity_per_order` = 1
+            WHERE `max_quantity_per_order` IS NULL OR `max_quantity_per_order` < 1'
+        );
+
+        $this->schemaEnsured = true;
+
+        return true;
     }
 
     protected function isValidToken()

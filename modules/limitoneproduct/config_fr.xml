@@ -2,8 +2,8 @@
 <module>
     <name>limitoneproduct</name>
     <displayName><![CDATA[Limit One Product]]></displayName>
-    <version><![CDATA[1.0.0]]></version>
-    <description><![CDATA[Limite la quantit&eacute; &agrave; 1 pour certains produits selon leur r&eacute;f&eacute;rence.]]></description>
+    <version><![CDATA[1.2.0]]></version>
+    <description><![CDATA[Limite la quantit&eacute; maximum par commande pour chaque produit s&eacute;lectionn&eacute;.]]></description>
     <author><![CDATA[David Forero]]></author>
     <tab><![CDATA[front_office_features]]></tab>
     <is_configurable>1</is_configurable>
