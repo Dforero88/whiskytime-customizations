@@ -681,12 +681,8 @@ class LimitOneProduct extends Module
 
     protected function isValidToken()
     {
-        $expectedToken = (string) Tools::getAdminTokenLite('AdminModules');
-        $submittedToken = (string) Tools::getValue('limitoneproduct_token');
-        $requestToken = (string) Tools::getValue('token');
-
-        return ($submittedToken !== '' && hash_equals($expectedToken, $submittedToken))
-            || ($requestToken !== '' && hash_equals($expectedToken, $requestToken));
+        return (bool) $this->context->employee
+            && Validate::isLoadedObject($this->context->employee);
     }
 
     protected function getModuleConfigUrl()
