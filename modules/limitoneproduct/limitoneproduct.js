@@ -63,39 +63,45 @@ document.addEventListener('DOMContentLoaded', function () {
     button.style.opacity = disabled ? '0.5' : '';
   }
 
-  function hideTouchSpinButtons(qtyInput) {
+  function syncTouchSpinButtons(qtyInput, disabled) {
     const wrapper = qtyInput?.closest('.bootstrap-touchspin');
     if (!wrapper) {
       return;
     }
 
     wrapper.querySelectorAll('.bootstrap-touchspin-up, .bootstrap-touchspin-down').forEach((button) => {
-      button.style.display = 'none';
-      button.style.pointerEvents = 'none';
-      button.setAttribute('aria-hidden', 'true');
-      button.disabled = true;
+      button.style.display = '';
+      button.style.pointerEvents = disabled ? 'none' : '';
+      button.setAttribute('aria-hidden', 'false');
+      button.disabled = disabled;
+      button.style.opacity = disabled ? '0.4' : '';
     });
   }
 
-  function observeTouchSpin(qtyInput) {
+  function observeTouchSpin(qtyInput, disabled) {
     const parent = qtyInput?.parentElement;
-    if (!qtyInput || !parent || parent.dataset.limitOneObserved === '1') {
+    if (!qtyInput || !parent) {
+      return;
+    }
+
+    syncTouchSpinButtons(qtyInput, disabled);
+
+    if (parent.dataset.limitOneObserved === '1') {
       return;
     }
 
     parent.dataset.limitOneObserved = '1';
     const observer = new MutationObserver(function () {
-      hideTouchSpinButtons(qtyInput);
+      syncTouchSpinButtons(qtyInput, disabled);
     });
 
     observer.observe(parent, { childList: true, subtree: true });
-    hideTouchSpinButtons(qtyInput);
-    setTimeout(() => hideTouchSpinButtons(qtyInput), 50);
-    setTimeout(() => hideTouchSpinButtons(qtyInput), 300);
-    setTimeout(() => hideTouchSpinButtons(qtyInput), 800);
+    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled), 50);
+    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled), 300);
+    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled), 800);
   }
 
-  function applyQuantityInputLimit(qtyInput, value, max, disabled) {
+  function applyQuantityInputLimit(qtyInput, value, max, disabled, readonly) {
     if (!qtyInput) {
       return;
     }
@@ -106,16 +112,20 @@ document.addEventListener('DOMContentLoaded', function () {
     qtyInput.value = String(normalizedValue);
     qtyInput.setAttribute('min', 1);
     qtyInput.setAttribute('max', normalizedMax);
-    qtyInput.setAttribute('readonly', 'readonly');
+    if (readonly) {
+      qtyInput.setAttribute('readonly', 'readonly');
+    } else {
+      qtyInput.removeAttribute('readonly');
+    }
     if (disabled) {
       qtyInput.setAttribute('disabled', 'disabled');
     } else {
       qtyInput.removeAttribute('disabled');
     }
-    qtyInput.style.cursor = 'not-allowed';
-    qtyInput.style.pointerEvents = 'none';
+    qtyInput.style.cursor = disabled ? 'not-allowed' : '';
+    qtyInput.style.pointerEvents = disabled ? 'none' : '';
 
-    observeTouchSpin(qtyInput);
+    observeTouchSpin(qtyInput, disabled);
   }
 
   function ensureLimitMessage(limit, reached) {
@@ -187,12 +197,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const remainingQty = Math.max(0, limit - cartQty);
     const qtyInput = document.querySelector('input[name="qty"], #quantity_wanted');
     const addButton = document.querySelector('.add-to-cart, [data-button-action="add-to-cart"]');
+    const desiredValue = Math.max(1, Math.min(parseInt(qtyInput?.value, 10) || 1, remainingQty || 1));
 
     if (remainingQty <= 0) {
-      applyQuantityInputLimit(qtyInput, 1, 1, true);
+      applyQuantityInputLimit(qtyInput, 1, 1, true, true);
       setAddToCartDisabled(addButton, true);
     } else {
-      applyQuantityInputLimit(qtyInput, remainingQty, remainingQty, false);
+      applyQuantityInputLimit(qtyInput, desiredValue, remainingQty, false, false);
       setAddToCartDisabled(addButton, false);
     }
 
@@ -215,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const limit = getLimitForProduct(productId);
       const currentQty = Math.min(limit, Math.max(1, parseInt(qtyInput.value, 10) || 1));
 
-      applyQuantityInputLimit(qtyInput, currentQty, limit, false);
+      applyQuantityInputLimit(qtyInput, currentQty, limit, false, false);
     });
   }
 
