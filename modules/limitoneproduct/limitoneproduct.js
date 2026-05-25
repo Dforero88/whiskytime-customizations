@@ -69,12 +69,55 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    wrapper.querySelectorAll('.bootstrap-touchspin-up, .bootstrap-touchspin-down').forEach((button) => {
+    const currentValue = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+    const maxValue = Math.max(1, parseInt(qtyInput.getAttribute('max'), 10) || 1);
+    const upButton = wrapper.querySelector('.bootstrap-touchspin-up');
+    const downButton = wrapper.querySelector('.bootstrap-touchspin-down');
+
+    [upButton, downButton].forEach((button) => {
+      if (!button) {
+        return;
+      }
+
       button.style.display = '';
-      button.style.pointerEvents = disabled ? 'none' : '';
       button.setAttribute('aria-hidden', 'false');
-      button.disabled = disabled;
-      button.style.opacity = disabled ? '0.4' : '';
+    });
+
+    if (upButton) {
+      const blockIncrement = disabled || currentValue >= maxValue;
+      upButton.style.pointerEvents = blockIncrement ? 'none' : '';
+      upButton.disabled = blockIncrement;
+      upButton.style.opacity = blockIncrement ? '0.4' : '';
+    }
+
+    if (downButton) {
+      const blockDecrement = disabled || currentValue <= 1;
+      downButton.style.pointerEvents = blockDecrement ? 'none' : '';
+      downButton.disabled = blockDecrement;
+      downButton.style.opacity = blockDecrement ? '0.4' : '';
+    }
+  }
+
+  function attachQuantityWatchers(qtyInput, disabled) {
+    if (!qtyInput) {
+      return;
+    }
+
+    const wrapper = qtyInput.closest('.bootstrap-touchspin');
+    if (!wrapper) {
+      return;
+    }
+
+    const refresh = function () {
+      setTimeout(() => {
+        syncTouchSpinButtons(qtyInput, disabled || qtyInput.disabled);
+      }, 0);
+    };
+
+    qtyInput.addEventListener('change', refresh);
+    qtyInput.addEventListener('input', refresh);
+    wrapper.querySelectorAll('.bootstrap-touchspin-up, .bootstrap-touchspin-down').forEach((button) => {
+      button.addEventListener('click', refresh);
     });
   }
 
@@ -91,14 +134,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     parent.dataset.limitOneObserved = '1';
+    attachQuantityWatchers(qtyInput, disabled);
     const observer = new MutationObserver(function () {
-      syncTouchSpinButtons(qtyInput, disabled);
+      syncTouchSpinButtons(qtyInput, disabled || qtyInput.disabled);
     });
 
     observer.observe(parent, { childList: true, subtree: true });
-    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled), 50);
-    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled), 300);
-    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled), 800);
+    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled || qtyInput.disabled), 50);
+    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled || qtyInput.disabled), 300);
+    setTimeout(() => syncTouchSpinButtons(qtyInput, disabled || qtyInput.disabled), 800);
   }
 
   function applyQuantityInputLimit(qtyInput, value, max, disabled, readonly) {
@@ -203,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
       applyQuantityInputLimit(qtyInput, 1, 1, true, true);
       setAddToCartDisabled(addButton, true);
     } else {
-      applyQuantityInputLimit(qtyInput, desiredValue, remainingQty, false, false);
+      applyQuantityInputLimit(qtyInput, desiredValue, remainingQty, false, true);
       setAddToCartDisabled(addButton, false);
     }
 
@@ -226,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const limit = getLimitForProduct(productId);
       const currentQty = Math.min(limit, Math.max(1, parseInt(qtyInput.value, 10) || 1));
 
-      applyQuantityInputLimit(qtyInput, currentQty, limit, false, false);
+      applyQuantityInputLimit(qtyInput, currentQty, limit, false, true);
     });
   }
 
