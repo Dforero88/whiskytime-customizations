@@ -372,13 +372,23 @@
             <p class="warning">{l s='No posts found' mod='ets_blog'}</p>
         {/if}
         {if $blog_post.related_posts}
-            <div class="ets-blog-related-posts ets_blog_related_posts_type_static">
-                <h4 class="title_blog">{l s='Related posts' mod='ets_blog'}</h4>
-                <div class="ets-blog-related-posts-wrapper">
+            <div class="ets-blog-related-posts ets_blog_related_posts_type_static wtrelatedblog">
+                <div class="wtrelatedblog__header">
+                    <h4 class="title_blog">{l s='Related posts' mod='ets_blog'}</h4>
+                    <div class="wtrelatedblog__nav" data-related-nav hidden>
+                        <button type="button" class="wtrelatedblog__arrow wtrelatedblog__arrow--prev" data-related-prev aria-label="{l s='Articles précédents' mod='ets_blog'}">
+                            <span aria-hidden="true">&larr;</span>
+                        </button>
+                        <button type="button" class="wtrelatedblog__arrow wtrelatedblog__arrow--next" data-related-next aria-label="{l s='Articles suivants' mod='ets_blog'}">
+                            <span aria-hidden="true">&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="ets-blog-related-posts-wrapper wtrelatedblog__viewport" data-related-viewport>
                     {assign var='post_row' value=3}
-                    <ul class="ets-blog-related-posts-list dt-{$post_row|intval}">
+                    <ul class="ets-blog-related-posts-list wtrelatedblog__track dt-{$post_row|intval}" data-related-track>
                         {foreach from=$blog_post.related_posts item='rpost'}                                            
-                            <li class="ets-blog-related-posts-list-li col-xs-12 col-sm-4 col-lg-{12/$post_row|intval} thumbnail-container">
+                            <li class="ets-blog-related-posts-list-li wtrelatedblog__item col-xs-12 col-sm-4 col-lg-{12/$post_row|intval} thumbnail-container">
                                 {if $rpost.thumb}
                                     <a class="ets_item_img" href="{$rpost.link|escape:'html':'UTF-8'}">
                                         <img src="{$rpost.thumb|escape:'html':'UTF-8'}" alt="{$rpost.title|escape:'html':'UTF-8'}" />
@@ -427,6 +437,63 @@
                     </ul>
                 </div>
             </div>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                var block = document.querySelector('.wtrelatedblog');
+
+                if (!block) {
+                  return;
+                }
+
+                var viewport = block.querySelector('[data-related-viewport]');
+                var track = block.querySelector('[data-related-track]');
+                var nav = block.querySelector('[data-related-nav]');
+                var prevButton = block.querySelector('[data-related-prev]');
+                var nextButton = block.querySelector('[data-related-next]');
+
+                if (!viewport || !track || !nav || !prevButton || !nextButton) {
+                  return;
+                }
+
+                var getScrollStep = function () {
+                  return Math.max(viewport.clientWidth * 0.92, 280);
+                };
+
+                var updateState = function () {
+                  var maxScrollLeft = Math.max(track.scrollWidth - viewport.clientWidth, 0);
+                  var hasOverflow = maxScrollLeft > 4;
+
+                  nav.hidden = !hasOverflow;
+                  prevButton.disabled = !hasOverflow || track.scrollLeft <= 4;
+                  nextButton.disabled = !hasOverflow || track.scrollLeft >= maxScrollLeft - 4;
+                };
+
+                prevButton.addEventListener('click', function () {
+                  track.scrollBy({
+                    left: -getScrollStep(),
+                    behavior: 'smooth'
+                  });
+                });
+
+                nextButton.addEventListener('click', function () {
+                  track.scrollBy({
+                    left: getScrollStep(),
+                    behavior: 'smooth'
+                  });
+                });
+
+                track.addEventListener('scroll', updateState, { passive: true });
+                window.addEventListener('resize', updateState);
+
+                if (typeof ResizeObserver !== 'undefined') {
+                  var resizeObserver = new ResizeObserver(updateState);
+                  resizeObserver.observe(track);
+                  resizeObserver.observe(viewport);
+                }
+
+                updateState();
+              });
+            </script>
         {/if}
     </div>
 </div>

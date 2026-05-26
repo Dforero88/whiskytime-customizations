@@ -2748,13 +2748,68 @@
   font-weight: 700;
 }
 
-#ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
   gap: 18px;
+  margin-bottom: 18px;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  color: #2f241b;
+  background: #fff;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__arrow:hover,
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__arrow:focus-visible {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__arrow[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__viewport {
+  overflow: hidden;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list::-webkit-scrollbar {
+  display: none;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__item {
+  flex: 0 0 calc((100% - 48px) / 3);
+  min-width: 0;
+  scroll-snap-align: start;
 }
 
 #ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list-li {
@@ -2843,8 +2898,8 @@
 }
 
 @media (max-width: 1199px) {
-  #ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  #ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__item {
+    flex-basis: calc((100% - 24px) / 2);
   }
 }
 
@@ -2857,8 +2912,13 @@
     padding: 20px;
   }
 
-  #ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list {
-    grid-template-columns: 1fr;
+  #ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  #ets_blog_page .ets-blog-wrapper-detail .wtrelatedblog__item {
+    flex-basis: 100%;
   }
 }
 
