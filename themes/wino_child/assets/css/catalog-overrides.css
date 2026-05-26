@@ -2272,6 +2272,9 @@
   grid-template-columns: 92px minmax(0, 1fr);
   gap: 10px;
   align-items: start;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
 }
 
 #ets_blog_page .ets_blog_sidebar .ets_block_slider .ets_item_img {
@@ -2279,6 +2282,8 @@
   overflow: hidden;
   border-radius: 16px;
   background: #fff;
+  width: auto !important;
+  float: none !important;
 }
 
 #ets_blog_page .ets_blog_sidebar .ets_block_slider .ets_item_img img {
@@ -2293,6 +2298,9 @@
   display: grid;
   gap: 8px;
   min-width: 0;
+  width: auto !important;
+  float: none !important;
+  padding: 0 !important;
 }
 
 #ets_blog_page .ets_blog_sidebar .ets_block_slider .ets_title_block {
@@ -2320,6 +2328,16 @@
 #ets_blog_page .ets_blog_sidebar .ets_block_slider .read_more {
   padding: 8px 12px;
   font-size: 12px;
+}
+
+#ets_blog_page .ets_blog_sidebar .ets_block_latest .owl-stage-outer,
+#ets_blog_page .ets_blog_sidebar .ets_block_latest .owl-stage,
+#ets_blog_page .ets_blog_sidebar .ets_block_latest .owl-item {
+  height: auto !important;
+}
+
+#ets_blog_page .ets_blog_sidebar .ets_block_latest .blog_description {
+  display: none;
 }
 
 #ets_blog_page .ets_blog_sidebar .button,
@@ -2400,6 +2418,8 @@
   overflow: hidden;
   background: #fff;
   border-right: 1px solid var(--primary-color-light);
+  width: auto !important;
+  float: none !important;
 }
 
 #ets_blog_page .ets-blog-list .ets_item_img img {
@@ -2414,6 +2434,9 @@
 #ets_blog_page .ets-blog-list .ets-blog-wrapper-content {
   display: flex;
   flex: 1 1 auto;
+  width: auto !important;
+  float: none !important;
+  padding-left: 0 !important;
 }
 
 #ets_blog_page .ets-blog-list .ets-blog-wrapper-content-main {
