@@ -1673,3 +1673,151 @@
     min-height: 170px;
   }
 }
+
+#module-eventsmanager-events,
+#module-eventsmanager-events #wrapper,
+#module-eventsmanager-events #content-wrapper,
+#module-eventsmanager-events #main,
+#module-eventsmanager-events .compojoom-bootstrap,
+#module-eventsmanager-events .wtevents-page {
+  background: #fff !important;
+}
+
+#module-eventsmanager-events .wtevents-page {
+  padding-bottom: 24px;
+}
+
+#module-eventsmanager-events .wtevents-page__selected-tag {
+  float: right;
+}
+
+#module-eventsmanager-events .wtevents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#module-eventsmanager-events .wtevents-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: stretch;
+  padding: 16px;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary-color-light) 58%, white) 0%, transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--primary-color-light) 26%, white) 0%, #fff 100%);
+  border: 2px solid var(--primary-color-light);
+  border-radius: 24px;
+}
+
+#module-eventsmanager-events .wtevents-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 24px;
+}
+
+#module-eventsmanager-events .wtevents-card__media {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 14px;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+}
+
+#module-eventsmanager-events .wtevents-card__image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#module-eventsmanager-events .wtevents-card__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 10px 8px 6px 0;
+}
+
+#module-eventsmanager-events .wtevents-card__title {
+  margin: 0;
+}
+
+#module-eventsmanager-events .wtevents-card__title a {
+  color: #2f241b !important;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-decoration: none;
+}
+
+#module-eventsmanager-events .wtevents-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+#module-eventsmanager-events .wtevents-card__meta-item,
+#module-eventsmanager-events .wtevents-card__detail {
+  color: #63574c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+#module-eventsmanager-events .wtevents-card__meta-item strong,
+#module-eventsmanager-events .wtevents-card__detail strong {
+  color: #2f241b;
+  font-weight: 700;
+}
+
+#module-eventsmanager-events .wtevents-card__details {
+  display: grid;
+  gap: 6px;
+}
+
+@media (max-width: 991px) {
+  #module-eventsmanager-events .wtevents-card {
+    grid-template-columns: 1fr;
+  }
+
+  #module-eventsmanager-events .wtevents-card__media {
+    min-height: 200px;
+  }
+
+  #module-eventsmanager-events .wtevents-card__body {
+    padding: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  #module-eventsmanager-events .wtevents-card {
+    gap: 16px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  #module-eventsmanager-events .wtevents-card__overlay {
+    border-radius: 20px;
+  }
+
+  #module-eventsmanager-events .wtevents-card__title a {
+    font-size: 22px;
+  }
+
+  #module-eventsmanager-events .wtevents-card__media {
+    min-height: 180px;
+  }
+}
