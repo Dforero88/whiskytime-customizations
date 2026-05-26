@@ -2457,6 +2457,10 @@
   background: transparent;
 }
 
+#ets_blog_page .wtblog-page__content-inner {
+  gap: 24px;
+}
+
 #ets_blog_page .ets-blog-list.blog-main-page {
   display: grid;
   grid-template-columns: 1fr;
@@ -2484,9 +2488,16 @@
   border: 2px solid var(--primary-color-light);
   border-radius: 26px;
   box-shadow: none;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+#ets_blog_page .ets-blog-list > li:hover .post-wrapper {
+  border-color: color-mix(in srgb, var(--primary-color) 28%, var(--primary-color-light));
+  transform: translateY(-2px);
 }
 
 #ets_blog_page .ets-blog-list .ets_item_img {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2495,6 +2506,14 @@
   border-right: 1px solid var(--primary-color-light);
   width: auto !important;
   float: none !important;
+}
+
+#ets_blog_page .ets-blog-list .ets_item_img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.03) 100%);
 }
 
 #ets_blog_page .ets-blog-list .ets_item_img img {
@@ -2518,8 +2537,9 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: 14px;
-  padding: 20px 22px 22px;
+  gap: 16px;
+  justify-content: center;
+  padding: 24px 26px 24px;
 }
 
 #ets_blog_page .ets-blog-list .ets_title_block {
@@ -2528,6 +2548,10 @@
   font-weight: 600;
   line-height: 1.15;
   text-decoration: none;
+}
+
+#ets_blog_page .ets-blog-list .ets_title_block:hover {
+  color: var(--primary-color);
 }
 
 #ets_blog_page .ets-blog-list .ets-blog-sidear-post-meta,
@@ -2541,6 +2565,36 @@
   line-height: 1.7;
 }
 
+#ets_blog_page .ets-blog-list .ets-blog-sidear-post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -2px;
+}
+
+#ets_blog_page .ets-blog-list .ets-blog-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+#ets_blog_page .ets-blog-list .ets-blog-categories a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 12px;
+  color: var(--primary-color);
+  background: var(--primary-color-light);
+  border-radius: 999px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+#ets_blog_page .ets-blog-list .ets-blog-categories a:hover {
+  opacity: 0.88;
+}
+
 #ets_blog_page .ets-blog-list .be-label {
   color: #2f241b;
   font-weight: 700;
@@ -2552,6 +2606,10 @@
 
 #ets_blog_page .ets-blog-list .blog_description p {
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 #ets_blog_page .ets-blog-list .read_more {
