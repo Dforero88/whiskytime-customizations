@@ -58,7 +58,15 @@ class Soonproducts extends Module
     public function getContent()
     {
         $output = '';
-        $this->cleanupSoonProducts();
+
+        if (Tools::isSubmit('submitSoonproductsUpdate')) {
+            if (!$this->isValidToken()) {
+                $output .= $this->displayError($this->l('Invalid security token.'));
+            } else {
+                $removedCount = $this->cleanupSoonProducts();
+                $output .= $this->displayConfirmation(sprintf($this->l('%d product(s) removed from soon list.'), (int) $removedCount));
+            }
+        }
 
         if (Tools::isSubmit('submitSoonproductsAdd')) {
             if (!$this->isValidToken()) {
@@ -176,7 +184,6 @@ class Soonproducts extends Module
             return $this->soonProductIds;
         }
 
-        $this->cleanupSoonProducts();
         $rows = Db::getInstance()->executeS('SELECT `id_product` FROM `' . _DB_PREFIX_ . 'soonproducts`');
         $this->soonProductIds = array_map('intval', array_column($rows ?: [], 'id_product'));
 
@@ -189,18 +196,23 @@ class Soonproducts extends Module
         if (!$rows) {
             $this->soonProductIds = [];
 
-            return;
+            return 0;
         }
 
+        $removedCount = 0;
         foreach ($rows as $row) {
             $idProduct = (int) $row['id_product'];
             if ($idProduct > 0 && StockAvailable::getQuantityAvailableByProduct($idProduct) > 0) {
-                Db::getInstance()->delete('soonproducts', '`id_product` = ' . $idProduct);
+                if (Db::getInstance()->delete('soonproducts', '`id_product` = ' . $idProduct)) {
+                    $removedCount++;
+                }
             }
         }
 
         $rows = Db::getInstance()->executeS('SELECT `id_product` FROM `' . _DB_PREFIX_ . 'soonproducts`');
         $this->soonProductIds = array_map('intval', array_column($rows ?: [], 'id_product'));
+
+        return $removedCount;
     }
 
     protected function addSoonProduct($idProduct)
@@ -276,14 +288,12 @@ class Soonproducts extends Module
     protected function renderSearchForm($searchTerm)
     {
         $action = htmlspecialchars($this->getModuleConfigUrl(), ENT_QUOTES, 'UTF-8');
-        $token = htmlspecialchars(Tools::getAdminTokenLite('AdminModules'), ENT_QUOTES, 'UTF-8');
         $searchTerm = htmlspecialchars($searchTerm, ENT_QUOTES, 'UTF-8');
 
         return '
         <div class="panel">
             <h3>' . $this->l('Ajouter un produit bientot dispo') . '</h3>
             <form method="post" action="' . $action . '">
-                <input type="hidden" name="soonproducts_token" value="' . $token . '">
                 <div class="form-group">
                     <label>' . $this->l('Rechercher un produit') . '</label>
                     <input type="text" class="form-control" name="soonproducts_search" value="' . $searchTerm . '" placeholder="' . $this->l('Nom, reference...') . '">
@@ -304,7 +314,6 @@ class Soonproducts extends Module
         }
 
         $action = htmlspecialchars($this->getModuleConfigUrl(), ENT_QUOTES, 'UTF-8');
-        $token = htmlspecialchars(Tools::getAdminTokenLite('AdminModules'), ENT_QUOTES, 'UTF-8');
         $html = '
         <div class="panel">
             <h3>' . $this->l('Resultats') . '</h3>
@@ -340,7 +349,6 @@ class Soonproducts extends Module
             } else {
                 $html .= '
                     <form method="post" action="' . $action . '" style="display:inline-block;">
-                        <input type="hidden" name="soonproducts_token" value="' . $token . '">
                         <input type="hidden" name="id_product" value="' . $idProduct . '">
                         <button type="submit" name="submitSoonproductsAdd" class="btn btn-default">' . $this->l('Ajouter') . '</button>
                     </form>';
@@ -364,11 +372,15 @@ class Soonproducts extends Module
     {
         $products = $this->getSoonProductsData();
         $action = htmlspecialchars($this->getModuleConfigUrl(), ENT_QUOTES, 'UTF-8');
-        $token = htmlspecialchars(Tools::getAdminTokenLite('AdminModules'), ENT_QUOTES, 'UTF-8');
 
         $html = '
         <div class="panel">
-            <h3>' . $this->l('Produits bientot dispo') . '</h3>';
+            <div class="panel-heading" style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                <h3 style="margin:0;">' . $this->l('Produits bientot dispo') . '</h3>
+                <form method="post" action="' . $action . '" style="margin:0;">
+                    <button type="submit" name="submitSoonproductsUpdate" class="btn btn-default">' . $this->l('Update') . '</button>
+                </form>
+            </div>';
 
         if (empty($products)) {
             return $html . '<p>' . $this->l('Aucun produit flague.') . '</p></div>';
@@ -396,7 +408,6 @@ class Soonproducts extends Module
                     <td>' . (int) $product['quantity'] . '</td>
                     <td>
                         <form method="post" action="' . $action . '" style="display:inline-block;">
-                            <input type="hidden" name="soonproducts_token" value="' . $token . '">
                             <input type="hidden" name="id_product" value="' . $idProduct . '">
                             <button type="submit" name="submitSoonproductsRemove" class="btn btn-link">' . $this->l('Retirer') . '</button>
                         </form>
@@ -415,7 +426,8 @@ class Soonproducts extends Module
 
     protected function isValidToken()
     {
-        return Tools::getValue('soonproducts_token') === Tools::getAdminTokenLite('AdminModules');
+        return (bool) $this->context->employee
+            && Validate::isLoadedObject($this->context->employee);
     }
 
     protected function getModuleConfigUrl()
