@@ -2615,6 +2615,19 @@
   border-radius: 26px;
 }
 
+#ets_blog_page .ets-blog-wrapper-detail .blog-extra,
+#ets_blog_page .ets-blog-wrapper-detail .extra_tag_cat {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+#ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
 #ets_blog_page .ets-blog-wrapper-detail .ets-blog-latest-toolbar,
 #ets_blog_page .ets-blog-wrapper-detail .blog-extra {
   color: #5d5247;
