@@ -107,13 +107,6 @@
 
     <section class="wtevent-detail">
       <header class="wtevent-detail__hero">
-        <div class="wtevent-detail__media">
-          <img
-            class="wtevent-detail__image"
-            src="{if $force_ssl == 1}{$base_dir_ssl|escape:'htmlall':'UTF-8'}{else}{$base_dir|escape:'htmlall':'UTF-8'}{/if}img/{$eventData.contact_photo|escape:'htmlall':'UTF-8'}"
-            alt="{$eventData.event_title|escape:'htmlall':'UTF-8'}"
-          />
-        </div>
         <div class="wtevent-detail__panel">
           <h1 class="wtevent-detail__title">{$eventData.event_title|escape:'htmlall':'UTF-8'}</h1>
 
@@ -198,7 +191,18 @@
       <section class="wtevent-detail__section">
         <h2 class="wtevent-detail__section-title">{l s='Description' mod='eventsmanager'}</h2>
         <div class="wtevent-detail__content">
-          {$eventData.event_content nofilter}{* HTML Content *}
+          <div class="wtevent-detail__content-layout">
+            <div class="wtevent-detail__content-media">
+              <img
+                class="wtevent-detail__content-image"
+                src="{if $force_ssl == 1}{$base_dir_ssl|escape:'htmlall':'UTF-8'}{else}{$base_dir|escape:'htmlall':'UTF-8'}{/if}img/{$eventData.contact_photo|escape:'htmlall':'UTF-8'}"
+                alt="{$eventData.event_title|escape:'htmlall':'UTF-8'}"
+              />
+            </div>
+            <div class="wtevent-detail__content-copy">
+              {$eventData.event_content nofilter}{* HTML Content *}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -221,10 +225,18 @@
                       <a class="btn btn-primary mat_btn_book {if $version < 1.6}button{/if}" href="{$link->getProductLink($product->id)|escape:'htmlall':'UTF-8'}">{l s='Buy Ticket' mod='eventsmanager'}</a>
                     {else}
                       <form action="{$link->getPageLink('cart', true, NULL, "token={$static_token|escape:'htmlall':'UTF-8'}&amp;add=1&id_product={$product->id|intval}&id_product_attribute=0")|escape:'html':'UTF-8'}" method="post" class="wtevent-ticket__form">
-                        <div class="qty wtevent-ticket__qty">
-                          <button type="button" class="wtevent-ticket__qty-btn wtevent-ticket__qty-btn--minus" onclick="var input=this.parentNode.querySelector('input[name=&quot;qty&quot;]'); var current=parseInt(input.value||1,10); input.value=Math.max(parseInt(input.min||1,10), current-1);">-</button>
-                          <input type="text" name="qty" id="quantity_wanted_{$product->id|intval}" class="input-group form-control js-cart-quantity wtevent-ticket__qty-input" min="1" value="1" inputmode="numeric">
-                          <button type="button" class="wtevent-ticket__qty-btn wtevent-ticket__qty-btn--plus" onclick="var input=this.parentNode.querySelector('input[name=&quot;qty&quot;]'); var current=parseInt(input.value||1,10); input.value=Math.max(parseInt(input.min||1,10), current+1);">+</button>
+                        <div class="qty">
+                          <div class="input-group bootstrap-touchspin wtevent-ticket__qty">
+                            <input type="text" name="qty" id="quantity_wanted_{$product->id|intval}" class="input-group form-control js-cart-quantity wtevent-ticket__qty-input" min="1" value="1" inputmode="numeric">
+                            <span class="input-group-btn-vertical">
+                              <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up" type="button" onclick="var input=this.closest('.bootstrap-touchspin').querySelector('input[name=&quot;qty&quot;]'); var current=parseInt(input.value||1,10); input.value=Math.max(parseInt(input.min||1,10), current+1);">
+                                <i class="material-icons touchspin-up"></i>
+                              </button>
+                              <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down" type="button" onclick="var input=this.closest('.bootstrap-touchspin').querySelector('input[name=&quot;qty&quot;]'); var current=parseInt(input.value||1,10); input.value=Math.max(parseInt(input.min||1,10), current-1);">
+                                <i class="material-icons touchspin-down"></i>
+                              </button>
+                            </span>
+                          </div>
                         </div>
                         <input type="hidden" name="id_product" value="{$product->id}">
                         <button

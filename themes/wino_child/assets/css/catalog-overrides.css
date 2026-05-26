@@ -1837,7 +1837,7 @@
 
 #module-eventsmanager-events .wtevent-detail__hero {
   display: grid;
-  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   align-items: stretch;
   padding: 18px;
@@ -1846,27 +1846,6 @@
     linear-gradient(180deg, color-mix(in srgb, var(--primary-color-light) 26%, white) 0%, #fff 100%);
   border: 2px solid var(--primary-color-light);
   border-radius: 28px;
-}
-
-#module-eventsmanager-events .wtevent-detail__media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 320px;
-  padding: 20px;
-  background: #fff;
-  border: 1px solid var(--primary-color-light);
-  border-radius: 22px;
-  overflow: hidden;
-}
-
-#module-eventsmanager-events .wtevent-detail__image {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
 }
 
 #module-eventsmanager-events .wtevent-detail__panel {
@@ -2001,6 +1980,42 @@
   margin-bottom: 0;
 }
 
+#module-eventsmanager-events .wtevent-detail__content-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+#module-eventsmanager-events .wtevent-detail__content-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#module-eventsmanager-events .wtevent-detail__content-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#module-eventsmanager-events .wtevent-detail__content-copy > *:first-child {
+  margin-top: 0;
+}
+
+#module-eventsmanager-events .wtevent-detail__content-copy > *:last-child {
+  margin-bottom: 0;
+}
+
 #module-eventsmanager-events .wtevent-tickets {
   display: grid;
   gap: 18px;
@@ -2070,42 +2085,27 @@
   gap: 12px;
 }
 
-#module-eventsmanager-events .wtevent-ticket__qty {
-  display: inline-grid;
-  grid-template-columns: 44px 72px 44px;
-  align-items: center;
-  width: auto;
-  overflow: hidden;
-  border: 1px solid var(--primary-color-light);
-  border-radius: 14px;
-  background: #fff;
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin {
+  margin: 0;
 }
 
-#module-eventsmanager-events .wtevent-ticket__qty-btn {
-  height: 46px;
-  border: 0;
-  background: var(--primary-color-light);
-  color: var(--primary-color);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1;
-  cursor: pointer;
-}
-
-#module-eventsmanager-events .wtevent-ticket__qty-btn:hover {
-  background: color-mix(in srgb, var(--primary-color-light) 82%, white 18%);
-}
-
-#module-eventsmanager-events .wtevent-ticket__qty-input.form-control,
-#module-eventsmanager-events .wtevent-ticket__form .form-control {
-  height: 46px;
-  border: 0;
-  border-radius: 0;
-  background: #fff;
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.form-control,
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.input-group {
+  width: 3.5rem;
+  height: 2.875rem;
+  border-color: var(--primary-color-light);
+  border-radius: 14px 0 0 14px;
   color: #2f241b;
-  text-align: center;
-  box-shadow: none;
-  padding: 0 8px;
+  font-weight: 600;
+}
+
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .btn-touchspin {
+  border-color: var(--primary-color-light);
+  background: #fff;
+}
+
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .btn-touchspin:hover {
+  background: var(--primary-color-light);
 }
 
 #module-eventsmanager-events .wtevent-detail__gallery .slider-pro,
@@ -2123,8 +2123,8 @@
 }
 
 @media (max-width: 1199px) {
-  #module-eventsmanager-events .wtevent-detail__hero {
-    grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+  #module-eventsmanager-events .wtevent-detail__content-layout {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
   }
 }
 
@@ -2134,12 +2134,16 @@
     grid-template-columns: 1fr;
   }
 
-  #module-eventsmanager-events .wtevent-detail__media {
-    min-height: 260px;
-  }
-
   #module-eventsmanager-events .wtevent-detail__panel {
     padding: 0;
+  }
+
+  #module-eventsmanager-events .wtevent-detail__content-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #module-eventsmanager-events .wtevent-detail__content-media {
+    min-height: 240px;
   }
 
   #module-eventsmanager-events .wtevent-ticket__actions {
