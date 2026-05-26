@@ -1502,3 +1502,174 @@
     align-items: flex-start;
   }
 }
+
+#module-giftcard-mygiftcards,
+#module-giftcard-mygiftcards #wrapper,
+#module-giftcard-mygiftcards #content-wrapper,
+#module-giftcard-mygiftcards #main,
+#module-giftcard-mygiftcards #products,
+#module-giftcard-mygiftcards .products,
+#module-giftcard-mygiftcards .wtcatalog-list,
+#module-giftcard-mygiftcards .wtgiftcards-page.card,
+#module-giftcard-mygiftcards .wtgiftcards-page .card {
+  background: #fff !important;
+}
+
+#module-giftcard-mygiftcards .wtgiftcards-page {
+  border: 0;
+  box-shadow: none;
+}
+
+#module-giftcard-mygiftcards hr,
+#module-giftcard-mygiftcards .sort-search,
+#module-giftcard-mygiftcards .gift-filter.tags,
+#module-giftcard-mygiftcards #gift-product-search,
+#module-giftcard-mygiftcards .row > h6 + .sortandshuffle,
+#module-giftcard-mygiftcards .row > h6 {
+  display: none !important;
+}
+
+#module-giftcard-mygiftcards .gift_products_wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+#module-giftcard-mygiftcards .filtr-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-grid {
+  row-gap: 24px;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  margin-bottom: 0;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card,
+#module-giftcard-mygiftcards .wtcatalog-card .thumbnail-container {
+  height: 100%;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 0;
+  padding: 14px;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary-color-light) 65%, white) 0%, transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--primary-color-light) 35%, white) 0%, #fff 100%);
+  border: 2px solid var(--primary-color-light) !important;
+  border-radius: 24px;
+  box-shadow: none;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 24px;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-image-block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  border: 1px solid var(--primary-color-light) !important;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-thumbnail img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-description {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 18px 10px 8px;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-title {
+  margin: 0 0 12px;
+  min-height: 48px;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-title a {
+  color: #2f241b !important;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-price-and-shipping {
+  margin-top: auto;
+}
+
+#module-giftcard-mygiftcards .wtcatalog-card .product-price-and-shipping .price {
+  color: #2f241b;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+@media (min-width: 1200px) {
+  #module-giftcard-mygiftcards .wtcatalog-grid > .wtcatalog-card {
+    max-width: 33.3333%;
+    flex: 0 0 33.3333%;
+  }
+}
+
+@media (max-width: 1199px) {
+  #module-giftcard-mygiftcards .wtcatalog-grid > .wtcatalog-card {
+    max-width: 33.3333%;
+    flex: 0 0 33.3333%;
+  }
+}
+
+@media (max-width: 991px) {
+  #module-giftcard-mygiftcards .wtcatalog-grid > .wtcatalog-card {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  #module-giftcard-mygiftcards .wtcatalog-grid > .wtcatalog-card {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+
+  #module-giftcard-mygiftcards .wtcatalog-card .product-image-block {
+    min-height: 220px;
+  }
+}
