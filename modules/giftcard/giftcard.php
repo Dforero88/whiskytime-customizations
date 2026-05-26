@@ -1058,14 +1058,40 @@ class GiftCard extends Module
         $action = '';
         $card_type = '';
         $preselected_price = '';
-        $product = [];
-        if ($id_product = (int) Tools::getValue('id_product')) {
+        $product = null;
+        $id_product = 0;
+
+        if (!empty($params['product'])) {
+            if (is_array($params['product'])) {
+                if (!empty($params['product']['id_product'])) {
+                    $id_product = (int) $params['product']['id_product'];
+                } elseif (!empty($params['product']['id'])) {
+                    $id_product = (int) $params['product']['id'];
+                }
+            } elseif (is_object($params['product'])) {
+                if (!empty($params['product']->id_product)) {
+                    $id_product = (int) $params['product']->id_product;
+                } elseif (!empty($params['product']->id)) {
+                    $id_product = (int) $params['product']->id;
+                }
+            }
+        }
+
+        if (!$id_product) {
+            $id_product = (int) Tools::getValue('id_product');
+        }
+
+        if ($id_product) {
             $product = new Product($id_product, true, $this->context->language->id, $this->context->shop->id);
         }
         if (Tools::getIsset('action') && Tools::getValue('action') == 'getGiftPrice') {
             $action = 'getGiftPrice';
             $card_type = (string) Tools::getValue('card_type');
             $preselected_price = (float) Tools::getValue('current_price');
+        }
+
+        if (!$product || !Validate::isLoadedObject($product)) {
+            return;
         }
 
         $vals = Gift::getCardValue($product->id);
@@ -1125,9 +1151,10 @@ class GiftCard extends Module
 
             $this->context->smarty->assign([
                 'values' => $_value,
-                'id_product' => Tools::getValue('id_product'),
+                'id_product' => $id_product,
                 'prices_tax' => $price,
                 'product_url' => $product_url,
+                'link' => $this->context->link,
                 'GIFTCARD_SHARE' => $GIFTCARD_SHARE,
                 'type' => $vals['value_type'],
                 'pid' => $product->id,
@@ -1173,6 +1200,7 @@ class GiftCard extends Module
 
         $this->context->smarty->assign([
             'id_customer' => $id_customer,
+            'link' => $this->context->link,
             'temp_videos' => $temp_videos,
             'video_expiry' => Configuration::get('GIFT_VIDEO_EXPIRY_DAYS'),
             'video_limit' => Configuration::get('GIFT_VIDEO_SIZE_LIMIT'),

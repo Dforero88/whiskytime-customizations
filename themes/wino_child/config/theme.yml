@@ -1,0 +1,67 @@
+name: wino_child
+display_name: Wino Child
+version: 1.0.0
+parent: wino
+
+meta:
+  compatibility:
+    from: 1.7.0.0
+    to: ~
+  available_layouts:
+    layout-full-width:
+      name: Full Width
+      description: No side columns, ideal for distraction-free pages such as product pages.
+    layout-both-columns:
+      name: Three Columns
+      description: One large central column and 2 side columns.
+    layout-left-column:
+      name: Two Columns, small left column
+      description: Two columns with a small left column
+    layout-right-column:
+      name: Two Columns, small right column
+      description: Two columns with a small right column
+
+theme_settings:
+  default_layout: layout-full-width
+  layouts:
+    index: layout-full-width
+    category: layout-left-column
+    product: layout-full-width
+    best-sales: layout-left-column
+    new-products: layout-left-column
+    prices-drop: layout-left-column
+    contact: layout-left-column
+    manufacturer: layout-left-column
+    password: layout-left-column
+    sitemap: layout-left-column
+    supplier: layout-left-column
+    address: layout-left-column
+    addresses: layout-left-column
+    authentication: layout-left-column
+    cart: layout-full-width
+    checkout: layout-left-column
+    discount: layout-left-column
+    history: layout-left-column
+    identity: layout-left-column
+    my-account: layout-left-column
+    order-follow: layout-left-column
+    order-slip: layout-left-column
+    order: layout-left-column
+    search: layout-left-column
+    stores: layout-left-column
+    guest-tracking: layout-left-column
+
+assets:
+  use_parent_assets: true
+  css:
+    all:
+      - id: wino-child-catalog
+        path: assets/css/catalog-overrides.css
+        media: all
+        priority: 1000
+
+global_settings:
+  hooks:
+    modules_to_hook:
+      displayProductAdditionalInfo:
+        - giftcard
