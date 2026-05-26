@@ -2641,6 +2641,10 @@
 }
 
 #ets_blog_page .ets-blog-wrapper-detail .blog_description {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   color: #4f463c;
   font-size: 18px;
   line-height: 1.9;
@@ -2851,7 +2855,6 @@
 }
 
 #ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list-li .ets_title_block {
-  display: block;
   margin-top: 18px;
   margin-bottom: 10px;
   color: #2f241b;
@@ -2860,10 +2863,6 @@
   line-height: 1.35;
   min-height: 54px;
   text-decoration: none;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
 }
 
 #ets_blog_page .ets-blog-wrapper-detail .ets-blog-related-posts-list-li .ets-blog-sidear-post-meta {
