@@ -126,43 +126,43 @@
             </div>
           {/if}
 
-          <div class="wtevent-detail__meta-grid">
-            <div class="wtevent-detail__meta-card">
-              <span class="wtevent-detail__meta-label">{l s='From' mod='eventsmanager'}</span>
-              <span class="wtevent-detail__meta-value">{$eventData.event_start_date|date_format:"%A %e %B %Y"|capitalize:true|escape:'htmlall':'UTF-8'}{if $events_timestamp > 0} {l s='at' mod='eventsmanager'} {$eventData.event_start_date|date_format:"%H:%M"|escape:'htmlall':'UTF-8'}{/if}</span>
+          <div class="wtevent-detail__meta-list">
+            <div class="wtevent-detail__meta-line">
+              <strong>{l s='From' mod='eventsmanager'}:</strong>
+              <span>{$eventData.event_start_date|date_format:"%A %e %B %Y"|capitalize:true|escape:'htmlall':'UTF-8'}{if $events_timestamp > 0} {l s='at' mod='eventsmanager'} {$eventData.event_start_date|date_format:"%H:%M"|escape:'htmlall':'UTF-8'}{/if}</span>
             </div>
-            <div class="wtevent-detail__meta-card">
-              <span class="wtevent-detail__meta-label">{l s='To' mod='eventsmanager'}</span>
-              <span class="wtevent-detail__meta-value">{$eventData.event_end_date|date_format:"%A %e %B %Y"|capitalize:true|escape:'htmlall':'UTF-8'}{if $events_timestamp > 0} {l s='at' mod='eventsmanager'} {$eventData.event_end_date|date_format:"%H:%M"|escape:'htmlall':'UTF-8'}{/if}</span>
+            <div class="wtevent-detail__meta-line">
+              <strong>{l s='To' mod='eventsmanager'}:</strong>
+              <span>{$eventData.event_end_date|date_format:"%A %e %B %Y"|capitalize:true|escape:'htmlall':'UTF-8'}{if $events_timestamp > 0} {l s='at' mod='eventsmanager'} {$eventData.event_end_date|date_format:"%H:%M"|escape:'htmlall':'UTF-8'}{/if}</span>
             </div>
             {if $eventData.event_venu neq ""}
-              <div class="wtevent-detail__meta-card">
-                <span class="wtevent-detail__meta-label">{l s='Venue' mod='eventsmanager'}</span>
+              <div class="wtevent-detail__meta-line">
+                <strong>{l s='Venue' mod='eventsmanager'}:</strong>
                 <span class="wtevent-detail__meta-value mapThis" place="{$eventData.event_venu|escape:'htmlall':'UTF-8'}" zoom="10">{$eventData.event_venu|escape:'htmlall':'UTF-8'}</span>
               </div>
             {/if}
             {if $eventData.contact_name neq ""}
-              <div class="wtevent-detail__meta-card">
-                <span class="wtevent-detail__meta-label">{l s='Contact Person' mod='eventsmanager'}</span>
-                <span class="wtevent-detail__meta-value">{$eventData.contact_name|escape:'htmlall':'UTF-8'}</span>
+              <div class="wtevent-detail__meta-line">
+                <strong>{l s='Contact Person' mod='eventsmanager'}:</strong>
+                <span>{$eventData.contact_name|escape:'htmlall':'UTF-8'}</span>
               </div>
             {/if}
             {if $eventData.contact_phone neq ""}
-              <div class="wtevent-detail__meta-card">
-                <span class="wtevent-detail__meta-label">{l s='Phone' mod='eventsmanager'}</span>
-                <span class="wtevent-detail__meta-value">{$eventData.contact_phone|escape:'htmlall':'UTF-8'}</span>
+              <div class="wtevent-detail__meta-line">
+                <strong>{l s='Phone' mod='eventsmanager'}:</strong>
+                <span>{$eventData.contact_phone|escape:'htmlall':'UTF-8'}</span>
               </div>
             {/if}
             {if $eventData.contact_email neq ""}
-              <div class="wtevent-detail__meta-card">
-                <span class="wtevent-detail__meta-label">{l s='Email' mod='eventsmanager'}</span>
-                <span class="wtevent-detail__meta-value">{$eventData.contact_email|escape:'htmlall':'UTF-8'}</span>
+              <div class="wtevent-detail__meta-line">
+                <strong>{l s='Email' mod='eventsmanager'}:</strong>
+                <span>{$eventData.contact_email|escape:'htmlall':'UTF-8'}</span>
               </div>
             {/if}
             {if $eventData.contact_address neq ""}
-              <div class="wtevent-detail__meta-card">
-                <span class="wtevent-detail__meta-label">{l s='Address' mod='eventsmanager'}</span>
-                <span class="wtevent-detail__meta-value">{$eventData.contact_address|escape:'htmlall':'UTF-8'}</span>
+              <div class="wtevent-detail__meta-line">
+                <strong>{l s='Address' mod='eventsmanager'}:</strong>
+                <span>{$eventData.contact_address|escape:'htmlall':'UTF-8'}</span>
               </div>
             {/if}
           </div>
@@ -221,8 +221,10 @@
                       <a class="btn btn-primary mat_btn_book {if $version < 1.6}button{/if}" href="{$link->getProductLink($product->id)|escape:'htmlall':'UTF-8'}">{l s='Buy Ticket' mod='eventsmanager'}</a>
                     {else}
                       <form action="{$link->getPageLink('cart', true, NULL, "token={$static_token|escape:'htmlall':'UTF-8'}&amp;add=1&id_product={$product->id|intval}&id_product_attribute=0")|escape:'html':'UTF-8'}" method="post" class="wtevent-ticket__form">
-                        <div class="qty">
-                          <input type="text" name="qty" id="quantity_wanted_{$product->id|intval}" class="input-group form-control js-cart-quantity" min="1" value="1">
+                        <div class="qty wtevent-ticket__qty">
+                          <button type="button" class="wtevent-ticket__qty-btn wtevent-ticket__qty-btn--minus" onclick="var input=this.parentNode.querySelector('input[name=&quot;qty&quot;]'); var current=parseInt(input.value||1,10); input.value=Math.max(parseInt(input.min||1,10), current-1);">-</button>
+                          <input type="text" name="qty" id="quantity_wanted_{$product->id|intval}" class="input-group form-control js-cart-quantity wtevent-ticket__qty-input" min="1" value="1" inputmode="numeric">
+                          <button type="button" class="wtevent-ticket__qty-btn wtevent-ticket__qty-btn--plus" onclick="var input=this.parentNode.querySelector('input[name=&quot;qty&quot;]'); var current=parseInt(input.value||1,10); input.value=Math.max(parseInt(input.min||1,10), current+1);">+</button>
                         </div>
                         <input type="hidden" name="id_product" value="{$product->id}">
                         <button
