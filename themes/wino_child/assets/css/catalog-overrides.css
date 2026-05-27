@@ -876,6 +876,16 @@
   }
 }
 
+@media (max-width: 991px) {
+  #header.is-open #mobile_top_menu_wrapper {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (max-width: 991px) and (min-width: 768px) {
   .page-product .wtproduct-details__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
