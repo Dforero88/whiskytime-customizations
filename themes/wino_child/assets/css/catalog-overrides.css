@@ -616,11 +616,6 @@
   margin: 0;
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
-
 .page-product .product-tabcontent .tabs .nav-link {
   display: inline-flex;
   align-items: center;

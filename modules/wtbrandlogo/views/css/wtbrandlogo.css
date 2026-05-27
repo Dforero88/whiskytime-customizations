@@ -1,0 +1,191 @@
+.wtbrandlogo {
+  margin: 34px 0 64px;
+  background: #fff !important;
+}
+
+.wtbrandlogo .container {
+  display: grid;
+  gap: 26px;
+  background: #fff !important;
+}
+
+.wtbrandlogo__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.wtbrandlogo .title_blog.title_block,
+.wtbrandlogo__title {
+  font-family: "Great Vibes", cursive !important;
+  font-size: 48px !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  display: inline-block !important;
+  margin: 0;
+  color: #000 !important;
+  padding: 0;
+}
+
+.wtbrandlogo__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wtbrandlogo__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 999px;
+  background: #fff;
+  color: #2f241b;
+  box-shadow: 0 12px 30px rgba(29, 17, 8, 0.06);
+  cursor: pointer;
+}
+
+.wtbrandlogo__arrow:hover,
+.wtbrandlogo__arrow:focus-visible {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.wtbrandlogo__arrow[disabled] {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+
+.wtbrandlogo__viewport {
+  overflow: hidden;
+  background: #fff !important;
+}
+
+.wtbrandlogo__track {
+  display: flex;
+  gap: 24px;
+  overflow-x: hidden;
+  padding-bottom: 0;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: #fff !important;
+}
+
+.wtbrandlogo__track::-webkit-scrollbar {
+  display: none;
+}
+
+.wtbrandlogo__item {
+  display: flex;
+  flex: 0 0 calc((100% - 96px) / 5);
+  min-width: 0;
+  text-decoration: none !important;
+  scroll-snap-align: start;
+}
+
+.wtbrandlogo__card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 182px;
+  padding: 14px;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary-color-light) 65%, white) 0%, transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--primary-color-light) 35%, white) 0%, #fff 100%);
+  border: 2px solid var(--primary-color-light) !important;
+  border-radius: 24px;
+  box-shadow: none;
+}
+
+.wtbrandlogo__item:hover .wtbrandlogo__card,
+.wtbrandlogo__item:focus-visible .wtbrandlogo__card {
+  border-color: var(--primary-color-light) !important;
+  box-shadow: none;
+}
+
+.wtbrandlogo__logo-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 154px;
+  padding: 20px;
+  border: 1px solid var(--primary-color-light) !important;
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.wtbrandlogo__logo {
+  display: block;
+  max-width: 100%;
+  max-height: 86px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: saturate(1.02);
+}
+
+@media (max-width: 1199px) {
+  .wtbrandlogo .title_blog.title_block,
+  .wtbrandlogo__title {
+    font-size: clamp(34px, 5vw, 48px) !important;
+  }
+
+  .wtbrandlogo__item {
+    flex-basis: calc((100% - 72px) / 4);
+  }
+}
+
+@media (max-width: 991px) {
+  .wtbrandlogo__item {
+    flex-basis: calc((100% - 48px) / 3);
+  }
+}
+
+@media (max-width: 767px) {
+  .wtbrandlogo {
+    margin: 24px 0 46px;
+  }
+
+  .wtbrandlogo__header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .wtbrandlogo .title_blog.title_block,
+  .wtbrandlogo__title {
+    font-size: clamp(30px, 9vw, 42px) !important;
+  }
+
+  .wtbrandlogo__track {
+    gap: 18px;
+  }
+
+  .wtbrandlogo__item {
+    flex-basis: calc((100% - 18px) / 2);
+  }
+
+  .wtbrandlogo__card {
+    min-height: 156px;
+    padding: 12px;
+  }
+
+  .wtbrandlogo__logo-shell {
+    min-height: 132px;
+    padding: 16px;
+  }
+
+  .wtbrandlogo__logo {
+    max-height: 72px;
+  }
+}
