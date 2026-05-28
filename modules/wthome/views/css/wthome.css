@@ -344,6 +344,7 @@
 
   .wthome__welcome-copy {
     min-height: auto;
+    padding-left: 0;
   }
 
   .wthome .title_blog.title_block,

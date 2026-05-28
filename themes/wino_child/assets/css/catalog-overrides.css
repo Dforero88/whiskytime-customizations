@@ -858,6 +858,22 @@
     margin: 34px 0 44px;
   }
 
+  .page-product .product-tabcontent .tabs .nav-tabs {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .page-product .product-tabcontent .tabs .nav-item {
+    flex: 1 1 0;
+  }
+
+  .page-product .product-tabcontent .tabs .nav-link {
+    width: 100%;
+    min-width: 0;
+    padding: 0 12px !important;
+    white-space: nowrap;
+  }
+
   .page-product .product-tabcontent .tab-content > .tab-pane {
     padding: 20px 18px;
     border-radius: 20px;
@@ -1149,6 +1165,7 @@
   }
 
   .page-product .wtproduct-strip .products.wtproduct-strip__grid {
+    grid-template-columns: 1fr;
     gap: 18px;
   }
 }
