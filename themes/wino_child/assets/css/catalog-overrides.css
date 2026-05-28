@@ -663,6 +663,16 @@
 }
 
 .page-product .product-tabcontent .tab-content > .tab-pane {
+  display: none;
+}
+
+.page-product .product-tabcontent .tab-content > .tab-pane.active,
+.page-product .product-tabcontent .tab-content > .tab-pane.in,
+.page-product .product-tabcontent .tab-content > .tab-pane.js-product-tab-active {
+  display: block;
+}
+
+.page-product .product-tabcontent .tab-content > .tab-pane {
   padding: 24px 26px;
   background:
     radial-gradient(circle at top right, color-mix(in srgb, var(--primary-color-light) 58%, white) 0%, transparent 34%),
