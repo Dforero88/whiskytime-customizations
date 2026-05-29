@@ -898,6 +898,8 @@
 
 .page-product .product-add-to-cart .bootstrap-touchspin {
   margin: 0;
+  display: flex;
+  align-items: stretch;
 }
 
 .page-product .product-add-to-cart .bootstrap-touchspin input.form-control,
