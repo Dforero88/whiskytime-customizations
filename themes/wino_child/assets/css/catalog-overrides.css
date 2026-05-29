@@ -2124,25 +2124,86 @@
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin {
   margin: 0;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 14px;
+  background: #fff;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.form-control,
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.input-group {
   width: 3.5rem;
   height: 2.875rem;
-  border-color: var(--primary-color-light);
-  border-radius: 14px 0 0 14px;
+  border: 0;
+  border-right: 1px solid var(--primary-color-light);
+  border-radius: 0;
   color: #2f241b;
   font-weight: 600;
+  box-shadow: none;
+}
+
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .input-group-btn-vertical {
+  display: flex;
+  flex-direction: column;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  align-self: stretch;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .btn-touchspin {
-  border-color: var(--primary-color-light);
+  display: flex;
+  flex: 1 1 50%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   background: #fff;
+  color: #2f241b;
+  box-shadow: none;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .btn-touchspin:hover {
   background: var(--primary-color-light);
+}
+
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .bootstrap-touchspin-up {
+  border-bottom: 1px solid var(--primary-color-light);
+}
+
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .touchspin-up::before,
+#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .touchspin-down::before {
+  font-size: 18px;
+  line-height: 1;
+}
+
+#module-eventsmanager-events .wtevent-ticket__form .btn-primary,
+#module-eventsmanager-events .wtevent-ticket__form .mat_btn_book {
+  min-height: 2.875rem;
+  padding: 0 22px;
+  border: 1px solid var(--primary-color);
+  border-radius: 14px;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+#module-eventsmanager-events .wtevent-ticket__form .btn-primary:hover,
+#module-eventsmanager-events .wtevent-ticket__form .mat_btn_book:hover,
+#module-eventsmanager-events .wtevent-ticket__form .btn-primary:focus,
+#module-eventsmanager-events .wtevent-ticket__form .mat_btn_book:focus {
+  background: color-mix(in srgb, var(--primary-color) 90%, black);
+  border-color: color-mix(in srgb, var(--primary-color) 90%, black);
+  color: #fff;
+  text-decoration: none;
 }
 
 #module-eventsmanager-events .wtevent-detail__gallery .slider-pro,
