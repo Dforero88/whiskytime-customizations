@@ -2124,6 +2124,8 @@
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin {
   margin: 0;
+  display: flex;
+  align-items: stretch;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.form-control,
