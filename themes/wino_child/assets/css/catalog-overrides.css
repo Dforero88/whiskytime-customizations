@@ -120,6 +120,11 @@
   text-transform: uppercase;
 }
 
+#products .product-miniature.js-product-miniature {
+  border-right: 0;
+  border-bottom: 0;
+}
+
 .page-category .products-sort-order {
   float: none;
   max-width: 320px;
