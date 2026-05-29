@@ -2124,31 +2124,21 @@
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin {
   margin: 0;
-  display: flex;
-  align-items: stretch;
-  overflow: hidden;
-  border: 1px solid var(--primary-color-light);
-  border-radius: 14px;
-  background: #fff;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.form-control,
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin input.input-group {
   width: 3.5rem;
   height: 2.875rem;
-  border: 0;
-  border-right: 1px solid var(--primary-color-light);
-  border-radius: 0;
+  border-color: var(--primary-color-light);
+  border-radius: 14px 0 0 14px;
   color: #2f241b;
   font-weight: 600;
-  box-shadow: none;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .input-group-btn-vertical {
   display: flex;
   flex-direction: column;
-  width: 2.5rem;
-  min-width: 2.5rem;
   align-self: stretch;
 }
 
@@ -2157,28 +2147,13 @@
   flex: 1 1 50%;
   align-items: center;
   justify-content: center;
-  width: 100%;
   min-height: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
+  border-color: var(--primary-color-light);
   background: #fff;
-  color: #2f241b;
-  box-shadow: none;
 }
 
 #module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .btn-touchspin:hover {
   background: var(--primary-color-light);
-}
-
-#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .bootstrap-touchspin-up {
-  border-bottom: 1px solid var(--primary-color-light);
-}
-
-#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .touchspin-up::before,
-#module-eventsmanager-events .wtevent-ticket__qty.bootstrap-touchspin .touchspin-down::before {
-  font-size: 18px;
-  line-height: 1;
 }
 
 #module-eventsmanager-events .wtevent-ticket__form .btn-primary,
