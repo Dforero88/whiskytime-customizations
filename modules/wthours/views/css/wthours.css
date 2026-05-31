@@ -3,6 +3,12 @@
   background: #fff !important;
 }
 
+.wthours[id],
+.wthours__copy[id],
+.wthours__location[id] {
+  scroll-margin-top: 120px;
+}
+
 .wthours .container {
   background: #fff !important;
 }
