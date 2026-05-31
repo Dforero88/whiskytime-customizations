@@ -1,7 +1,7 @@
 <section class="wthours">
   <div class="container">
     <div class="wthours__inner">
-      <div class="wthours__copy">
+      <div class="wthours__copy" id="wthours-hours">
         <h2 class="title_blog title_block wthours__title">{$wthours.title|escape:'html':'UTF-8'}</h2>
         <div class="wthours__text">{$wthours.body|nl2br nofilter}</div>
       </div>

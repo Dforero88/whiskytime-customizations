@@ -7,6 +7,10 @@
   background: #fff !important;
 }
 
+.wthours__copy[id] {
+  scroll-margin-top: 120px;
+}
+
 .wthours__inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
