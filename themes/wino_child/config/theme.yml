@@ -61,6 +61,35 @@ assets:
         priority: 1000
 
 global_settings:
+  image_types:
+    cart_default:
+      width: 70
+      height: 76
+      scope: [ products ]
+    small_default:
+      width: 98
+      height: 98
+      scope: [ products, categories, manufacturers, suppliers ]
+    medium_default:
+      width: 452
+      height: 452
+      scope: [ products, manufacturers, suppliers ]
+    home_default:
+      width: 300
+      height: 314
+      scope: [ products ]
+    large_default:
+      width: 955
+      height: 1000
+      scope: [ products, manufacturers, suppliers ]
+    category_default:
+      width: 885
+      height: 200
+      scope: [ categories ]
+    stores_default:
+      width: 170
+      height: 115
+      scope: [ stores ]
   hooks:
     modules_to_hook:
       displayProductAdditionalInfo:
