@@ -1,10 +1,12 @@
 (function () {
+  var supportedHashes = ['#wthours-hours', '#wthours-address', '#wthours-contact'];
+
   function scrollToHoursAnchor() {
-    if (window.location.hash !== '#wthours-hours') {
+    if (supportedHashes.indexOf(window.location.hash) === -1) {
       return;
     }
 
-    var target = document.getElementById('wthours-hours');
+    var target = document.getElementById(window.location.hash.substring(1));
     if (!target) {
       return;
     }

@@ -72,7 +72,7 @@ class WtHours extends Module
             [
                 'media' => 'all',
                 'priority' => 150,
-                'version' => '20260524-10',
+                'version' => '20260601-01',
             ]
         );
     }
@@ -94,6 +94,9 @@ class WtHours extends Module
             'address_label' => $this->l('Boutique'),
             'address_line_1' => "Rue de l'Horloge 6",
             'address_line_2' => '1095 Lutry',
+            'contact_label' => $this->l('Contact'),
+            'phone' => '+41 21 791 70 02',
+            'email' => 'info@whisky-time.ch',
         ];
     }
 
