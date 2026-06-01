@@ -1640,6 +1640,10 @@
   line-height: 1;
 }
 
+:is(.page-category, .page-manufacturer) .page-list .spacer::after {
+  content: none;
+}
+
 @media (max-width: 767px) {
   :is(.page-category, .page-manufacturer) .products-selection,
   :is(.page-category, .page-manufacturer) .pagination {
