@@ -1624,6 +1624,22 @@
   list-style: none;
 }
 
+:is(.page-category, .page-manufacturer) .page-list .spacer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 999px;
+  background: #fff;
+  color: #2f241b;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
 @media (max-width: 767px) {
   :is(.page-category, .page-manufacturer) .products-selection,
   :is(.page-category, .page-manufacturer) .pagination {
