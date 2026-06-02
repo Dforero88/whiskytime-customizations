@@ -7,6 +7,8 @@ class WtBanner extends Module
 {
     const CFG_IMAGE = 'WTBANNER_IMAGE';
     const CFG_ALT = 'WTBANNER_ALT';
+    const CFG_FOCAL_X = 'WTBANNER_FOCAL_X';
+    const CFG_FOCAL_Y = 'WTBANNER_FOCAL_Y';
     const MAX_UPLOAD_SIZE = 5242880;
 
     public function __construct()
@@ -27,7 +29,7 @@ class WtBanner extends Module
     public function install()
     {
         return parent::install()
-            && $this->registerHook('displayHome')
+            && $this->registerHook('displayTopColumn')
             && $this->registerHook('displayHeader');
     }
 
@@ -66,7 +68,17 @@ class WtBanner extends Module
         );
     }
 
+    public function hookDisplayTopColumn($params)
+    {
+        return $this->renderBanner();
+    }
+
     public function hookDisplayHome($params)
+    {
+        return $this->renderBanner();
+    }
+
+    protected function renderBanner()
     {
         $fileName = (string) Configuration::get(self::CFG_IMAGE);
         if (!$fileName || !is_file($this->getUploadDir() . $fileName)) {
@@ -77,6 +89,8 @@ class WtBanner extends Module
             'wtbanner' => [
                 'image_url' => $this->getUploadUrl($fileName),
                 'alt' => $this->getTranslatedAlt(),
+                'focal_x' => $this->getFocalPoint(self::CFG_FOCAL_X),
+                'focal_y' => $this->getFocalPoint(self::CFG_FOCAL_Y),
             ],
         ]);
 
@@ -146,6 +160,20 @@ class WtBanner extends Module
                         'name' => self::CFG_ALT,
                         'lang' => true,
                     ],
+                    [
+                        'type' => 'text',
+                        'label' => $this->l('Cadrage horizontal (%)'),
+                        'name' => self::CFG_FOCAL_X,
+                        'suffix' => '%',
+                        'desc' => $this->l('0 = gauche, 50 = centre, 100 = droite.'),
+                    ],
+                    [
+                        'type' => 'text',
+                        'label' => $this->l('Cadrage vertical (%)'),
+                        'name' => self::CFG_FOCAL_Y,
+                        'suffix' => '%',
+                        'desc' => $this->l('0 = haut, 50 = centre, 100 = bas.'),
+                    ],
                 ],
                 'submit' => [
                     'title' => $this->l('Enregistrer'),
@@ -180,6 +208,8 @@ class WtBanner extends Module
             $values[self::CFG_ALT][$idLang] = Configuration::get(self::CFG_ALT, $idLang) ?: $defaultAlt;
         }
 
+        $values[self::CFG_FOCAL_X] = (string) $this->getFocalPoint(self::CFG_FOCAL_X);
+        $values[self::CFG_FOCAL_Y] = (string) $this->getFocalPoint(self::CFG_FOCAL_Y);
         $values['WTBANNER_REMOVE_IMAGE'] = 0;
 
         return $values;
@@ -220,6 +250,8 @@ class WtBanner extends Module
             $translations[$idLang] = $value !== '' ? $value : $defaultAlt;
         }
         Configuration::updateValue(self::CFG_ALT, $translations, true);
+        Configuration::updateValue(self::CFG_FOCAL_X, $this->sanitizeFocalPoint(Tools::getValue(self::CFG_FOCAL_X, 50)));
+        Configuration::updateValue(self::CFG_FOCAL_Y, $this->sanitizeFocalPoint(Tools::getValue(self::CFG_FOCAL_Y, 50)));
 
         if (empty($errors) && !$currentFile) {
             $errors[] = $this->l('Veuillez televerser une image pour activer la banniere.');
@@ -293,7 +325,9 @@ class WtBanner extends Module
     protected function deleteConfiguration()
     {
         return Configuration::deleteByName(self::CFG_IMAGE)
-            && Configuration::deleteByName(self::CFG_ALT);
+            && Configuration::deleteByName(self::CFG_ALT)
+            && Configuration::deleteByName(self::CFG_FOCAL_X)
+            && Configuration::deleteByName(self::CFG_FOCAL_Y);
     }
 
     protected function getUploadDir()
@@ -311,6 +345,26 @@ class WtBanner extends Module
         $alt = (string) Configuration::get(self::CFG_ALT, (int) $this->context->language->id);
 
         return $alt !== '' ? $alt : $this->getDefaultAlt();
+    }
+
+    protected function getFocalPoint($key)
+    {
+        return $this->sanitizeFocalPoint(Configuration::get($key, null, null, null, 50));
+    }
+
+    protected function sanitizeFocalPoint($value)
+    {
+        $value = (int) round((float) $value);
+
+        if ($value < 0) {
+            return 0;
+        }
+
+        if ($value > 100) {
+            return 100;
+        }
+
+        return $value;
     }
 
     protected function getDefaultAlt()
