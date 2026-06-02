@@ -3,13 +3,17 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class WtBanner extends Module
+use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
+
+class WtBanner extends Module implements WidgetInterface
 {
     const CFG_IMAGE = 'WTBANNER_IMAGE';
     const CFG_ALT = 'WTBANNER_ALT';
     const CFG_FOCAL_X = 'WTBANNER_FOCAL_X';
     const CFG_FOCAL_Y = 'WTBANNER_FOCAL_Y';
     const MAX_UPLOAD_SIZE = 5242880;
+
+    protected $templateFile;
 
     public function __construct()
     {
@@ -24,6 +28,7 @@ class WtBanner extends Module
 
         $this->displayName = $this->l('Whisky Time Banner');
         $this->description = $this->l('Affiche une bannière hero pleine largeur sur la home a partir d\'une seule image.');
+        $this->templateFile = 'module:' . $this->name . '/views/templates/hook/wtbanner.tpl';
     }
 
     public function install()
@@ -70,31 +75,45 @@ class WtBanner extends Module
 
     public function hookDisplayTopColumn($params)
     {
-        return $this->renderBanner();
+        return $this->renderWidget('displayTopColumn', $params);
     }
 
     public function hookDisplayHome($params)
     {
-        return $this->renderBanner();
+        return $this->renderWidget('displayHome', $params);
     }
 
-    protected function renderBanner()
+    public function renderWidget($hookName = null, array $configuration = [])
     {
-        $fileName = (string) Configuration::get(self::CFG_IMAGE);
-        if (!$fileName || !is_file($this->getUploadDir() . $fileName)) {
+        if (empty($configuration['from_theme_widget'])) {
             return '';
         }
 
-        $this->context->smarty->assign([
+        $variables = $this->getWidgetVariables($hookName, $configuration);
+        if (empty($variables)) {
+            return '';
+        }
+
+        $this->smarty->assign($variables);
+
+        return $this->fetch($this->templateFile);
+    }
+
+    public function getWidgetVariables($hookName = null, array $configuration = [])
+    {
+        $fileName = (string) Configuration::get(self::CFG_IMAGE);
+        if (!$fileName || !is_file($this->getUploadDir() . $fileName)) {
+            return [];
+        }
+
+        return [
             'wtbanner' => [
                 'image_url' => $this->getUploadUrl($fileName),
                 'alt' => $this->getTranslatedAlt(),
                 'focal_x' => $this->getFocalPoint(self::CFG_FOCAL_X),
                 'focal_y' => $this->getFocalPoint(self::CFG_FOCAL_Y),
             ],
-        ]);
-
-        return $this->display(__FILE__, 'views/templates/hook/wtbanner.tpl');
+        ];
     }
 
     protected function renderConfigurationPage()
