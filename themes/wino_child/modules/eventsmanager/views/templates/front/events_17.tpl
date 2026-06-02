@@ -55,6 +55,9 @@
           <article class="wtevents-card">
             <a class="wtevents-card__overlay" href="{$event_link}{* HTML CONTENT *}" aria-label="{if !empty($_event.event_title)}{$_event.event_title|escape:'htmlall':'UTF-8'}{/if}"></a>
             <div class="wtevents-card__media">
+              {if !empty($_event.is_sold_out)}
+                <span class="wtevents-card__badge">{l s='Complet' mod='eventsmanager'}</span>
+              {/if}
               <img class="wtevents-card__image" src="{if $force_ssl == 1}{$base_dir_ssl|escape:'htmlall':'UTF-8'}{else}{$base_dir|escape:'htmlall':'UTF-8'}{/if}img/{$_event.contact_photo|escape:'htmlall':'UTF-8'}" alt="{if !empty($_event.event_title)}{$_event.event_title|escape:'htmlall':'UTF-8'}{/if}" />
             </div>
             <div class="wtevents-card__body">
@@ -83,6 +86,9 @@
         <article class="wtevents-card">
           <a class="wtevents-card__overlay" href="{$event_link}{* HTML CONTENT *}" aria-label="{if !empty($_event.event_title)}{$_event.event_title|escape:'htmlall':'UTF-8'}{/if}"></a>
           <div class="wtevents-card__media">
+            {if !empty($_event.is_sold_out)}
+              <span class="wtevents-card__badge">{l s='Complet' mod='eventsmanager'}</span>
+            {/if}
             <img class="wtevents-card__image" src="{if $force_ssl == 1}{$base_dir_ssl|escape:'htmlall':'UTF-8'}{else}{$base_dir|escape:'htmlall':'UTF-8'}{/if}img/{$_event.contact_photo|escape:'htmlall':'UTF-8'}" alt="{if !empty($_event.event_title)}{$_event.event_title|escape:'htmlall':'UTF-8'}{/if}" />
           </div>
           <div class="wtevents-card__body">

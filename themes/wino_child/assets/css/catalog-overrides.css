@@ -2009,6 +2009,26 @@
   overflow: hidden;
 }
 
+#module-eventsmanager-events .wtevents-card__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 #module-eventsmanager-events .wtevents-card__image {
   display: block;
   width: auto;
@@ -2096,6 +2116,11 @@
 
   #module-eventsmanager-events .wtevents-card__media {
     min-height: 180px;
+  }
+
+  #module-eventsmanager-events .wtevents-card__badge {
+    top: 12px;
+    left: 12px;
   }
 }
 

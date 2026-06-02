@@ -17,6 +17,7 @@ class EventsManagerEventsModuleFrontController extends ModuleFrontController
 {
     protected $event;
     protected $show;
+    protected $invalidEvent = false;
     public $useSSL = true;
 
     public function setMedia($isNewTheme = false)
@@ -59,9 +60,7 @@ class EventsManagerEventsModuleFrontController extends ModuleFrontController
         if ($event_id = Tools::getValue('event_id')) {
             $this->event = new Events((int) $event_id, $this->context->language->id);
             if (!Validate::isLoadedObject($this->event) || !$this->event->event_status) {
-                header('HTTP/1.1 404 Not Found');
-                header('Status: 404 Not Found');
-                $this->errors[] = Tools::displayError('Event does not exist.');
+                $this->invalidEvent = true;
             }
         }
     }
@@ -69,6 +68,9 @@ class EventsManagerEventsModuleFrontController extends ModuleFrontController
     public function initContent()
     {
         parent::initContent();
+        if ($this->invalidEvent) {
+            Tools::redirect($this->context->link->getModuleLink('eventsmanager', 'events', ['show' => 'grid'], true));
+        }
         if (Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=') == true) {
             $force_ssl = (Configuration::get('PS_SSL_ENABLED') && Configuration::get('PS_SSL_ENABLED_EVERYWHERE'));
             $this->context->smarty->assign(
@@ -550,6 +552,7 @@ class EventsManagerEventsModuleFrontController extends ModuleFrontController
                 Context::getContext()->language->id,
                 $pagesLimit
             );
+            $get_events_all = $this->appendSaleStatus($get_events_all);
             $result = Events::getAllFrontEvents(Context::getContext()->language->id, '');
             $nbEvents = count($result);
             $pages = new EventsPaginator();
@@ -572,6 +575,45 @@ class EventsManagerEventsModuleFrontController extends ModuleFrontController
         } else {
             $this->context->smarty->assign('nbEvents', 0);
         }
+    }
+
+    protected function appendSaleStatus($events)
+    {
+        if (empty($events) || !is_array($events)) {
+            return $events;
+        }
+
+        $eventsModel = new Events();
+        foreach ($events as &$event) {
+            $event['is_sold_out'] = false;
+            if (empty($event['event_id'])) {
+                continue;
+            }
+
+            $products = $eventsModel->getProduct((int) $event['event_id']);
+            if (empty($products) || !is_array($products)) {
+                continue;
+            }
+
+            $hasAvailableProduct = false;
+            foreach ($products as $productData) {
+                $product = new Product((int) $productData['id_product']);
+                if (!Validate::isLoadedObject($product)) {
+                    continue;
+                }
+
+                if ((int) $product->available_for_order === 1 && (int) $productData['quantity'] > 0) {
+                    $hasAvailableProduct = true;
+                    break;
+                }
+            }
+
+            $event['is_sold_out'] = !$hasAvailableProduct;
+        }
+
+        unset($event);
+
+        return $events;
     }
 
     public function drawCalendar($month, $year)
