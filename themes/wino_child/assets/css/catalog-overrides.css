@@ -817,9 +817,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 8px 16px 14px;
-  background:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--primary-color-light) 45%, white) 0%, transparent 42%),
-    linear-gradient(180deg, color-mix(in srgb, var(--primary-color-light) 18%, white) 0%, #fff 100%);
+  background: #fff;
   border: 1px solid var(--primary-color-light);
   border-radius: 18px;
 }
