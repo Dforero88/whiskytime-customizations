@@ -1,12 +1,12 @@
 .wtbanner {
   width: 100%;
-  margin: 0 0 2.5rem;
+  margin: 0 0 2rem;
 }
 
 .wtbanner__media {
   display: block;
   width: 100%;
-  height: clamp(260px, 28vw, 420px);
+  height: clamp(180px, 18vw, 300px);
   overflow: hidden;
 }
 
@@ -20,16 +20,16 @@
 
 @media (max-width: 991px) {
   .wtbanner {
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 
   .wtbanner__media {
-    height: clamp(220px, 40vw, 320px);
+    height: clamp(170px, 28vw, 240px);
   }
 }
 
 @media (max-width: 767px) {
   .wtbanner__media {
-    height: clamp(210px, 58vw, 300px);
+    height: clamp(160px, 42vw, 210px);
   }
 }

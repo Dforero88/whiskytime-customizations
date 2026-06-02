@@ -48,10 +48,12 @@ class WtBanner extends Module implements WidgetInterface
 
     public function getContent()
     {
+        $this->registerAdminAssets();
+
         if (Tools::isSubmit('submitWtBanner')) {
             $errors = $this->saveConfiguration();
             if (!empty($errors)) {
-            return $this->displayError(implode('<br>', $errors)) . $this->renderConfigurationPage();
+                return $this->displayError(implode('<br>', $errors)) . $this->renderConfigurationPage();
             }
 
             return $this->displayConfirmation($this->l('Configuration mise à jour.')) . $this->renderConfigurationPage();
@@ -129,11 +131,17 @@ class WtBanner extends Module implements WidgetInterface
         }
 
         $imageUrl = $this->getUploadUrl($fileName);
+        $focalX = (int) $this->getFocalPoint(self::CFG_FOCAL_X);
+        $focalY = (int) $this->getFocalPoint(self::CFG_FOCAL_Y);
 
         return '
-            <div class="panel">
+            <div class="panel wtbanner-admin">
                 <h3><i class="icon-picture"></i> ' . $this->l('Apercu de l\'image actuelle') . '</h3>
-                <img src="' . htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') . '" alt="" style="display:block;max-width:100%;height:auto;border-radius:12px;">
+                <p class="wtbanner-admin__help">' . $this->l('Cliquez ou faites glisser dans l\'apercu pour choisir visuellement la zone qui restera visible sur la home.') . '</p>
+                <div class="wtbanner-admin__viewport" data-wtbanner-cropper data-focal-x="' . $focalX . '" data-focal-y="' . $focalY . '">
+                    <img src="' . htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') . '" alt="" data-wtbanner-preview-image>
+                    <span class="wtbanner-admin__marker" data-wtbanner-marker></span>
+                </div>
             </div>
         ';
     }
@@ -180,18 +188,12 @@ class WtBanner extends Module implements WidgetInterface
                         'lang' => true,
                     ],
                     [
-                        'type' => 'text',
-                        'label' => $this->l('Cadrage horizontal (%)'),
+                        'type' => 'hidden',
                         'name' => self::CFG_FOCAL_X,
-                        'suffix' => '%',
-                        'desc' => $this->l('0 = gauche, 50 = centre, 100 = droite.'),
                     ],
                     [
-                        'type' => 'text',
-                        'label' => $this->l('Cadrage vertical (%)'),
+                        'type' => 'hidden',
                         'name' => self::CFG_FOCAL_Y,
-                        'suffix' => '%',
-                        'desc' => $this->l('0 = haut, 50 = centre, 100 = bas.'),
                     ],
                 ],
                 'submit' => [
@@ -400,5 +402,11 @@ class WtBanner extends Module implements WidgetInterface
         }
 
         return $languages;
+    }
+
+    protected function registerAdminAssets()
+    {
+        $this->context->controller->addCSS($this->_path . 'views/css/admin.css');
+        $this->context->controller->addJS($this->_path . 'views/js/admin.js');
     }
 }
