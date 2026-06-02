@@ -32,13 +32,58 @@
 
 .wtbanner-admin__handle {
   position: absolute;
-  right: -10px;
-  bottom: -10px;
   width: 20px;
   height: 20px;
   border: 2px solid #ffffff;
   border-radius: 999px;
   box-shadow: 0 0 0 2px rgba(20, 74, 55, 0.55);
   background: #144a37;
+}
+
+.wtbanner-admin__handle--n {
+  top: -10px;
+  left: calc(50% - 10px);
+  cursor: ns-resize;
+}
+
+.wtbanner-admin__handle--s {
+  bottom: -10px;
+  left: calc(50% - 10px);
+  cursor: ns-resize;
+}
+
+.wtbanner-admin__handle--e {
+  right: -10px;
+  top: calc(50% - 10px);
+  cursor: ew-resize;
+}
+
+.wtbanner-admin__handle--w {
+  left: -10px;
+  top: calc(50% - 10px);
+  cursor: ew-resize;
+}
+
+.wtbanner-admin__handle--ne {
+  top: -10px;
+  right: -10px;
+  cursor: nesw-resize;
+}
+
+.wtbanner-admin__handle--nw {
+  top: -10px;
+  left: -10px;
   cursor: nwse-resize;
+}
+
+.wtbanner-admin__handle--se {
+  right: -10px;
+  bottom: -10px;
+  cursor: nwse-resize;
+}
+
+.wtbanner-admin__handle--sw {
+  left: -10px;
+  bottom: -10px;
+  cursor: nesw-resize;
 }

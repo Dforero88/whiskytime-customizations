@@ -142,7 +142,14 @@ class WtBanner extends Module implements WidgetInterface
                 <div class="wtbanner-admin__viewport" data-wtbanner-cropper data-crop-x="' . $crop['x'] . '" data-crop-y="' . $crop['y'] . '" data-crop-w="' . $crop['w'] . '" data-crop-h="' . $crop['h'] . '">
                     <img src="' . htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') . '" alt="" data-wtbanner-preview-image>
                     <span class="wtbanner-admin__crop-box" data-wtbanner-crop-box>
-                        <span class="wtbanner-admin__handle" data-wtbanner-handle></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--n" data-wtbanner-handle="n"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--s" data-wtbanner-handle="s"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--e" data-wtbanner-handle="e"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--w" data-wtbanner-handle="w"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--ne" data-wtbanner-handle="ne"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--nw" data-wtbanner-handle="nw"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--se" data-wtbanner-handle="se"></span>
+                        <span class="wtbanner-admin__handle wtbanner-admin__handle--sw" data-wtbanner-handle="sw"></span>
                     </span>
                 </div>
             </div>

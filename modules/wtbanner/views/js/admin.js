@@ -2,19 +2,20 @@ document.addEventListener('DOMContentLoaded', function () {
   var viewport = document.querySelector('[data-wtbanner-cropper]');
   var image = document.querySelector('[data-wtbanner-preview-image]');
   var cropBox = document.querySelector('[data-wtbanner-crop-box]');
-  var handle = document.querySelector('[data-wtbanner-handle]');
+  var handles = Array.prototype.slice.call(document.querySelectorAll('[data-wtbanner-handle]'));
   var inputX = document.querySelector('input[name="WTBANNER_CROP_X"]');
   var inputY = document.querySelector('input[name="WTBANNER_CROP_Y"]');
   var inputW = document.querySelector('input[name="WTBANNER_CROP_W"]');
   var inputH = document.querySelector('input[name="WTBANNER_CROP_H"]');
   var uploadInput = document.querySelector('input[name="WTBANNER_IMAGE_UPLOAD"]');
 
-  if (!viewport || !image || !cropBox || !handle || !inputX || !inputY || !inputW || !inputH) {
+  if (!viewport || !image || !cropBox || !handles.length || !inputX || !inputY || !inputW || !inputH) {
     return;
   }
 
   var ratio = 4 / 1;
   var interaction = null;
+  var suppressClick = false;
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -90,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function startMove(event) {
     var rect = getViewportRect();
     var crop = getCrop();
+    suppressClick = false;
     interaction = {
       mode: 'move',
       pointerId: event.pointerId,
@@ -105,15 +107,19 @@ document.addEventListener('DOMContentLoaded', function () {
     event.stopPropagation();
     var rect = getViewportRect();
     var crop = getCrop();
+    var direction = event.currentTarget.getAttribute('data-wtbanner-handle');
+    suppressClick = false;
     interaction = {
       mode: 'resize',
+      direction: direction,
+      handle: event.currentTarget,
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
       crop: crop,
       rect: rect
     };
-    handle.setPointerCapture(event.pointerId);
+    event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   function onPointerMove(event) {
@@ -123,6 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var deltaX = ((event.clientX - interaction.startX) / interaction.rect.width) * 100;
     var deltaY = ((event.clientY - interaction.startY) / interaction.rect.height) * 100;
+    if (Math.abs(deltaX) > 0.01 || Math.abs(deltaY) > 0.01) {
+      suppressClick = true;
+    }
 
     if (interaction.mode === 'move') {
       setCrop({
@@ -134,21 +143,97 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    var nextWidth = clamp(interaction.crop.w + deltaX, 5, 100 - interaction.crop.x);
-    var nextHeight = nextWidth / ratio;
-    var maxHeight = 100 - interaction.crop.y;
+    var crop = interaction.crop;
+    var direction = interaction.direction || 'se';
+    var nextCrop = {
+      x: crop.x,
+      y: crop.y,
+      w: crop.w,
+      h: crop.h
+    };
 
-    if (nextHeight > maxHeight) {
-      nextHeight = maxHeight;
-      nextWidth = nextHeight * ratio;
+    var widthFromHeight;
+    var heightFromWidth;
+
+    if (direction === 'e' || direction === 'ne' || direction === 'se') {
+      nextCrop.w = clamp(crop.w + deltaX, 5, 100 - crop.x);
+      nextCrop.h = nextCrop.w / ratio;
     }
 
-    setCrop({
-      x: interaction.crop.x,
-      y: interaction.crop.y,
-      w: nextWidth,
-      h: nextHeight
-    });
+    if (direction === 'w' || direction === 'nw' || direction === 'sw') {
+      nextCrop.w = clamp(crop.w - deltaX, 5, crop.x + crop.w);
+      nextCrop.h = nextCrop.w / ratio;
+      nextCrop.x = crop.x + crop.w - nextCrop.w;
+    }
+
+    if (direction === 's' || direction === 'se' || direction === 'sw') {
+      nextCrop.h = clamp(crop.h + deltaY, 5, 100 - crop.y);
+      widthFromHeight = nextCrop.h * ratio;
+      if (direction === 's') {
+        nextCrop.w = widthFromHeight;
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      } else if (direction === 'sw') {
+        nextCrop.w = widthFromHeight;
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      } else {
+        nextCrop.w = widthFromHeight;
+      }
+    }
+
+    if (direction === 'n' || direction === 'ne' || direction === 'nw') {
+      nextCrop.h = clamp(crop.h - deltaY, 5, crop.y + crop.h);
+      heightFromWidth = nextCrop.h * ratio;
+      if (direction === 'n') {
+        nextCrop.w = heightFromWidth;
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      } else if (direction === 'nw') {
+        nextCrop.w = heightFromWidth;
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      } else {
+        nextCrop.w = heightFromWidth;
+      }
+      nextCrop.y = crop.y + crop.h - nextCrop.h;
+    }
+
+    if (nextCrop.x < 0) {
+      nextCrop.w += nextCrop.x;
+      nextCrop.h = nextCrop.w / ratio;
+      nextCrop.x = 0;
+    }
+
+    if (nextCrop.y < 0) {
+      nextCrop.h += nextCrop.y;
+      nextCrop.w = nextCrop.h * ratio;
+      if (direction === 'n') {
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      } else if (direction === 'nw' || direction === 'w' || direction === 'sw') {
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      }
+      nextCrop.y = 0;
+    }
+
+    if (nextCrop.x + nextCrop.w > 100) {
+      nextCrop.w = 100 - nextCrop.x;
+      nextCrop.h = nextCrop.w / ratio;
+      if (direction === 'n') {
+        nextCrop.y = crop.y + crop.h - nextCrop.h;
+      }
+    }
+
+    if (nextCrop.y + nextCrop.h > 100) {
+      nextCrop.h = 100 - nextCrop.y;
+      nextCrop.w = nextCrop.h * ratio;
+      if (direction === 'w') {
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      } else if (direction === 'n' || direction === 's') {
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      }
+    }
+
+    nextCrop.w = clamp(nextCrop.w, 5, 100);
+    nextCrop.h = clamp(nextCrop.h, 5, 100);
+
+    setCrop(nextCrop);
   }
 
   function endInteraction(event) {
@@ -159,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (interaction.mode === 'move') {
       cropBox.releasePointerCapture(event.pointerId);
     } else {
-      handle.releasePointerCapture(event.pointerId);
+      interaction.handle.releasePointerCapture(event.pointerId);
     }
 
     interaction = null;
@@ -176,12 +261,19 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   cropBox.addEventListener('pointerdown', startMove);
-  handle.addEventListener('pointerdown', startResize);
+  handles.forEach(function (handle) {
+    handle.addEventListener('pointerdown', startResize);
+  });
   window.addEventListener('pointermove', onPointerMove);
   window.addEventListener('pointerup', endInteraction);
 
   viewport.addEventListener('click', function (event) {
-    if (event.target === cropBox || event.target === handle) {
+    if (suppressClick) {
+      suppressClick = false;
+      return;
+    }
+
+    if (event.target.closest('[data-wtbanner-crop-box]')) {
       return;
     }
 
