@@ -20,7 +20,7 @@
 
       {if $has_mobile_filters}
         <div class="col-sm-3 col-xs-4 hidden-md-up filter-button">
-          <button id="search_filter_toggler" class="btn btn-secondary">
+          <button id="search_filter_toggler" class="btn btn-primary">
             {l s='Filter' d='Shop.Theme.Actions'}
           </button>
         </div>
