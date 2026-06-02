@@ -8,10 +8,14 @@ use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 class WtBanner extends Module implements WidgetInterface
 {
     const CFG_IMAGE = 'WTBANNER_IMAGE';
+    const CFG_CROPPED_IMAGE = 'WTBANNER_CROPPED_IMAGE';
     const CFG_ALT = 'WTBANNER_ALT';
-    const CFG_FOCAL_X = 'WTBANNER_FOCAL_X';
-    const CFG_FOCAL_Y = 'WTBANNER_FOCAL_Y';
+    const CFG_CROP_X = 'WTBANNER_CROP_X';
+    const CFG_CROP_Y = 'WTBANNER_CROP_Y';
+    const CFG_CROP_W = 'WTBANNER_CROP_W';
+    const CFG_CROP_H = 'WTBANNER_CROP_H';
     const MAX_UPLOAD_SIZE = 5242880;
+    const CROP_RATIO = 4.0;
 
     protected $templateFile;
 
@@ -110,10 +114,8 @@ class WtBanner extends Module implements WidgetInterface
 
         return [
             'wtbanner' => [
-                'image_url' => $this->getUploadUrl($fileName),
+                'image_url' => $this->getRenderImageUrl($fileName),
                 'alt' => $this->getTranslatedAlt(),
-                'focal_x' => $this->getFocalPoint(self::CFG_FOCAL_X),
-                'focal_y' => $this->getFocalPoint(self::CFG_FOCAL_Y),
             ],
         ];
     }
@@ -131,16 +133,17 @@ class WtBanner extends Module implements WidgetInterface
         }
 
         $imageUrl = $this->getUploadUrl($fileName);
-        $focalX = (int) $this->getFocalPoint(self::CFG_FOCAL_X);
-        $focalY = (int) $this->getFocalPoint(self::CFG_FOCAL_Y);
+        $crop = $this->getCropValues();
 
         return '
             <div class="panel wtbanner-admin">
                 <h3><i class="icon-picture"></i> ' . $this->l('Apercu de l\'image actuelle') . '</h3>
                 <p class="wtbanner-admin__help">' . $this->l('Cliquez ou faites glisser dans l\'apercu pour choisir visuellement la zone qui restera visible sur la home.') . '</p>
-                <div class="wtbanner-admin__viewport" data-wtbanner-cropper data-focal-x="' . $focalX . '" data-focal-y="' . $focalY . '">
+                <div class="wtbanner-admin__viewport" data-wtbanner-cropper data-crop-x="' . $crop['x'] . '" data-crop-y="' . $crop['y'] . '" data-crop-w="' . $crop['w'] . '" data-crop-h="' . $crop['h'] . '">
                     <img src="' . htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') . '" alt="" data-wtbanner-preview-image>
-                    <span class="wtbanner-admin__marker" data-wtbanner-marker></span>
+                    <span class="wtbanner-admin__crop-box" data-wtbanner-crop-box>
+                        <span class="wtbanner-admin__handle" data-wtbanner-handle></span>
+                    </span>
                 </div>
             </div>
         ';
@@ -189,11 +192,19 @@ class WtBanner extends Module implements WidgetInterface
                     ],
                     [
                         'type' => 'hidden',
-                        'name' => self::CFG_FOCAL_X,
+                        'name' => self::CFG_CROP_X,
                     ],
                     [
                         'type' => 'hidden',
-                        'name' => self::CFG_FOCAL_Y,
+                        'name' => self::CFG_CROP_Y,
+                    ],
+                    [
+                        'type' => 'hidden',
+                        'name' => self::CFG_CROP_W,
+                    ],
+                    [
+                        'type' => 'hidden',
+                        'name' => self::CFG_CROP_H,
                     ],
                 ],
                 'submit' => [
@@ -229,8 +240,11 @@ class WtBanner extends Module implements WidgetInterface
             $values[self::CFG_ALT][$idLang] = Configuration::get(self::CFG_ALT, $idLang) ?: $defaultAlt;
         }
 
-        $values[self::CFG_FOCAL_X] = (string) $this->getFocalPoint(self::CFG_FOCAL_X);
-        $values[self::CFG_FOCAL_Y] = (string) $this->getFocalPoint(self::CFG_FOCAL_Y);
+        $crop = $this->getCropValues();
+        $values[self::CFG_CROP_X] = (string) $crop['x'];
+        $values[self::CFG_CROP_Y] = (string) $crop['y'];
+        $values[self::CFG_CROP_W] = (string) $crop['w'];
+        $values[self::CFG_CROP_H] = (string) $crop['h'];
         $values['WTBANNER_REMOVE_IMAGE'] = 0;
 
         return $values;
@@ -254,11 +268,14 @@ class WtBanner extends Module implements WidgetInterface
                 } else {
                     Configuration::updateValue(self::CFG_IMAGE, $stored['file']);
                     $this->deleteStoredImage($currentFile, $stored['file']);
+                    $this->deleteStoredCroppedImage();
                     $currentFile = $stored['file'];
+                    $this->setDefaultCropFromImage($currentFile);
                 }
             }
         } elseif ($removeImage) {
             $this->deleteStoredImage($currentFile);
+            $this->deleteStoredCroppedImage();
             Configuration::deleteByName(self::CFG_IMAGE);
             $currentFile = '';
         }
@@ -271,8 +288,14 @@ class WtBanner extends Module implements WidgetInterface
             $translations[$idLang] = $value !== '' ? $value : $defaultAlt;
         }
         Configuration::updateValue(self::CFG_ALT, $translations, true);
-        Configuration::updateValue(self::CFG_FOCAL_X, $this->sanitizeFocalPoint(Tools::getValue(self::CFG_FOCAL_X, 50)));
-        Configuration::updateValue(self::CFG_FOCAL_Y, $this->sanitizeFocalPoint(Tools::getValue(self::CFG_FOCAL_Y, 50)));
+
+        if ($currentFile) {
+            $this->saveCropConfiguration();
+            $cropError = $this->regenerateCroppedImage($currentFile);
+            if ($cropError !== '') {
+                $errors[] = $cropError;
+            }
+        }
 
         if (empty($errors) && !$currentFile) {
             $errors[] = $this->l('Veuillez televerser une image pour activer la banniere.');
@@ -346,9 +369,12 @@ class WtBanner extends Module implements WidgetInterface
     protected function deleteConfiguration()
     {
         return Configuration::deleteByName(self::CFG_IMAGE)
+            && Configuration::deleteByName(self::CFG_CROPPED_IMAGE)
             && Configuration::deleteByName(self::CFG_ALT)
-            && Configuration::deleteByName(self::CFG_FOCAL_X)
-            && Configuration::deleteByName(self::CFG_FOCAL_Y);
+            && Configuration::deleteByName(self::CFG_CROP_X)
+            && Configuration::deleteByName(self::CFG_CROP_Y)
+            && Configuration::deleteByName(self::CFG_CROP_W)
+            && Configuration::deleteByName(self::CFG_CROP_H);
     }
 
     protected function getUploadDir()
@@ -368,14 +394,50 @@ class WtBanner extends Module implements WidgetInterface
         return $alt !== '' ? $alt : $this->getDefaultAlt();
     }
 
-    protected function getFocalPoint($key)
+    protected function saveCropConfiguration()
     {
-        return $this->sanitizeFocalPoint(Configuration::get($key, null, null, null, 50));
+        $crop = [
+            'x' => $this->sanitizePercentage(Tools::getValue(self::CFG_CROP_X, 0)),
+            'y' => $this->sanitizePercentage(Tools::getValue(self::CFG_CROP_Y, 0)),
+            'w' => $this->sanitizePercentage(Tools::getValue(self::CFG_CROP_W, 100)),
+            'h' => $this->sanitizePercentage(Tools::getValue(self::CFG_CROP_H, 100)),
+        ];
+
+        if ($crop['w'] <= 0) {
+            $crop['w'] = 100;
+        }
+
+        if ($crop['h'] <= 0) {
+            $crop['h'] = 100;
+        }
+
+        if ($crop['x'] + $crop['w'] > 100) {
+            $crop['x'] = max(0, 100 - $crop['w']);
+        }
+
+        if ($crop['y'] + $crop['h'] > 100) {
+            $crop['y'] = max(0, 100 - $crop['h']);
+        }
+
+        Configuration::updateValue(self::CFG_CROP_X, $crop['x']);
+        Configuration::updateValue(self::CFG_CROP_Y, $crop['y']);
+        Configuration::updateValue(self::CFG_CROP_W, $crop['w']);
+        Configuration::updateValue(self::CFG_CROP_H, $crop['h']);
     }
 
-    protected function sanitizeFocalPoint($value)
+    protected function getCropValues()
     {
-        $value = (int) round((float) $value);
+        return [
+            'x' => $this->sanitizePercentage(Configuration::get(self::CFG_CROP_X, null, null, null, 0)),
+            'y' => $this->sanitizePercentage(Configuration::get(self::CFG_CROP_Y, null, null, null, 0)),
+            'w' => $this->sanitizePercentage(Configuration::get(self::CFG_CROP_W, null, null, null, 100)),
+            'h' => $this->sanitizePercentage(Configuration::get(self::CFG_CROP_H, null, null, null, 100)),
+        ];
+    }
+
+    protected function sanitizePercentage($value)
+    {
+        $value = (float) $value;
 
         if ($value < 0) {
             return 0;
@@ -385,7 +447,154 @@ class WtBanner extends Module implements WidgetInterface
             return 100;
         }
 
-        return $value;
+        return round($value, 4);
+    }
+
+    protected function setDefaultCropFromImage($fileName)
+    {
+        $path = $this->getUploadDir() . $fileName;
+        $size = @getimagesize($path);
+        if (!$size || empty($size[0]) || empty($size[1])) {
+            return;
+        }
+
+        $width = (float) $size[0];
+        $height = (float) $size[1];
+        $ratio = $width / $height;
+        $targetRatio = self::CROP_RATIO;
+
+        if ($ratio > $targetRatio) {
+            $cropHeight = 100.0;
+            $cropWidth = ($targetRatio / $ratio) * 100.0;
+            $cropX = (100.0 - $cropWidth) / 2.0;
+            $cropY = 0.0;
+        } else {
+            $cropWidth = 100.0;
+            $cropHeight = ($ratio / $targetRatio) * 100.0;
+            $cropX = 0.0;
+            $cropY = (100.0 - $cropHeight) / 2.0;
+        }
+
+        Configuration::updateValue(self::CFG_CROP_X, round($cropX, 4));
+        Configuration::updateValue(self::CFG_CROP_Y, round($cropY, 4));
+        Configuration::updateValue(self::CFG_CROP_W, round($cropWidth, 4));
+        Configuration::updateValue(self::CFG_CROP_H, round($cropHeight, 4));
+    }
+
+    protected function regenerateCroppedImage($fileName)
+    {
+        $sourcePath = $this->getUploadDir() . $fileName;
+        if (!is_file($sourcePath)) {
+            return $this->l('Image source introuvable pour generer le recadrage.');
+        }
+
+        $imageInfo = @getimagesize($sourcePath);
+        if ($imageInfo === false) {
+            return $this->l('Impossible de lire l\'image source.');
+        }
+
+        $resource = $this->createImageResource($sourcePath, $imageInfo['mime']);
+        if (!$resource) {
+            return $this->l('Le format de l\'image source n\'est pas supporte pour le recadrage.');
+        }
+
+        $crop = $this->getCropValues();
+        $sourceWidth = (int) $imageInfo[0];
+        $sourceHeight = (int) $imageInfo[1];
+        $cropX = (int) round(($crop['x'] / 100) * $sourceWidth);
+        $cropY = (int) round(($crop['y'] / 100) * $sourceHeight);
+        $cropWidth = max(1, (int) round(($crop['w'] / 100) * $sourceWidth));
+        $cropHeight = max(1, (int) round(($crop['h'] / 100) * $sourceHeight));
+
+        if ($cropX + $cropWidth > $sourceWidth) {
+            $cropWidth = $sourceWidth - $cropX;
+        }
+
+        if ($cropY + $cropHeight > $sourceHeight) {
+            $cropHeight = $sourceHeight - $cropY;
+        }
+
+        $cropped = imagecrop($resource, [
+            'x' => $cropX,
+            'y' => $cropY,
+            'width' => $cropWidth,
+            'height' => $cropHeight,
+        ]);
+
+        imagedestroy($resource);
+
+        if (!$cropped) {
+            return $this->l('Impossible de generer l\'image recadree.');
+        }
+
+        $croppedFile = sprintf('wtbanner_crop_%s.jpg', sha1($fileName . '|' . json_encode($crop)));
+        $croppedPath = $this->getUploadDir() . $croppedFile;
+        if (!imagejpeg($cropped, $croppedPath, 90)) {
+            imagedestroy($cropped);
+
+            return $this->l('Impossible d\'enregistrer l\'image recadree.');
+        }
+
+        imagedestroy($cropped);
+        @chmod($croppedPath, 0644);
+
+        $previousFile = (string) Configuration::get(self::CFG_CROPPED_IMAGE);
+        if ($previousFile && $previousFile !== $croppedFile) {
+            $previousPath = $this->getUploadDir() . $previousFile;
+            if (is_file($previousPath)) {
+                @unlink($previousPath);
+            }
+        }
+
+        Configuration::updateValue(self::CFG_CROPPED_IMAGE, $croppedFile);
+
+        return '';
+    }
+
+    protected function createImageResource($path, $mime)
+    {
+        switch ($mime) {
+            case 'image/jpeg':
+                return @imagecreatefromjpeg($path);
+
+            case 'image/png':
+                return @imagecreatefrompng($path);
+
+            case 'image/webp':
+                if (function_exists('imagecreatefromwebp')) {
+                    return @imagecreatefromwebp($path);
+                }
+
+                return false;
+
+            default:
+                return false;
+        }
+    }
+
+    protected function getRenderImageUrl($fallbackFileName)
+    {
+        $croppedFile = (string) Configuration::get(self::CFG_CROPPED_IMAGE);
+        if ($croppedFile && is_file($this->getUploadDir() . $croppedFile)) {
+            return $this->getUploadUrl($croppedFile);
+        }
+
+        return $this->getUploadUrl($fallbackFileName);
+    }
+
+    protected function deleteStoredCroppedImage()
+    {
+        $fileName = (string) Configuration::get(self::CFG_CROPPED_IMAGE);
+        if (!$fileName) {
+            return;
+        }
+
+        $path = $this->getUploadDir() . $fileName;
+        if (is_file($path)) {
+            @unlink($path);
+        }
+
+        Configuration::deleteByName(self::CFG_CROPPED_IMAGE);
     }
 
     protected function getDefaultAlt()
