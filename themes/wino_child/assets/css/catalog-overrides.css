@@ -1402,6 +1402,67 @@
   text-decoration: none;
 }
 
+:is(.page-category, .page-manufacturer) .facet-dropdown {
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: none;
+}
+
+:is(.page-category, .page-manufacturer) .facet-dropdown .select-title {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 999px;
+  background: #fff;
+  color: #2f241b;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  box-shadow: none;
+}
+
+:is(.page-category, .page-manufacturer) .facet-dropdown .select-title .material-icons {
+  margin-left: auto;
+  color: #63574c;
+}
+
+:is(.page-category, .page-manufacturer) .facet-dropdown.open > .select-title,
+:is(.page-category, .page-manufacturer) .facet-dropdown.show > .select-title {
+  border-color: var(--primary-color);
+}
+
+:is(.page-category, .page-manufacturer) .facet-dropdown .dropdown-menu {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--primary-color-light);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(29, 17, 8, 0.08);
+}
+
+:is(.page-category, .page-manufacturer) .facet-dropdown .select-list {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: transparent;
+  color: #2f241b;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+:is(.page-category, .page-manufacturer) .facet-dropdown .select-list:hover,
+:is(.page-category, .page-manufacturer) .facet-dropdown .select-list.current {
+  background: color-mix(in srgb, var(--primary-color-light) 26%, white);
+  color: #000;
+  text-decoration: none;
+}
+
 :is(.page-category, .page-manufacturer) .wtcatalog-card {
   position: relative;
   margin-bottom: 0;
@@ -1657,6 +1718,47 @@
   :is(.page-category, .page-manufacturer) .pagination {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  :is(.page-category, .page-manufacturer) .products-selection .filter-button {
+    display: flex;
+    align-items: center;
+  }
+
+  :is(.page-category, .page-manufacturer) #search_filter_toggler,
+  :is(.page-category, .page-manufacturer) #search_filter_controls .ok {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 18px;
+    border: 1px solid var(--primary-color);
+    border-radius: 999px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: none;
+    box-shadow: none;
+  }
+
+  :is(.page-category, .page-manufacturer) #search_filter_toggler:hover,
+  :is(.page-category, .page-manufacturer) #search_filter_toggler:focus,
+  :is(.page-category, .page-manufacturer) #search_filter_controls .ok:hover,
+  :is(.page-category, .page-manufacturer) #search_filter_controls .ok:focus {
+    background: color-mix(in srgb, var(--primary-color) 90%, black);
+    border-color: color-mix(in srgb, var(--primary-color) 90%, black);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  :is(.page-category, .page-manufacturer) #search_filter_controls .ok {
+    gap: 6px;
+  }
+
+  :is(.page-category, .page-manufacturer) #search_filter_controls .ok .material-icons {
+    font-size: 18px;
   }
 }
 
