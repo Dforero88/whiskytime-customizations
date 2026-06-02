@@ -336,7 +336,7 @@ class WtBanner extends Module implements WidgetInterface
     protected function storeUploadedImage(array $file)
     {
         $uploadDir = $this->getUploadDir();
-        if (!is_dir($uploadDir) && !@mkdir($uploadDir, 0755, true)) {
+        if (!$this->ensureUploadDirectoryReady()) {
             return ['error' => $this->l('Impossible de preparer le dossier d\'upload.')];
         }
 
@@ -483,6 +483,10 @@ class WtBanner extends Module implements WidgetInterface
 
     protected function regenerateCroppedImage($fileName)
     {
+        if (!$this->ensureUploadDirectoryReady()) {
+            return $this->l('Le dossier d\'upload n\'est pas accessible en ecriture.');
+        }
+
         $sourcePath = $this->getUploadDir() . $fileName;
         if (!is_file($sourcePath)) {
             return $this->l('Image source introuvable pour generer le recadrage.');
@@ -529,7 +533,13 @@ class WtBanner extends Module implements WidgetInterface
 
         $croppedFile = sprintf('wtbanner_crop_%s.jpg', sha1($fileName . '|' . json_encode($crop)));
         $croppedPath = $this->getUploadDir() . $croppedFile;
-        if (!imagejpeg($cropped, $croppedPath, 90)) {
+        if (!is_writable($this->getUploadDir())) {
+            imagedestroy($cropped);
+
+            return $this->l('Le dossier d\'upload n\'est pas accessible en ecriture.');
+        }
+
+        if (!@imagejpeg($cropped, $croppedPath, 90)) {
             imagedestroy($cropped);
 
             return $this->l('Impossible d\'enregistrer l\'image recadree.');
@@ -595,6 +605,19 @@ class WtBanner extends Module implements WidgetInterface
         }
 
         Configuration::deleteByName(self::CFG_CROPPED_IMAGE);
+    }
+
+    protected function ensureUploadDirectoryReady()
+    {
+        $uploadDir = $this->getUploadDir();
+
+        if (!is_dir($uploadDir) && !@mkdir($uploadDir, 0755, true)) {
+            return false;
+        }
+
+        @chmod($uploadDir, 0775);
+
+        return is_dir($uploadDir) && is_writable($uploadDir);
     }
 
     protected function getDefaultAlt()
