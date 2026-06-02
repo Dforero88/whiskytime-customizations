@@ -1,0 +1,35 @@
+.wtbanner {
+  width: 100%;
+  margin: 0 0 2.5rem;
+}
+
+.wtbanner__media {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 28vw, 420px);
+  overflow: hidden;
+}
+
+.wtbanner__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+@media (max-width: 991px) {
+  .wtbanner {
+    margin-bottom: 2rem;
+  }
+
+  .wtbanner__media {
+    height: clamp(220px, 40vw, 320px);
+  }
+}
+
+@media (max-width: 767px) {
+  .wtbanner__media {
+    height: clamp(210px, 58vw, 300px);
+  }
+}
