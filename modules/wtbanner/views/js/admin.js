@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var interaction = null;
   var suppressClick = false;
+  var ratio = 5 / 1;
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -61,12 +62,30 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function fitDefaultCrop() {
-    setCrop({
-      x: 0,
-      y: 0,
-      w: 100,
-      h: 100
-    });
+    if (!image.naturalWidth || !image.naturalHeight) {
+      return;
+    }
+
+    var imageRatio = image.naturalWidth / image.naturalHeight;
+    var crop;
+
+    if (imageRatio > ratio) {
+      crop = {
+        x: (100 - ((ratio / imageRatio) * 100)) / 2,
+        y: 0,
+        w: (ratio / imageRatio) * 100,
+        h: 100
+      };
+    } else {
+      crop = {
+        x: 0,
+        y: (100 - ((imageRatio / ratio) * 100)) / 2,
+        w: 100,
+        h: (imageRatio / ratio) * 100
+      };
+    }
+
+    setCrop(crop);
   }
 
   function startMove(event) {
@@ -126,33 +145,94 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var crop = interaction.crop;
     var direction = interaction.direction || 'se';
-    var left = crop.x;
-    var top = crop.y;
-    var right = crop.x + crop.w;
-    var bottom = crop.y + crop.h;
+    var nextCrop = {
+      x: crop.x,
+      y: crop.y,
+      w: crop.w,
+      h: crop.h
+    };
+    var widthFromHeight;
+    var heightFromWidth;
 
-    if (direction.indexOf('e') !== -1) {
-      right = clamp(right + deltaX, left + 5, 100);
+    if (direction === 'e' || direction === 'ne' || direction === 'se') {
+      nextCrop.w = clamp(crop.w + deltaX, 5, 100 - crop.x);
+      nextCrop.h = nextCrop.w / ratio;
     }
 
-    if (direction.indexOf('w') !== -1) {
-      left = clamp(left + deltaX, 0, right - 5);
+    if (direction === 'w' || direction === 'nw' || direction === 'sw') {
+      nextCrop.w = clamp(crop.w - deltaX, 5, crop.x + crop.w);
+      nextCrop.h = nextCrop.w / ratio;
+      nextCrop.x = crop.x + crop.w - nextCrop.w;
     }
 
-    if (direction.indexOf('s') !== -1) {
-      bottom = clamp(bottom + deltaY, top + 5, 100);
+    if (direction === 's' || direction === 'se' || direction === 'sw') {
+      nextCrop.h = clamp(crop.h + deltaY, 5, 100 - crop.y);
+      widthFromHeight = nextCrop.h * ratio;
+      if (direction === 's') {
+        nextCrop.w = widthFromHeight;
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      } else if (direction === 'sw') {
+        nextCrop.w = widthFromHeight;
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      } else {
+        nextCrop.w = widthFromHeight;
+      }
     }
 
-    if (direction.indexOf('n') !== -1) {
-      top = clamp(top + deltaY, 0, bottom - 5);
+    if (direction === 'n' || direction === 'ne' || direction === 'nw') {
+      nextCrop.h = clamp(crop.h - deltaY, 5, crop.y + crop.h);
+      heightFromWidth = nextCrop.h * ratio;
+      if (direction === 'n') {
+        nextCrop.w = heightFromWidth;
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      } else if (direction === 'nw') {
+        nextCrop.w = heightFromWidth;
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      } else {
+        nextCrop.w = heightFromWidth;
+      }
+      nextCrop.y = crop.y + crop.h - nextCrop.h;
     }
 
-    setCrop({
-      x: left,
-      y: top,
-      w: right - left,
-      h: bottom - top
-    });
+    if (nextCrop.x < 0) {
+      nextCrop.w += nextCrop.x;
+      nextCrop.h = nextCrop.w / ratio;
+      nextCrop.x = 0;
+    }
+
+    if (nextCrop.y < 0) {
+      nextCrop.h += nextCrop.y;
+      nextCrop.w = nextCrop.h * ratio;
+      if (direction === 'n') {
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      } else if (direction === 'nw' || direction === 'w' || direction === 'sw') {
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      }
+      nextCrop.y = 0;
+    }
+
+    if (nextCrop.x + nextCrop.w > 100) {
+      nextCrop.w = 100 - nextCrop.x;
+      nextCrop.h = nextCrop.w / ratio;
+      if (direction === 'n') {
+        nextCrop.y = crop.y + crop.h - nextCrop.h;
+      }
+    }
+
+    if (nextCrop.y + nextCrop.h > 100) {
+      nextCrop.h = 100 - nextCrop.y;
+      nextCrop.w = nextCrop.h * ratio;
+      if (direction === 'w') {
+        nextCrop.x = crop.x + crop.w - nextCrop.w;
+      } else if (direction === 'n' || direction === 's') {
+        nextCrop.x = crop.x + ((crop.w - nextCrop.w) / 2);
+      }
+    }
+
+    nextCrop.w = clamp(nextCrop.w, 5, 100);
+    nextCrop.h = clamp(nextCrop.h, 5, 100);
+
+    setCrop(nextCrop);
   }
 
   function endInteraction(event) {

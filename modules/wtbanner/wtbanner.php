@@ -15,7 +15,7 @@ class WtBanner extends Module implements WidgetInterface
     const CFG_CROP_W = 'WTBANNER_CROP_W';
     const CFG_CROP_H = 'WTBANNER_CROP_H';
     const MAX_UPLOAD_SIZE = 5242880;
-    const CROP_RATIO = 4.0;
+    const CROP_RATIO = 5.0;
 
     protected $templateFile;
 
@@ -138,7 +138,7 @@ class WtBanner extends Module implements WidgetInterface
         return '
             <div class="panel wtbanner-admin">
                 <h3><i class="icon-picture"></i> ' . $this->l('Apercu de l\'image actuelle') . '</h3>
-                <p class="wtbanner-admin__help">' . $this->l('Cliquez ou faites glisser dans l\'apercu pour choisir visuellement la zone qui restera visible sur la home.') . '</p>
+                <p class="wtbanner-admin__help">' . $this->l('Deplacez ou redimensionnez la zone de recadrage. Le format du hero reste verrouille sur un ratio 5:1, identique au rendu de la home.') . '</p>
                 <div class="wtbanner-admin__viewport" data-wtbanner-cropper data-crop-x="' . $crop['x'] . '" data-crop-y="' . $crop['y'] . '" data-crop-w="' . $crop['w'] . '" data-crop-h="' . $crop['h'] . '">
                     <img src="' . htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') . '" alt="" data-wtbanner-preview-image>
                     <span class="wtbanner-admin__crop-box" data-wtbanner-crop-box>
@@ -165,7 +165,7 @@ class WtBanner extends Module implements WidgetInterface
                     'title' => $this->l('Bannière home'),
                     'icon' => 'icon-picture',
                 ],
-                'description' => $this->l('Une seule image suffit. Le module gere le rendu responsive et le recadrage visuel automatiquement.'),
+                'description' => $this->l('Une seule image suffit. Le hero et le recadrage BO utilisent le meme ratio fixe 5:1.'),
                 'input' => [
                     [
                         'type' => 'file',

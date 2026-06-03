@@ -6,7 +6,7 @@
 .wtbanner__media {
   display: block;
   width: 100%;
-  height: clamp(180px, 18vw, 300px);
+  aspect-ratio: 5 / 1;
   overflow: hidden;
 }
 
@@ -21,15 +21,5 @@
 @media (max-width: 991px) {
   .wtbanner {
     margin-bottom: 1.75rem;
-  }
-
-  .wtbanner__media {
-    height: clamp(170px, 28vw, 240px);
-  }
-}
-
-@media (max-width: 767px) {
-  .wtbanner__media {
-    height: clamp(160px, 42vw, 210px);
   }
 }
