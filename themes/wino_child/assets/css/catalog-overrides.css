@@ -2001,6 +2001,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
   min-height: 0;
   padding: 14px;
   border: 1px solid var(--primary-color-light);
