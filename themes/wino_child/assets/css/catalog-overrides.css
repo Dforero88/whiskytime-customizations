@@ -1977,7 +1977,7 @@
 #module-eventsmanager-events .wtevents-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
   gap: 22px;
   align-items: stretch;
   padding: 16px;
@@ -2001,10 +2001,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 220px;
-  padding: 14px;
+  min-height: 280px;
+  padding: 18px;
   border: 1px solid var(--primary-color-light);
-  border-radius: 18px;
+  border-radius: 20px;
   background: #fff;
   overflow: hidden;
 }
@@ -2086,13 +2086,19 @@
   gap: 6px;
 }
 
+@media (max-width: 1199px) {
+  #module-eventsmanager-events .wtevents-card {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  }
+}
+
 @media (max-width: 991px) {
   #module-eventsmanager-events .wtevents-card {
     grid-template-columns: 1fr;
   }
 
   #module-eventsmanager-events .wtevents-card__media {
-    min-height: 200px;
+    min-height: 240px;
   }
 
   #module-eventsmanager-events .wtevents-card__body {
@@ -2116,7 +2122,7 @@
   }
 
   #module-eventsmanager-events .wtevents-card__media {
-    min-height: 180px;
+    min-height: 240px;
   }
 
   #module-eventsmanager-events .wtevents-card__badge {
