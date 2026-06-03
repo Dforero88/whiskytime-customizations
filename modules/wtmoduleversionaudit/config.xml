@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>wtmoduleversionaudit</name>
+    <displayName><![CDATA[WT Module Version Audit]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Audit installed module versions in database versus disk and generate SQL for mismatches.]]></description>
+    <author><![CDATA[David Forero]]></author>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+</module>
+
