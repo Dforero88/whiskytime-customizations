@@ -1977,8 +1977,8 @@
 #module-eventsmanager-events .wtevents-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
-  gap: 22px;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 16px;
   align-items: center;
   padding: 16px;
   background:
@@ -2092,7 +2092,7 @@
 
 @media (max-width: 1199px) {
   #module-eventsmanager-events .wtevents-card {
-    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    grid-template-columns: max-content minmax(0, 1fr);
   }
 }
 
