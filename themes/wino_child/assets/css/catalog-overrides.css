@@ -2002,11 +2002,12 @@
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding: 18px;
+  padding: 14px;
   border: 1px solid var(--primary-color-light);
   border-radius: 20px;
   background: #fff;
   overflow: hidden;
+  align-self: start;
 }
 
 #module-eventsmanager-events .wtevents-card__badge {
@@ -2035,7 +2036,7 @@
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: 100%;
+  max-height: 180px;
   object-fit: contain;
 }
 
