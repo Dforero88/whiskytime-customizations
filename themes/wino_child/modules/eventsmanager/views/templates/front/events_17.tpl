@@ -48,7 +48,7 @@
           {assign var=params value=['event_id'=> $_event.event_id, 'eventslink'=> $_event.event_permalinks]}
           {assign var=event_link value=$link->getModuleLink('eventsmanager', 'detail', $params)|escape:'htmlall':'UTF-8'}
           {if $_event.event_image}
-            {$_event.contact_photo = $_event.event_thumb_image}
+            {$_event.contact_photo = $_event.event_image}
           {else}
             {$_event.contact_photo = 'events/blank_icon.jpg'}
           {/if}
@@ -79,7 +79,7 @@
         {assign var=params value=['event_id'=> $_event.event_id, 'eventslink'=> $_event.event_permalinks]}
         {assign var=event_link value=$link->getModuleLink('eventsmanager', 'detail', $params)|escape:'htmlall':'UTF-8'}
         {if $_event.event_image}
-          {$_event.contact_photo = $_event.event_thumb_image}
+          {$_event.contact_photo = $_event.event_image}
         {else}
           {$_event.contact_photo = 'events/blank_icon.jpg'}
         {/if}
