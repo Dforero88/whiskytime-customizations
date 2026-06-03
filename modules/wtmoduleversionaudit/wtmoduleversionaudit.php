@@ -4,7 +4,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class WtModuleVersionAudit extends Module
+class Wtmoduleversionaudit extends Module
 {
     public function __construct()
     {
