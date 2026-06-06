@@ -1,0 +1,60 @@
+.wtholidays {
+  margin: 18px 0 28px;
+}
+
+.wtholidays__card {
+  border: 1px solid #d7e7dd;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fcfdfb 0%, #edf6f1 100%);
+  color: #3c312b;
+}
+
+.wtholidays__card--home {
+  padding: 28px 32px 24px;
+}
+
+.wtholidays__card--compact {
+  padding: 16px 18px 14px;
+}
+
+.wtholidays__headline {
+  margin: 0 0 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.05;
+  color: #2d241f;
+}
+
+.wtholidays__message {
+  margin: 0;
+  color: #4e5b55;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.product-additional-info .wtholidays {
+  margin: 0 0 16px;
+}
+
+.cart-summary .wtholidays {
+  margin: 0 0 16px;
+}
+
+@media (max-width: 767px) {
+  .wtholidays {
+    margin: 14px 0 22px;
+  }
+
+  .wtholidays__card--home {
+    padding: 20px 18px 18px;
+  }
+
+  .wtholidays__card--compact {
+    padding: 14px 14px 12px;
+  }
+
+  .wtholidays__headline {
+    font-size: 28px;
+  }
+}
