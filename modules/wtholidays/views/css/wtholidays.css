@@ -33,6 +33,25 @@
   line-height: 1.75;
 }
 
+.wtholidays__message--product {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-style: italic;
+}
+
+.wtholidays__icon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #1c503c;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.wtholidays__message-copy {
+  min-width: 0;
+}
+
 .product-additional-info .wtholidays {
   margin: 0 0 16px;
 }
@@ -56,5 +75,9 @@
 
   .wtholidays__headline {
     font-size: 28px;
+  }
+
+  .wtholidays__message--product {
+    gap: 6px;
   }
 }
