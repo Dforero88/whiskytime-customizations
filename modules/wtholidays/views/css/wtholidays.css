@@ -18,18 +18,20 @@
 }
 
 .wtholidays__headline {
-  margin: 0 0 10px;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 1.05;
-  color: #2d241f;
+  margin: 0 0 14px;
+  font-family: "Great Vibes", cursive !important;
+  font-size: 48px !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  color: #000 !important;
 }
 
 .wtholidays__message {
   margin: 0;
-  color: #4e5b55;
-  font-size: 14px;
+  color: #63574c;
+  font-size: 15px;
   line-height: 1.75;
 }
 
@@ -37,14 +39,18 @@
   display: inline-flex;
   align-items: flex-start;
   gap: 8px;
+  color: #a94442;
+  font-size: 13px;
+  font-weight: 400;
   font-style: italic;
+  line-height: 1.4;
 }
 
 .wtholidays__icon {
   flex: 0 0 auto;
   margin-top: 2px;
-  color: #1c503c;
-  font-size: 18px;
+  color: #a94442;
+  font-size: 16px;
   line-height: 1;
 }
 
@@ -58,6 +64,10 @@
 
 .cart-summary .wtholidays {
   margin: 0 0 16px;
+}
+
+.wtholidays--cart .wtholidays__message {
+  color: #a94442;
 }
 
 @media (max-width: 767px) {
@@ -74,7 +84,7 @@
   }
 
   .wtholidays__headline {
-    font-size: 28px;
+    font-size: clamp(24px, 7vw, 32px) !important;
   }
 
   .wtholidays__message--product {
