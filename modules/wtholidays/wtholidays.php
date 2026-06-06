@@ -70,7 +70,7 @@ class Wtholidays extends Module
             [
                 'media' => 'all',
                 'priority' => 145,
-                'version' => '20260606-01',
+                'version' => '20260606-02',
             ]
         );
     }
