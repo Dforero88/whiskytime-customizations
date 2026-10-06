@@ -57,6 +57,20 @@ class AdminWtTranslationController extends ModuleAdminController
         exit;
     }
 
+    public function ajaxProcessPendingCount()
+    {
+        header('Content-Type: application/json');
+        try {
+            if (!$this->access('view') || Shop::getContext() !== Shop::CONTEXT_SHOP) {
+                throw new WtTranslationException('Accès refusé.');
+            }
+            $this->ajaxRender(json_encode(['ok' => true, 'count' => count($this->module->candidates())]));
+        } catch (Throwable $e) {
+            $this->ajaxRender(json_encode(['ok' => false]));
+        }
+        exit;
+    }
+
     public function initContent()
     {
         parent::initContent();

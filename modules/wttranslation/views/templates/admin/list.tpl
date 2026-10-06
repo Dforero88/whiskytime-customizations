@@ -9,7 +9,7 @@
   </form>
   {/if}
 </div>
-<div class="panel" id="wt-translation" data-url="{$wt_url|escape:'html':'UTF-8'}">
+<div class="panel" id="wt-translation" data-count="{$wt_rows|count}" data-url="{$wt_url|escape:'html':'UTF-8'}">
   <h3>{$wt_rows|count} produit(s) à traduire</h3>
   <div id="wt-error" class="alert alert-danger" hidden></div>
   <div id="wt-progress" class="alert alert-info" hidden></div>

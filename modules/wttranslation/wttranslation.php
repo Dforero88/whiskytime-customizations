@@ -54,7 +54,21 @@ class WtTranslation extends Module
         foreach (Language::getLanguages(false) as $lang) {
             $tab->name[$lang['id_lang']] = 'WT Traduction';
         }
-        return (bool) $tab->add();
+        return (bool) $tab->add() && $this->registerHook('displayBackOfficeHeader');
+    }
+
+    public function hookDisplayBackOfficeHeader()
+    {
+        if (!$this->context->employee || !$this->context->employee->id
+            || Shop::getContext() !== Shop::CONTEXT_SHOP) {
+            return;
+        }
+        $this->context->controller->addJS($this->_path . 'views/js/menu.js');
+        $this->context->controller->addCSS($this->_path . 'views/css/menu.css');
+        Media::addJsDef(['wtTranslationMenu' => [
+            'url' => $this->context->link->getAdminLink('AdminWtTranslation'),
+            'cacheKey' => 'wtTranslationCount_' . (int) $this->context->employee->id . '_' . (int) $this->context->shop->id,
+        ]]);
     }
 
     public function uninstall()

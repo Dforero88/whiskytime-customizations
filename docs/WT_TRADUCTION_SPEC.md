@@ -10,6 +10,11 @@ recapitulatifs produits via DeepL. Les champs SEO utilisent les fallbacks natifs
 ## Perimetre
 
 - Page BO WT Traduction sous le menu Whisky Time existant.
+- Pastille rouge sur l'entree menu indiquant le nombre de produits a traduire;
+  aucune pastille a zero. Compteur charge en arriere-plan lors de la navigation,
+  resultat conserve 60 secondes par employe/boutique dans le navigateur.
+  La page du module reutilise son propre nombre sans appel supplementaire.
+  La pastille est actualisee apres chaque produit traduit.
 - Boutique courante uniquement; produits actifs et inactifs.
 - Reference strictement composee de deux chiffres, un tiret et cinq chiffres.
 - Description FR non vide et description EN vide, ou recapitulatif FR non vide

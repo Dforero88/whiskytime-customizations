@@ -23,6 +23,17 @@ derniere mise a jour produit 2026-06-09. Pas une copie actuelle de production.
 
 ## Test utilisateur attendu
 
+### Pastille menu - 2026-10-06
+
+Hook displayBackOfficeHeader ajoute et enregistre sur le module local existant.
+Tests HTTP authentifies: assets compteur presents sur dashboard, JSON compteur 1
+avant traduction et 0 apres. Tests JS: rendu compteur positif, aucune pastille a
+zero, suppression immediate, cache 60s sans prolongation sur navigation,
+expiration et reutilisation du compteur de la page module: OK.
+Calcul seul mesure a 2.76 ms sur 8090 (192 references compatibles).
+Le rendu visuel de la pastille reste a confirmer dans le navigateur utilisateur.
+La fixture 285 est traduite apres ces tests; la liste actuelle est vide.
+
 Un produit inactif de demonstration est conserve uniquement sur 8090:
 ID 285, reference 99-99998, nom WT TEST Traduction (inactif).
 Ses champs EN ont ete remis a vide apres les tests pour permettre un clic reel
