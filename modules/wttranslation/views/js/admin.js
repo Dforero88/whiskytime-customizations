@@ -22,9 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
         fields += result.fields;
         done++;
         row.remove();
-        if (window.wtUpdateTranslationBadge) {
-          window.wtUpdateTranslationBadge(panel.querySelectorAll('tr[data-product]').length);
-        }
       }
       progress.textContent = `Terminé : ${done} produits traités, ${fields} champs traduits. Actualisation…`;
       window.location.reload();

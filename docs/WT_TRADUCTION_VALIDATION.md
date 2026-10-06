@@ -7,6 +7,22 @@ derniere mise a jour produit 2026-06-09. Pas une copie actuelle de production.
 
 ## Controles effectues
 
+### Version 1.0.1 sans pastille - 2026-10-06
+
+- Suppression du hook global, assets menu, action AJAX compteur et mise a jour JS.
+- Premiere installation native et absence de cle: message controle, sans appel API.
+- Passage temporaire de 8090 en debug=false pour controles BO HTTP et PHP.
+- BO: liste non vide, submit configuration vide conservant la cle, traduction
+  reelle AJAX de deux champs, liste vide, JSON strict succes et GET refuse: OK.
+- Pages Commandes et Commentaires du blog: HTTP 200, aucun asset de pastille: OK.
+- Migration retrait hook testee deux fois: idempotente, cle preservee.
+- Tests HTML vide, non-ecrasement EN, erreur API et reprise: OK.
+- JS reel servi HTTP 200; ecriture www-data compile et sous-dossiers, admin,
+  logs et sessions prod: OK. Configuration debug locale d'origine restauree.
+- Ces tests ne prouvent pas la cause de l'ancien cache Symfony en production.
+  Aucun test ni redeploiement de la version 1.0.1 en production a ce stade.
+- Inspect and Adapt: tester aussi le BO avec debug=false avant livraison.
+
 - Installation et reinstallation par la commande native prestashop:module.
 - Lint PHP sur module et controleur: OK.
 - Connexion HTTP authentifiee BO, entree menu et page: OK.
@@ -24,6 +40,8 @@ derniere mise a jour produit 2026-06-09. Pas une copie actuelle de production.
 ## Test utilisateur attendu
 
 ### Pastille menu - 2026-10-06
+
+Historique version 1.0.0: cette fonctionnalite a ete retiree en 1.0.1.
 
 Hook displayBackOfficeHeader ajoute et enregistre sur le module local existant.
 Tests HTTP authentifies: assets compteur presents sur dashboard, JSON compteur 1
