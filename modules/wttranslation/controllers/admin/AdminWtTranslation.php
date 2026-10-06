@@ -54,6 +54,7 @@ class AdminWtTranslationController extends ModuleAdminController
             $message = $e instanceof WtTranslationException ? $e->getMessage() : 'Erreur technique lors de la traduction.';
             $this->ajaxRender(json_encode(['ok' => false, 'error' => $message]));
         }
+        exit;
     }
 
     public function initContent()

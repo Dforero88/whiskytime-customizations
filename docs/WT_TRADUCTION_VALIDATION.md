@@ -38,5 +38,16 @@ Le dossier updates sera prepare apres cette validation.
 
 ## Inspect and Adapt
 
+### Correctif du 2026-10-06 apres test utilisateur
+
+ajaxRender ecrit la reponse mais ne termine pas le controleur legacy. Le rendu
+BO etait ajoute au JSON, provoquant une erreur de parsing navigateur alors que
+les traductions etaient enregistrees. Ajout de exit apres les reponses AJAX.
+Retest HTTP authentifie avec parsing JSON strict: succes (deux champs traduits)
+et erreur (methode GET refusee) OK. Liste vide apres traduction OK.
+Fixture 285 remise a vide apres verification pour le prochain test utilisateur.
+Verification initiale insuffisante: rechercher une sous-chaine JSON dans une
+reponse ne valide pas son format. Toujours parser la reponse entiere.
+
 Toujours tester une liste BO non vide: elle exerce les liens vers les fiches
 produit et les variables de template que la liste vide ne couvre pas.
